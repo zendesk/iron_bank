@@ -3,7 +3,6 @@
 require 'reek/rake/task'
 require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
-require 'private_gem/tasks'
 require 'bump/tasks'
 
 Reek::Rake::Task.new do |reek|
