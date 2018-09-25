@@ -1,0 +1,21 @@
+<field>
+   <name>Currency</name>
+   <label>Currency</label>
+   <selectable>true</selectable>
+   <createable>true</createable>
+   <updateable>true</updateable>
+   <filterable>true</filterable>
+   <custom>false</custom>
+   <maxlength/>
+   <required>true</required>
+   <type>text</type>
+   <options>
+      <option>EUR</option>
+      <option>GBP</option>
+      <option>USD</option>
+   </options>
+   <contexts>
+      <context>soap</context>
+      <context>export</context>
+   </contexts>
+</field>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects>
+  <object href="https://apisandbox.zuora.com/apps/api/describe/Account">
+    <name>Account</name>
+    <label>Account</label>
+  </object>
+
+  <object href="https://apisandbox.zuora.com/apps/api/describe/Amendment">
+    <name>Amendment</name>
+    <label>Amendment</label>
+  </object>
+
+  <object href="https://apisandbox.zuora.com/apps/api/describe/Contact">
+    <name>Contact</name>
+    <label>Contact</label>
+  </object>
+
+  <object href="https://apisandbox.zuora.com/apps/api/describe/Invoice">
+    <name>Invoice</name>
+    <label>Invoice</label>
+  </object>
+
+  <object href="https://apisandbox.zuora.com/apps/api/describe/PaymentMethod">
+    <name>PaymentMethod</name>
+    <label>Payment Method</label>
+  </object>
+
+  <object href="https://apisandbox.zuora.com/apps/api/describe/Subscription">
+    <name>Subscription</name>
+    <label>Subscription</label>
+  </object>
+</objects>

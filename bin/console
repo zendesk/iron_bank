@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'dotenv/load'
+require 'bundler/setup'
+require 'iron_bank'
+require 'pry-byebug'
+
+credentials = {
+  domain:        ENV['ZUORA_DOMAIN'],
+  client_id:     ENV['ZUORA_CLIENT_ID'],
+  client_secret: ENV['ZUORA_CLIENT_SECRET'],
+  auth_type:     ENV['ZUORA_AUTH_TYPE']
+}
+
+# If credentials are present in environment variables
+IronBank.client = IronBank::Client.new(credentials) if credentials.values.all?
+
+Pry.start

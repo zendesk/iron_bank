@@ -1,0 +1,23 @@
+<field>
+   <name>MyCustomField__c</name>
+   <label>My Custom Field</label>
+   <selectable>true</selectable>
+   <createable>true</createable>
+   <updateable>true</updateable>
+   <filterable>true</filterable>
+   <custom>true</custom>
+   <maxlength>255</maxlength>
+   <required>false</required>
+   <type>picklist</type>
+   <options>
+      <option>Customer</option>
+      <option>Employee</option>
+      <option>Sponsored</option>
+      <option>Partner</option>
+      <option>Reseller Customer</option>
+   </options>
+   <contexts>
+      <context>soap</context>
+      <context>export</context>
+   </contexts>
+</field>

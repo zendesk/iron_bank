@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object href="https://apisandbox-api.zuora.com/rest/api/describe/RatePlanCharge">
+   <name>RatePlanCharge</name>
+   <label>Rate Plan Charge</label>
+   <fields>
+      <field>
+         <name>ChargeModel</name>
+         <label>Charge Model</label>
+         <selectable>true</selectable>
+         <createable>false</createable>
+         <updateable>false</updateable>
+         <filterable>true</filterable>
+         <custom>false</custom>
+         <maxlength/>
+         <required>false</required>
+         <type>text</type>
+         <options>
+            <option>Flat Fee Pricing</option>
+            <option>Per Unit Pricing</option>
+            <option>Overage Pricing</option>
+            <option>Volume Pricing</option>
+            <option>Tiered Pricing</option>
+            <option>Tiered with Overage Pricing</option>
+            <option>Discount-Fixed Amount</option>
+            <option>Discount-Percentage</option>
+         </options>
+         <contexts>
+            <context>soap</context>
+            <context>export</context>
+         </contexts>
+      </field>
+   </fields>
+</object>

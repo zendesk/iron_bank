@@ -1,0 +1,16 @@
+<field>
+  <name>AccountNumber</name>
+  <label>Account Number</label>
+  <selectable>true</selectable>
+  <createable>true</createable>
+  <updateable>true</updateable>
+  <filterable>true</filterable>
+  <custom>false</custom>
+  <maxlength/>
+  <required>false</required>
+  <type>text</type>
+  <contexts>
+    <context>soap</context>
+    <context>export</context>
+  </contexts>
+</field>

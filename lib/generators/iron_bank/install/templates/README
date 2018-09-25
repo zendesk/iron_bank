@@ -1,0 +1,16 @@
+*******************************************************************************
+
+Next steps:
+
+1. Edit the config/initializers/iron_bank.rb file with your Zuora credentials
+
+2. Export the schema for your Zuora tenant by running in the Rails console:
+
+    IronBank::Schema.export
+
+3. (optional) Export your product catalog by running in the Rails console:
+
+    IronBank::LocalRecords.export
+    exit # need to exit the session to finish exporting the local records
+
+*******************************************************************************

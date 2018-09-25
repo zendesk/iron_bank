@@ -1,0 +1,55 @@
+AllCops:
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  TargetRubyVersion: 2.3
+
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+Lint/UselessAssignment:
+  Exclude:
+    - bin/console
+
+Metrics/AbcSize:
+  Exclude:
+    - lib/iron_bank/associations.rb
+    - lib/iron_bank/client.rb
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+    - iron_bank.gemspec
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - lib/iron_bank/error.rb
+
+Metrics/MethodLength:
+  Exclude:
+    - lib/iron_bank/utils.rb
+    - lib/iron_bank/associations.rb
+    - lib/iron_bank/queryable.rb
+    - lib/iron_bank/resources/product_rate_plan_charge_tier.rb
+    - lib/iron_bank/error.rb
+    - lib/iron_bank/client.rb
+
+Metrics/LineLength:
+  Exclude:
+    - lib/iron_bank.rb
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: nested
+
+Style/OptionalArguments:
+  Exclude:
+    - lib/iron_bank/local.rb
+    - lib/iron_bank/queryable.rb
+    - lib/iron_bank/resource.rb
+
+Style/RescueStandardError:
+  Exclude:
+    - lib/iron_bank/csv.rb
+
+Style/MixinUsage:
+  Exclude:
+    - lib/iron_bank/resource.rb

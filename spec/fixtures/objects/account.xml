@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object href="https://apisandbox-api.zuora.com/rest/api/describe/Account">
+   <name>Account</name>
+   <label>Account</label>
+   <fields>
+      <field>
+         <name>AccountNumber</name>
+         <label>Account Number</label>
+         <selectable>true</selectable>
+         <createable>true</createable>
+         <updateable>true</updateable>
+         <filterable>true</filterable>
+         <custom>false</custom>
+         <maxlength/>
+         <required>false</required>
+         <type>text</type>
+         <contexts>
+            <context>soap</context>
+            <context>export</context>
+         </contexts>
+      </field>
+      <field>
+         <name>AdditionalEmailAddresses</name>
+         <label>Additional Email Addresses</label>
+         <selectable>false</selectable>
+         <createable>true</createable>
+         <updateable>true</updateable>
+         <filterable>true</filterable>
+         <custom>false</custom>
+         <maxlength/>
+         <required>false</required>
+         <type>text</type>
+         <contexts>
+            <context>soap</context>
+            <context>export</context>
+         </contexts>
+      </field>
+      <field>
+         <name>AllowInvoiceEdit</name>
+         <label>Allow Invoice Editing</label>
+         <selectable>false</selectable>
+         <createable>true</createable>
+         <updateable>true</updateable>
+         <filterable>true</filterable>
+         <custom>false</custom>
+         <maxlength/>
+         <required>false</required>
+         <type>boolean</type>
+         <contexts>
+            <context>soap</context>
+            <context>export</context>
+         </contexts>
+      </field>
+      <field>
+         <name>Name</name>
+         <label>Name</label>
+         <selectable>true</selectable>
+         <createable>true</createable>
+         <updateable>true</updateable>
+         <filterable>true</filterable>
+         <custom>false</custom>
+         <maxlength/>
+         <required>true</required>
+         <type>text</type>
+         <contexts>
+            <context>soap</context>
+            <context>export</context>
+         </contexts>
+      </field>
+   </fields>
+   <related-objects>
+      <object href="https://apisandbox-api.zuora.com/rest/api/describe/Contact">
+         <name>BillToContact</name>
+         <label>Bill To</label>
+      </object>
+      <object href="https://apisandbox-api.zuora.com/rest/api/describe/PaymentMethod">
+         <name>DefaultPaymentMethod</name>
+         <label>Default Payment Method</label>
+      </object>
+      <object href="https://apisandbox-api.zuora.com/rest/api/describe/Account">
+         <name>ParentAccount</name>
+         <label>Parent Account</label>
+      </object>
+      <object href="https://apisandbox-api.zuora.com/rest/api/describe/Contact">
+         <name>SoldToContact</name>
+         <label>Sold To</label>
+      </object>
+   </related-objects>
+</object>

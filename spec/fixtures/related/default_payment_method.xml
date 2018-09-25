@@ -1,0 +1,4 @@
+<object href="https://apisandbox-api.zuora.com/rest/api/describe/PaymentMethod">
+  <name>DefaultPaymentMethod</name>
+  <label>Default Payment Method</label>
+</object>
