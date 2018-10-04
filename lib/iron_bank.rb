@@ -144,12 +144,3 @@ IronBank::CatalogTier   = IronBank::Resources::ProductRatePlanChargeTier
 IronBank::Plan   = IronBank::Resources::RatePlan
 IronBank::Charge = IronBank::Resources::RatePlanCharge
 IronBank::Tier   = IronBank::Resources::RatePlanChargeTier
-
-Datadog.configure do |config|
-  config.tracer(
-    enabled: IronBank.configuration.open_tracing_enabled
-  )
-  # registers the tracing middleware.
-  config.use :faraday,
-             service_name: IronBank.configuration.open_tracing_service_name
-end

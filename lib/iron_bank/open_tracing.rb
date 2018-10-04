@@ -10,7 +10,8 @@ module IronBank
     def open_tracing_options
       {
         distributed_tracing: true,
-        split_by_domain:     false
+        split_by_domain:     false,
+        service_name:        IronBank.configuration.open_tracing_service_name
       }
     end
   end

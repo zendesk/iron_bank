@@ -88,6 +88,7 @@ UtilityFunction:
     - IronBank::Object#camelize_array
     - IronBank::Object#underscore_array
     - IronBank::OpenTracing#open_tracing_enabled?
+    - IronBank::OpenTracing#open_tracing_options
     - IronBank::QueryBuilder#range_query_builder
     - IronBank::Utils#lower_camelize
     - IronBank::Utils#upper_camelize
