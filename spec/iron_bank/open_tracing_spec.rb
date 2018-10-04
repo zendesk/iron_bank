@@ -13,7 +13,8 @@ RSpec.describe IronBank::OpenTracing do
     let(:options) do
       {
         distributed_tracing: true,
-        split_by_domain:     false
+        split_by_domain:     false,
+        service_name:        'ironbank'
       }
     end
 
