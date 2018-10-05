@@ -12,6 +12,7 @@ module IronBank
         case status
         when 400      then IronBank::BadRequest
         when 404      then IronBank::NotFound
+        when 422      then IronBank::UnprocessableEntity
         when 429      then IronBank::TooManyRequests
         when 500      then IronBank::InternalServerError
         when 400..499 then IronBank::ClientError
@@ -33,6 +34,9 @@ module IronBank
 
   # Raised when Zuora returns a 404 HTTP status code
   class NotFound < ClientError; end
+
+  # Raised when Zuora return 422 and unsuccessful action responses
+  class UnprocessableEntity < Error; end
 
   # Raised when Zuora returns a 429 HTTP status code
   class TooManyRequests < ClientError; end
