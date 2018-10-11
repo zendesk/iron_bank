@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
+# IronBank main module
 module IronBank
-  # Faraday response middleware
-  module Response
+  # IronBank Faraday middleware module
+  module FaradayMiddleware
     # This class raises an exception based on the HTTP status code and the
     # `success` flag (if present in the response) from Zuora.
     class RaiseError < Faraday::Response::Middleware
