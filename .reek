@@ -42,6 +42,10 @@ FeatureEnvy:
     - IronBank::Actions::Subscribe#hash_args
     - IronBank::Utils#camelize
 
+InstanceVariableAssumption:
+  exclude:
+    - IronBank::FaradayMiddleware::RetriableAuth
+
 IrresponsibleModule:
   exclude:
     - Sample

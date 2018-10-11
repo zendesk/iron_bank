@@ -57,7 +57,9 @@ require 'iron_bank/utils'
 require 'iron_bank/version'
 require 'iron_bank/csv'
 require 'iron_bank/error'
-require 'iron_bank/response/raise_error'
+require 'iron_bank/faraday_middleware/raise_error'
+require 'iron_bank/faraday_middleware/retriable_auth'
+require 'iron_bank/faraday_middleware'
 
 # Helpers
 require 'iron_bank/open_tracing'
