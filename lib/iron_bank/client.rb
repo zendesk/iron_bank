@@ -44,9 +44,9 @@ module IronBank
       @connection ||= Faraday.new(faraday_config) do |conn|
         conn.use      :ddtrace, open_tracing_options if open_tracing_enabled?
         conn.use      instrumenter, instrumenter_options if instrumenter
-        conn.use      :raise_error
         conn.request  :json
-        conn.request  :retry, max: 2, retry_statuses: [401]
+        conn.request  :retry, max: 2, exceptions: [IronBank::Unauthorized]
+        conn.use      :raise_error
         conn.request  :retriable_auth, auth
         conn.response :logger, IronBank.logger
         conn.response :json, content_type: /\bjson$/

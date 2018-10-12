@@ -11,6 +11,7 @@ module IronBank
       klass = begin
         case status
         when 400      then IronBank::BadRequest
+        when 401      then IronBank::Unauthorized
         when 404      then IronBank::NotFound
         when 422      then IronBank::UnprocessableEntity
         when 429      then IronBank::TooManyRequests
@@ -31,6 +32,9 @@ module IronBank
 
   # Raised when Zuora returns a 400 HTTP status code
   class BadRequest < ClientError; end
+
+  # Raised when Zuora returns a 401 HTTP status code
+  class Unauthorized < Error; end
 
   # Raised when Zuora returns a 404 HTTP status code
   class NotFound < ClientError; end

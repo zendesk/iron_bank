@@ -25,8 +25,8 @@ module IronBank
       def renew_auth_header
         auth.renew_session
 
-        # The :retry middleware use cached request's headers which doesn't retry
-        # the request headers automatically
+        # NOTE: Merging the refreshed auth headers into the original request
+        #       (which will be retried via the `:retry` middleware.)
         env.request_headers = env.request_headers.merge(auth.header)
       end
     end

@@ -46,11 +46,13 @@ RSpec.describe IronBank::FaradayMiddleware::RetriableAuth do
 
   private
 
+  # :reek:FeatureEnvy
   def connection
     Faraday.new do |conn|
       # To simulate a second request with new auth headers
-      conn.request :retry, max: 2, retry_statuses: [401]
+      conn.request :retry, max: 2, exceptions: [IronBank::Unauthorized]
 
+      conn.use     IronBank::FaradayMiddleware::RaiseError
       conn.use     described_class, auth
       conn.adapter :test, connection_stubs
     end
