@@ -7,6 +7,6 @@ RSpec.describe IronBank::Actions::QueryMore do
   it_behaves_like 'a Zuora action' do
     let(:args)     { anything }
     let(:endpoint) { 'v1/action/queryMore' }
-    let(:params)   { { 'queryLocator' => args } }
+    let(:params)   { { 'queryLocator': args } }
   end
 end

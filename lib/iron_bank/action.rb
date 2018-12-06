@@ -12,9 +12,10 @@ module IronBank
 
     def call
       @body = IronBank.client.connection.post(endpoint, params).body
-      return body if success?
 
-      raise ::IronBank::UnprocessableEntity, errors
+      raise ::IronBank::UnprocessableEntity, errors unless success?
+
+      IronBank::Object.new(body).deep_underscore
     end
 
     private
@@ -47,12 +48,6 @@ module IronBank
 
     def errors
       { errors: response_object.fetch(:errors, []) }
-    end
-
-    def requests(type: :upper)
-      args.fetch(:objects).map do |object|
-        IronBank::Object.new(object).deep_camelize(type: type)
-      end
     end
   end
 end

@@ -6,10 +6,20 @@ module IronBank
     # https://www.zuora.com/developer/api-reference/#operation/Action_POSTamend
     #
     class Amend < Action
+      def call
+        # NOTE: The amend response wraps all results in an object, which is
+        #       inconsistent with the rest of the `/v1/action` responses.
+        super[:results]
+      end
+
       private
 
       def params
-        { requests: args }
+        { requests: requests }
+      end
+
+      def requests
+        IronBank::Object.new(args.fetch(:requests)).deep_camelize(type: :upper)
       end
     end
   end

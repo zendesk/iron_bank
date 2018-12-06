@@ -11,8 +11,12 @@ module IronBank
       def params
         {
           ids:  args.fetch(:ids),
-          type: args.fetch(:type)
+          type: type
         }
+      end
+
+      def type
+        IronBank::Utils.camelize(args.fetch(:type), type: :upper)
       end
     end
   end
