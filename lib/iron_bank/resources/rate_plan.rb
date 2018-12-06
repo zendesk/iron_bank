@@ -14,7 +14,7 @@ module IronBank
       with_one :subscription
 
       with_many :rate_plan_charges,
-                aka: :charges,
+                aka:        :charges,
                 conditions: { is_last_segment: true }
     end
   end

@@ -57,7 +57,7 @@ RSpec.describe IronBank::Describe::Tenant do
           'success' => false,
           'reasons' => [
             {
-              'code' => 90_000_011,
+              'code'    => 90_000_011,
               'message' => 'this resource is protected, please sign in first'
             }
           ]

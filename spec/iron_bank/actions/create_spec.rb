@@ -7,7 +7,7 @@ RSpec.describe IronBank::Actions::Create do
   it_behaves_like 'a Zuora action' do
     let(:args) do
       {
-        type: 'Account',
+        type:    'Account',
         objects: [
           { name: 'test-account-1' },
           { name: 'test-account-2' }
@@ -19,7 +19,7 @@ RSpec.describe IronBank::Actions::Create do
 
     let(:params) do
       {
-        type: 'Account',
+        type:    'Account',
         objects: [
           { 'Name' => 'test-account-1' },
           { 'Name' => 'test-account-2' }

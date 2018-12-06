@@ -7,7 +7,7 @@ RSpec.describe IronBank::Actions::Generate do
   it_behaves_like 'a Zuora action' do
     let(:args) do
       {
-        type: 'Invoice',
+        type:    'Invoice',
         objects: [
           IronBank::Object.new(
             account_id:   'zuora-account-123',
@@ -27,7 +27,7 @@ RSpec.describe IronBank::Actions::Generate do
 
     let(:params) do
       {
-        type: 'Invoice',
+        type:    'Invoice',
         objects: [
           {
             'AccountId'   => 'zuora-account-123',
