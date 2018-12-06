@@ -6,6 +6,10 @@ AllCops:
 Layout/DotPosition:
   EnforcedStyle: trailing
 
+Layout/AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
+
 Lint/UselessAssignment:
   Exclude:
     - bin/console

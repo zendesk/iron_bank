@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-A_ZUORA_ID = /[a-z0-9]{32}/
-AN_ENTITY  = /\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/
+A_ZUORA_ID = /[a-z0-9]{32}/.freeze
+AN_ENTITY  = /\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/.freeze
 
 FAKE_ZUORA_ID   = '2c92abc0123def234ghi345jkl456mno'
 FAKE_BEARER     = 'Bearer 001abc002def003ghi004jkl005mno00'

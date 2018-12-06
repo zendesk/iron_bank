@@ -6,9 +6,9 @@ module IronBank
   class Endpoint
     private_class_method :new
 
-    PRODUCTION  = /\Arest\.zuora\.com\z/i
-    SERVICES    = /\Aservices(\d+)\.zuora\.com(:\d+)?\z/i
-    APISANDBOX  = /\Arest.apisandbox.zuora\.com\z/i
+    PRODUCTION  = /\Arest\.zuora\.com\z/i.freeze
+    SERVICES    = /\Aservices(\d+)\.zuora\.com(:\d+)?\z/i.freeze
+    APISANDBOX  = /\Arest.apisandbox.zuora\.com\z/i.freeze
 
     def self.base_url(domain = '')
       new(domain).base_url

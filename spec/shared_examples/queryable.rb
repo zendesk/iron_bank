@@ -44,11 +44,11 @@ RSpec.shared_examples 'a queryable resource' do
       context 'initial query done (< 2k records returnded)' do
         let(:result) do
           {
+            'done'    => true,
             'records' => [
               { 'Id' => 'zuora-object-id-123' },
               { 'Id' => 'zuora-object-id-234' }
-            ],
-            'done' => true
+            ]
           }
         end
 
@@ -60,22 +60,22 @@ RSpec.shared_examples 'a queryable resource' do
       context 'initial query not done (> 2k records)' do
         let(:result) do
           {
-            'records' => [
+            'done'         => false,
+            'queryLocator' => 'query-locator-zuora-id',
+            'records'      => [
               { 'Id' => 'zuora-object-id-123' },
               { 'Id' => 'zuora-object-id-234' }
-            ],
-            'done'         => false,
-            'queryLocator' => 'query-locator-zuora-id'
+            ]
           }
         end
 
         let(:more_results) do
           {
+            'done'    => true,
             'records' => [
               { 'Id' => 'zuora-object-id-345' },
               { 'Id' => 'zuora-object-id-456' }
-            ],
-            'done' => true
+            ]
           }
         end
 

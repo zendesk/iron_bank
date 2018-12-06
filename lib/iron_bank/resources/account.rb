@@ -32,7 +32,7 @@ module IronBank
       with_many :subscriptions
       with_many :active_subscriptions,
                 resource_name: 'Subscription',
-                conditions: { status: 'Active' }
+                conditions:    { status: 'Active' }
 
       # Invoices
       with_many :invoices

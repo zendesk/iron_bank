@@ -15,7 +15,7 @@ module IronBank
       with_one :original, resource_name: 'Subscription'
       with_one :previous,
                resource_name: 'Subscription',
-               foreign_key: 'previous_subscription_id'
+               foreign_key:   'previous_subscription_id'
 
       with_many :rate_plans, aka: :plans
       with_many :usages
