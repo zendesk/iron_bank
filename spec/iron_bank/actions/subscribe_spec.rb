@@ -5,10 +5,18 @@ require 'shared_examples/action'
 
 RSpec.describe IronBank::Actions::Subscribe do
   it_behaves_like 'a Zuora action' do
-    let(:args)              { { dummy: true } }
-    let(:response_body)     { { success: true } }
-    let(:endpoint)          { 'v1/action/subscribe' }
-    let(:subscribe_request) { IronBank::Object.new(args).deep_camelize }
-    let(:params)            { { subscribes: [subscribe_request] } }
+    let(:args)       { { subscribes: [subscribe1, subscribe2] } }
+    let(:subscribe1) { { account: {}, subscribe_options: {} } }
+    let(:subscribe2) { { account: {}, subscribe_options: {} } }
+    let(:endpoint)   { 'v1/action/subscribe' }
+
+    let(:params) do
+      {
+        subscribes: [
+          { 'Account' => {}, 'SubscribeOptions' => {} },
+          { 'Account' => {}, 'SubscribeOptions' => {} }
+        ]
+      }
+    end
   end
 end

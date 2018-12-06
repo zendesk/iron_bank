@@ -5,16 +5,9 @@ require 'shared_examples/action'
 
 RSpec.describe IronBank::Actions::Create do
   it_behaves_like 'a Zuora action' do
-    let(:args) do
-      {
-        type:    'Account',
-        objects: [
-          { name: 'test-account-1' },
-          { name: 'test-account-2' }
-        ]
-      }
-    end
-
+    let(:args)     { { type: :account, objects: [object1, object2] } }
+    let(:object1)  { { name: 'test-account-1' } }
+    let(:object2)  { { name: 'test-account-2' } }
     let(:endpoint) { 'v1/action/create' }
 
     let(:params) do
@@ -25,6 +18,13 @@ RSpec.describe IronBank::Actions::Create do
           { 'Name' => 'test-account-2' }
         ]
       }
+    end
+
+    let(:body) do
+      [
+        { 'Success' => true, 'Id' => 'id-1' },
+        { 'Success' => true, 'Id' => 'id-2' }
+      ]
     end
   end
 end

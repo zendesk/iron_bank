@@ -10,9 +10,17 @@ module IronBank
 
       def params
         {
-          objects: requests,
-          type:    args.fetch(:type)
+          objects: objects,
+          type:    type
         }
+      end
+
+      def objects
+        IronBank::Object.new(args.fetch(:objects)).deep_camelize(type: :upper)
+      end
+
+      def type
+        IronBank::Utils.camelize(args.fetch(:type), type: :upper)
       end
     end
   end

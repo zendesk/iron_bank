@@ -34,7 +34,7 @@ RSpec.describe IronBank::Action do
         ]
       end
 
-      it { expect(call).to eq(body) }
+      it { expect(call).to eq(IronBank::Object.new(body).deep_underscore) }
     end
 
     context 'with params on failure' do
