@@ -52,7 +52,6 @@ module IronBank
           end
         end
 
-        # Association is "also known as"
         alias_name = options[:alias]
         alias_method alias_name, name if alias_name
       end
