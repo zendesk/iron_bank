@@ -25,9 +25,8 @@ module IronBank
           end
         end
 
-        # Association is "also known as"
-        aka = options[:aka]
-        alias_method aka, name if aka
+        alias_name = options[:alias]
+        alias_method alias_name, name if alias_name
       end
 
       def with_many(name, options = {})
@@ -54,8 +53,8 @@ module IronBank
         end
 
         # Association is "also known as"
-        aka = options[:aka]
-        alias_method aka, name if aka
+        alias_name = options[:alias]
+        alias_method alias_name, name if alias_name
       end
     end
 

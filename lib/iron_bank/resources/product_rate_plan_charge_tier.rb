@@ -10,7 +10,7 @@ module IronBank
       with_local_records
       with_cache
 
-      with_one :product_rate_plan_charge, aka: :charge
+      with_one :product_rate_plan_charge, alias: :charge
 
       def self.where(conditions)
         # If we are coming from a subclass, defer to Queryable#all

@@ -21,10 +21,10 @@ module IronBank
       with_cache
 
       with_one :original, resource_name: 'RatePlanCharge'
-      with_one :product_rate_plan_charge, aka: :catalog_charge
-      with_one :rate_plan, aka: :plan
+      with_one :product_rate_plan_charge, alias: :catalog_charge
+      with_one :rate_plan, alias: :plan
 
-      with_many :rate_plan_charge_tiers, aka: :tiers
+      with_many :rate_plan_charge_tiers, alias: :tiers
     end
   end
 end

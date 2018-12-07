@@ -17,7 +17,7 @@ module IronBank
                resource_name: 'Subscription',
                foreign_key:   'previous_subscription_id'
 
-      with_many :rate_plans, aka: :plans
+      with_many :rate_plans, alias: :plans
       with_many :usages
 
       # FIXME: a subscription can only have at most one amendment (no amendment

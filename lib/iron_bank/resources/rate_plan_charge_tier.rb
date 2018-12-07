@@ -20,7 +20,7 @@ module IronBank
       with_schema
       with_cache
 
-      with_one :rate_plan_charge, aka: :charge
+      with_one :rate_plan_charge, alias: :charge
     end
   end
 end
