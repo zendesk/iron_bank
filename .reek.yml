@@ -1,0 +1,101 @@
+---
+
+# Exclude vendor/bundle directory for Travis
+exclude_paths:
+  - vendor/bundle
+
+detectors:
+  Attribute:
+    exclude:
+      - IronBank#client
+      - IronBank#configuration
+      - IronBank::Configuration#auth_type
+      - IronBank::Configuration#cache
+      - IronBank::Configuration#client_id
+      - IronBank::Configuration#client_secret
+      - IronBank::Configuration#domain
+      - IronBank::Configuration#export_directory
+      - IronBank::Configuration#instrumenter
+      - IronBank::Configuration#instrumenter_options
+      - IronBank::Configuration#logger
+      - IronBank::Configuration#open_tracing_enabled
+      - IronBank::Configuration#open_tracing_service_name
+      - IronBank::Configuration#schema_directory
+
+  BooleanParameter:
+    exclude:
+      - IronBank::Cacheable::ClassMethods#find
+
+  DuplicateMethodCall:
+    exclude:
+      - IronBank::Utils#camelize
+      - IronBank::Local#all
+
+  FeatureEnvy:
+    exclude:
+      - IronBank::Client#connection
+      - IronBank::Authentications::Cookie#connection
+      - IronBank::Authentications::Token#connection
+      - IronBank::Configuration#schema_directory=
+      - IronBank::Resource#==
+      - IronBank::Object#camelize
+      - IronBank::Object#underscore
+      - IronBank::Actions::Subscribe#hash_args
+      - IronBank::Utils#camelize
+
+  InstanceVariableAssumption:
+    exclude:
+      - IronBank::FaradayMiddleware::RetriableAuth
+
+  IrresponsibleModule:
+    exclude:
+      - Sample
+
+  ManualDispatch:
+    exclude:
+      - IronBank::Resource#inspect
+
+  NestedIterators:
+    exclude:
+      - IronBank::Schema#self.import
+      - IronBank::Local#where
+      - IronBank::Local#load_records
+      - IronBank::Resources::ProductRatePlanChargeTier#self.load_records
+
+  NilCheck:
+    exclude:
+      - IronBank::Local#load_records
+      - IronBank::Resources::ProductRatePlanChargeTier#self.load_records
+
+  TooManyInstanceVariables:
+    max_instance_variables: 6
+
+  TooManyStatements:
+    exclude:
+      - IronBank::Associations::ClassMethods#with_many
+      - IronBank::Associations::ClassMethods#with_one
+      - IronBank::Authentications::Cookie#connection
+      - IronBank::Authentications::Token#connection
+      - IronBank::Client#connection
+      - IronBank::Configuration#schema_directory=
+      - IronBank::Configuration#initialize
+      - IronBank::Queryable#find_each
+      - IronBank::Queryable#where
+      - IronBank::Utils#camelize
+      - IronBank::Utils#underscore
+      - IronBank::Resources::ProductRatePlanChargeTier#self.load_records
+      - IronBank::Error#self.from_response
+
+  UtilityFunction:
+    exclude:
+      - IronBank::Cacheable::ClassMethods#cache
+      - IronBank::Object#convert
+      - IronBank::Object#camelize_array
+      - IronBank::Object#underscore_array
+      - IronBank::OpenTracing#open_tracing_enabled?
+      - IronBank::OpenTracing#open_tracing_options
+      - IronBank::QueryBuilder#range_query_builder
+      - IronBank::Utils#lower_camelize
+      - IronBank::Utils#upper_camelize
+      - IronBank::Instrumentation#instrumenter
+      - IronBank::Instrumentation#instrumenter_options
