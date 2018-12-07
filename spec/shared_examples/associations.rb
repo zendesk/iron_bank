@@ -8,7 +8,7 @@ RSpec.shared_examples 'a resource with associations' do
 
   describe '::with_one' do
     before do
-      described_class.with_one :associated_object, aka: :an_object
+      described_class.with_one :associated_object, alias: :an_object
     end
 
     it 'defines an instance method and an alias to find the association' do
@@ -51,7 +51,7 @@ RSpec.shared_examples 'a resource with associations' do
 
   describe '::with_many' do
     before do
-      described_class.with_many :associated_objects, aka: :objects
+      described_class.with_many :associated_objects, alias: :objects
     end
 
     it 'defines an instance method an alias to query the association' do

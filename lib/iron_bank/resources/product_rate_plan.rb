@@ -16,7 +16,7 @@ module IronBank
       with_cache
 
       with_one  :product
-      with_many :product_rate_plan_charges, aka: :charges
+      with_many :product_rate_plan_charges, alias: :charges
 
       def active_currencies
         query_string = IronBank::QueryBuilder.zoql(

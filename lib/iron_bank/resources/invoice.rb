@@ -23,8 +23,8 @@ module IronBank
 
       with_one :account
 
-      with_many :invoice_adjustments, aka: :adjustments
-      with_many :invoice_items, aka: :items
+      with_many :invoice_adjustments, alias: :adjustments
+      with_many :invoice_items, alias: :items
       with_many :invoice_payments
 
       # We can only retrieve one invoice body at a time, hence Body is excluded

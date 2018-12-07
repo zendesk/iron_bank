@@ -19,9 +19,9 @@ module IronBank
       with_local_records
       with_cache
 
-      with_one :product_rate_plan, aka: :plan
+      with_one :product_rate_plan, alias: :plan
 
-      with_many :product_rate_plan_charge_tiers, aka: :tiers
+      with_many :product_rate_plan_charge_tiers, alias: :tiers
     end
   end
 end

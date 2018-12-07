@@ -10,11 +10,11 @@ module IronBank
       with_cache
 
       with_one :amendment
-      with_one :product_rate_plan, aka: :catalog_plan
+      with_one :product_rate_plan, alias: :catalog_plan
       with_one :subscription
 
       with_many :rate_plan_charges,
-                aka:        :charges,
+                alias:      :charges,
                 conditions: { is_last_segment: true }
     end
   end

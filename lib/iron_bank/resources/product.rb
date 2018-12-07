@@ -8,7 +8,7 @@ module IronBank
       with_schema
       with_local_records
       with_cache
-      with_many :product_rate_plans, aka: :plans
+      with_many :product_rate_plans, alias: :plans
     end
   end
 end
