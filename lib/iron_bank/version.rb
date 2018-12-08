@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 module IronBank
-  VERSION     = '1.0.4'
+  VERSION     = '2.0.0'
   API_VERSION = 'v1'
 end
