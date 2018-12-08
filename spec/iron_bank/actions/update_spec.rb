@@ -7,7 +7,7 @@ RSpec.describe IronBank::Actions::Update do
   it_behaves_like 'a Zuora action' do
     let(:args) do
       {
-        type:    'Account',
+        type:    :account,
         objects: [
           { id: 'some-zuora-id-123', name: 'new-name-1' },
           { id: 'some-zuora-id-234', name: 'new-name-2' }

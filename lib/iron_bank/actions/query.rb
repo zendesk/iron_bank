@@ -9,7 +9,7 @@ module IronBank
       private
 
       def params
-        { 'queryString' => args }
+        { 'queryString': args }
       end
     end
   end

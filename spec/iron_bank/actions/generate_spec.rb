@@ -7,18 +7,18 @@ RSpec.describe IronBank::Actions::Generate do
   it_behaves_like 'a Zuora action' do
     let(:args) do
       {
-        type:    'Invoice',
+        type:    :invoice,
         objects: [
-          IronBank::Object.new(
+          {
             account_id:   'zuora-account-123',
             invoice_date: '2017-10-20',
             target_date:  '2017-10-20'
-          ),
-          IronBank::Object.new(
+          },
+          {
             account_id:   'zuora-account-234',
             invoice_date: '2017-10-21',
             target_date:  '2017-10-21'
-          )
+          }
         ]
       }
     end

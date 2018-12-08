@@ -7,25 +7,14 @@ module IronBank
     # https://www.zuora.com/developer/api-reference/#operation/Action_POSTsubscribe
     #
     class Subscribe < Action
-      def call
-        body = IronBank.client.connection.post(endpoint, params).body
-
-        if body.is_a?(Array)
-          body.map { |result| IronBank::Object.new(result).deep_underscore }
-        else
-          IronBank::Object.new(body).deep_underscore
-        end
-      end
-
       private
 
       def params
-        { subscribes: subscribe_requests }
+        { subscribes: subscribes }
       end
 
-      def subscribe_requests
-        requests = [args].flatten
-        requests.map { |request| IronBank::Object.new(request).deep_camelize }
+      def subscribes
+        IronBank::Object.new(args.fetch(:subscribes)).deep_camelize
       end
     end
   end
