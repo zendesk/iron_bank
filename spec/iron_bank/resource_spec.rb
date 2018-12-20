@@ -12,7 +12,7 @@ RSpec.describe IronBank::Resource do
 
   let(:client)   { instance_double(IronBank::Client) }
   let(:id)       { 'an-id-from-zuora' }
-  let(:remote)   { { 'Id' => id } }
+  let(:remote)   { { id: id } }
   let(:resource) { described_class.new(remote) }
 
   describe '#inspect' do
@@ -51,7 +51,7 @@ RSpec.describe IronBank::Resource do
   end
 
   describe '#reload' do
-    let(:reloaded_remote) { { 'Id' => id, 'Name' => 'now I have a name' } }
+    let(:reloaded_remote) { { id: id, name: 'now I have a name' } }
 
     let(:reloaded) do
       instance_double(IronBank::Resource, remote: reloaded_remote)
@@ -78,8 +78,8 @@ RSpec.describe IronBank::Resource do
   describe '#to_csv_row' do
     let(:remote) do
       {
-        'Id'          => id,
-        'CustomField' => 'custom-field-value'
+        id:           id,
+        custom_field: 'custom-field-value'
       }
     end
 

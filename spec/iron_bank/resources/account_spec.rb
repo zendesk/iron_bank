@@ -39,20 +39,20 @@ RSpec.describe IronBank::Resources::Account do
   describe 'instance methods' do
     let(:instance) do
       described_class.new(
-        'Id'       => 'zuora_account_id_123',
-        'ParentId' => parent_account_id
+        id:        'zuora_account_id_123',
+        parent_id: parent_account_id
       )
     end
 
     let(:parent_account) do
       described_class.new(
-        'Id'       => parent_account_id,
-        'ParentId' => root_parent_account_id
+        id:        parent_account_id,
+        parent_id: root_parent_account_id
       )
     end
 
     let(:root_parent_account) do
-      described_class.new('Id' => root_parent_account_id)
+      described_class.new(id: root_parent_account_id)
     end
 
     let(:accounts) do

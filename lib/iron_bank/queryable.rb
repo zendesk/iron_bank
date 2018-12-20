@@ -8,9 +8,11 @@ module IronBank
     def find(id)
       raise IronBank::NotFound unless id
 
-      new(
-        IronBank.client.connection.get("v1/object/#{object_name}/#{id}").body
+      response = IronBank.client.connection.get(
+        "v1/object/#{object_name}/#{id}"
       )
+
+      new(IronBank::Object.new(response.body).deep_underscore)
     end
 
     # This methods leverages the fact that Zuora only returns 2,000 records at a
@@ -23,10 +25,10 @@ module IronBank
       query_result = client.query(query_string) # up to 2k records from Zuora
 
       loop do
-        query_result['records'].each { |data| yield new(data) }
-        break if query_result['done']
+        query_result[:records].each { |data| yield new(data) }
+        break if query_result[:done]
 
-        query_result = client.query_more(query_result['queryLocator'])
+        query_result = client.query_more(query_result[:queryLocator])
       end
     end
 
@@ -44,7 +46,7 @@ module IronBank
       # FIXME: need to use logger instance instead
       # puts "query: #{query_string}"
 
-      records = IronBank::Query.call(query_string)['records']
+      records = IronBank::Query.call(query_string)[:records]
       return [] unless records
 
       records.each.with_object([]) do |data, result|

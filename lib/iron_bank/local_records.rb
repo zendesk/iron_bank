@@ -24,7 +24,8 @@ module IronBank
 
     def export
       CSV.open(file_path, 'w') do |csv|
-        csv << klass.fields # headers
+        # first row = CSV headers
+        csv << klass.fields.map { |field| IronBank::Utils.underscore(field) }
         write_records(csv)
       end
     end

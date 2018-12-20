@@ -36,7 +36,7 @@ module IronBank
       # discount-fixed amount and regular pricing).
       def to_csv_row
         ProductRatePlanChargeTier.fields.each.with_object([]) do |field, row|
-          row << remote[field]
+          row << remote[IronBank::Utils.underscore(field).to_sym]
         end
       end
 
@@ -44,15 +44,15 @@ module IronBank
         CSV.foreach(file_path, csv_options).with_object({}) do |row, store|
           remote = row.to_h.reject { |_, value| value.nil? }
 
-          record = if remote['DiscountAmount']
+          record = if remote[:discount_amount]
                      CatalogTiers::DiscountAmount.new(remote)
-                   elsif remote['DiscountPercentage']
+                   elsif remote[:discount_percentage]
                      CatalogTiers::DiscountPercentage.new(remote)
                    else
                      CatalogTiers::Price.new(remote)
                    end
 
-          store[row['Id']] = record
+          store[row[:id]] = record
         end
       end
     end

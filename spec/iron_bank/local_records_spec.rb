@@ -51,7 +51,7 @@ RSpec.describe IronBank::LocalRecords do
     context 'for one resource' do
       let(:csv_file) { instance_double(File) }
       let(:klass)    { double('resource class', fields: fields) }
-      let(:fields)   { %w[Id Field CustomField] }
+      let(:fields)   { %w[id field custom_field] }
       let(:a_record) { instance_double(IronBank::Resource, to_csv_row: row) }
       let(:row)      { %w[some-id field-value custom-field-value] }
 
