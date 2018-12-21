@@ -84,7 +84,7 @@ RSpec.shared_examples 'a resource with metadata' do
 
     describe 'the defined methods' do
       let(:remote) do
-        { 'MyCustomField__c' => 'custom-field-value-from-remote' }
+        { my_custom_field__c: 'custom-field-value-from-remote' }
       end
 
       before { with_schema }

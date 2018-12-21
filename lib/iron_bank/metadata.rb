@@ -28,8 +28,8 @@ module IronBank
 
     def with_schema
       fields.each do |field|
-        method_name = IronBank::Utils.underscore(field)
-        define_method(:"#{method_name}") { remote[field] }
+        field_name = IronBank::Utils.underscore(field).to_sym
+        define_method(:"#{field_name}") { remote[field_name] }
       end
     end
   end

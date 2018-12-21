@@ -60,6 +60,7 @@ detectors:
       - IronBank::Schema#self.import
       - IronBank::Local#where
       - IronBank::Local#load_records
+      - IronBank::LocalRecords#export
       - IronBank::Resources::ProductRatePlanChargeTier#self.load_records
 
   NilCheck:

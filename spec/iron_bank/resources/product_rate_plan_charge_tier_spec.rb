@@ -43,22 +43,22 @@ RSpec.describe IronBank::Resources::ProductRatePlanChargeTier do
   describe '#to_csv_row' do
     let(:remote_with_discount_percentage) do
       {
-        'Id'                 => 'zuora-123',
-        'DiscountPercentage' => 10.0
+        id:                  'zuora-123',
+        discount_percentage: 10.0
       }
     end
 
     let(:remote_with_discount_amount) do
       {
-        'Id'             => 'zuora-234',
-        'DiscountAmount' => 50
+        id:              'zuora-234',
+        discount_amount: 50
       }
     end
 
     let(:remote_with_price) do
       {
-        'Id'    => 'zuora-345',
-        'Price' => 99
+        id:    'zuora-345',
+        price: 99
       }
     end
 

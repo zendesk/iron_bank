@@ -74,7 +74,7 @@ RSpec.shared_examples 'a cacheable resource' do
     end
 
     describe '#reload' do
-      let(:remote)      { { 'Id' => 'resource-id' } }
+      let(:remote)      { { id: 'resource-id' } }
       let(:response)    { instance_double(IronBank::Resource, remote: remote) }
       let(:an_instance) { described_class.new(remote) }
 

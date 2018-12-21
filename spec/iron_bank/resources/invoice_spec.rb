@@ -28,8 +28,8 @@ RSpec.describe IronBank::Resources::Invoice do
     context 'present in the remote' do
       let(:remote) do
         {
-          'Id'   => 'zuora-invoice-id',
-          'Body' => invoice_body
+          id:   'zuora-invoice-id',
+          body: invoice_body
         }
       end
 
@@ -41,8 +41,8 @@ RSpec.describe IronBank::Resources::Invoice do
 
       let(:remote_with_body) do
         {
-          'Id'   => 'zuora-invoice-id',
-          'Body' => invoice_body
+          id:   'zuora-invoice-id',
+          body: invoice_body
         }
       end
 

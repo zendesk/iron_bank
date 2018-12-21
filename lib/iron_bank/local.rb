@@ -43,16 +43,23 @@ module IronBank
         # this line, delete the other one, since `Hash#compact` is available in
         # 2.4.x and we can remove two smells from `.reek` while we are at it
         #
-        # store[row['Id']] = new(row.to_h.compact)
-        store[row['Id']] = new(row.to_h.reject { |_, value| value.nil? })
+        # store[row[:id]] = new(row.to_h.compact)
+        store[row[:id]] = new(row.to_h.reject { |_, value| value.nil? })
       end
     end
 
     def csv_options
       {
-        headers:    true,
-        converters: csv_converters
+        headers:           true,
+        header_converters: header_converters,
+        converters:        csv_converters
       }
+    end
+
+    def header_converters
+      %i[
+        symbol
+      ]
     end
 
     def csv_converters

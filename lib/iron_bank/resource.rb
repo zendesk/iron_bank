@@ -31,7 +31,7 @@ module IronBank
     # Every Zuora object has an ID, so we can safely declare it for each
     # resource
     def id
-      remote['Id']
+      remote[:id]
     end
 
     def inspect
@@ -56,7 +56,7 @@ module IronBank
 
     def to_csv_row
       self.class.fields.each.with_object([]) do |field, row|
-        row << remote[field]
+        row << remote[IronBank::Utils.underscore(field).to_sym]
       end
     end
 

@@ -2,7 +2,7 @@
 
 RSpec.shared_examples 'a resource with associations' do
   let(:id)         { 'the-resource-id' }
-  let(:remote)     { { 'Id' => id } }
+  let(:remote)     { { id: id } }
   let(:instance)   { described_class.new(remote) }
   let(:associated) { double('another resource class') }
 

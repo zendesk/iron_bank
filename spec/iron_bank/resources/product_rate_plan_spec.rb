@@ -17,7 +17,7 @@ RSpec.describe IronBank::Resources::ProductRatePlan do
 
   describe '#active_currencies' do
     let(:client) { instance_double(IronBank::Client) }
-    let(:plan)   { described_class.new('Id' => 'a-plan-id') }
+    let(:plan)   { described_class.new(id: 'a-plan-id') }
 
     let(:query_string) do
       "select ActiveCurrencies from ProductRatePlan where Id='a-plan-id'"

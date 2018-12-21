@@ -30,7 +30,7 @@ module IronBank
       # We can only retrieve one invoice body at a time, hence Body is excluded
       # from the query fields, but is populated using the `find` class method
       def body
-        remote['Body'] || reload['Body']
+        remote[:body] || reload[:body]
       end
     end
   end
