@@ -87,6 +87,10 @@ detectors:
       - IronBank::Resources::ProductRatePlanChargeTier#self.load_records
       - IronBank::Error#self.from_response
 
+  UncommunicativeVariableName:
+    exclude:
+      - IronBank::Local#csv_options
+
   UtilityFunction:
     exclude:
       - IronBank::Cacheable::ClassMethods#cache

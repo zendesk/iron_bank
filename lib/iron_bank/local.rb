@@ -51,15 +51,9 @@ module IronBank
     def csv_options
       {
         headers:           true,
-        header_converters: header_converters,
+        header_converters: [->(h) { IronBank::Utils.underscore(h).to_sym }],
         converters:        csv_converters
       }
-    end
-
-    def header_converters
-      %i[
-        symbol
-      ]
     end
 
     def csv_converters
