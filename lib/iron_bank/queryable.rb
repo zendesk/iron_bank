@@ -4,15 +4,18 @@ module IronBank
   # Query-like features, such as `find` and `where` methods for a resource.
   #
   module Queryable
+    include IronBank::Instrumentation
+
     # We use the REST endpoint for the `find` method
     def find(id)
       raise IronBank::NotFound unless id
 
-      response = IronBank.client.connection.get(
-        "v1/object/#{object_name}/#{id}"
-      )
-
-      new(IronBank::Object.new(response.body).deep_underscore)
+      datadog_instrumenter(:find) do
+        response = IronBank.client.connection.get(
+          "v1/object/#{object_name}/#{id}"
+        )
+        new(IronBank::Object.new(response.body).deep_underscore)
+      end
     end
 
     # This methods leverages the fact that Zuora only returns 2,000 records at a

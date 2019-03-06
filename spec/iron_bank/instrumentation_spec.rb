@@ -35,6 +35,44 @@ RSpec.describe IronBank::Instrumentation do
     end
   end
 
+  describe '#datadog_instrumenter' do
+    subject(:datadog_instrumenter) { instance.datadog_instrumenter(:find) {} }
+
+    let(:dd_client) { instance_double(Datadog::Tracer) }
+
+    context 'when datadog is configured' do
+      let(:expected_options) do
+        {
+          service:  'billing-ironbank-client',
+          resource: 'find'
+        }
+      end
+
+      before do
+        allow(Datadog).to receive(:tracer).and_return(dd_client)
+      end
+
+      specify do
+        expect(dd_client).to receive(:trace).
+          with('billing-ironbank', expected_options)
+
+        datadog_instrumenter
+      end
+    end
+
+    context 'when datadog is not configured' do
+      before do
+        allow(Datadog).to receive(:respond_to?).and_return(nil)
+      end
+
+      it 'wont trace/instrument' do
+        expect(dd_client).not_to receive(:trace)
+
+        datadog_instrumenter
+      end
+    end
+  end
+
   describe '#instrumenter_options' do
     subject(:instrumenter_options) { instance.instrumenter_options }
 

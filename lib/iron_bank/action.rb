@@ -4,6 +4,8 @@ module IronBank
   # Base class for Zuora actions, e.g., subscribe
   #
   class Action
+    include IronBank::Instrumentation
+
     private_class_method :new
 
     def self.call(args)
@@ -11,11 +13,13 @@ module IronBank
     end
 
     def call
-      @body = IronBank.client.connection.post(endpoint, params).body
+      datadog_instrumenter(name.downcase) do
+        @body = IronBank.client.connection.post(endpoint, params).body
 
-      raise ::IronBank::UnprocessableEntity, errors unless success?
+        raise ::IronBank::UnprocessableEntity, errors unless success?
 
-      IronBank::Object.new(body).deep_underscore
+        IronBank::Object.new(body).deep_underscore
+      end
     end
 
     private
