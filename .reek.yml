@@ -54,6 +54,7 @@ detectors:
   ManualDispatch:
     exclude:
       - IronBank::Resource#inspect
+      - IronBank::Instrumentation#datadog_instrumenter
 
   NestedIterators:
     exclude:
@@ -104,3 +105,4 @@ detectors:
       - IronBank::Utils#upper_camelize
       - IronBank::Instrumentation#instrumenter
       - IronBank::Instrumentation#instrumenter_options
+      - IronBank::Instrumentation#datadog_instrumenter

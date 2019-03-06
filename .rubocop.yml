@@ -18,6 +18,7 @@ Metrics/AbcSize:
   Exclude:
     - lib/iron_bank/associations.rb
     - lib/iron_bank/client.rb
+    - lib/iron_bank/action.rb
 
 Metrics/BlockLength:
   Exclude:

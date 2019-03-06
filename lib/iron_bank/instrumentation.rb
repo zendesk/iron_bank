@@ -11,8 +11,8 @@ module IronBank
       IronBank.configuration.instrumenter_options || {}
     end
 
-    DDTRACE_NAME          = 'billing-ironbank'.freeze
-    DDTRACE_SERVICE_NAME  = 'billing-ironbank-client'.freeze
+    DDTRACE_NAME          = 'billing-ironbank'
+    DDTRACE_SERVICE_NAME  = 'billing-ironbank-client'
 
     def datadog_instrumenter(name)
       if defined?(Datadog) && Datadog.respond_to?(:tracer)
