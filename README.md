@@ -44,6 +44,26 @@ $ rails generate iron_bank:install
 Use the `client_id` and `client_secret` from your Zuora OAuth client and add
 them to the generated `config/initializers/iron_bank.rb` file.
 
+## Configuration
+
+```ruby
+# configure Ironbank
+IronBank.configure do |c|
+  c.client_id         = 'client_id'
+  c.client_secret     = 'client_secret'
+  c.auth_type         = 'auth_type'
+  c.domain            = 'zuora-domain'   # zuora doamin
+  c.export_directory  = 'directory-path' # export directory path
+  c.schema_directory  = 'directory-path' # schema drirectory path
+
+  # Ironbank uses farday to send request to zuora, to use custom faraday
+  # middlewares we can send in an array with cutomer middleware class
+  # and options
+  c.middlewares << [DummyMiddlewareClass, {}]
+end
+
+```
+
 ## Usage
 
 ```ruby

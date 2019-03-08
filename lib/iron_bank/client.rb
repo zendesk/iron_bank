@@ -5,9 +5,6 @@ module IronBank
   # authenticated request, reusing the same session cookie for future requests.
   #
   class Client
-    include IronBank::Instrumentation
-    include IronBank::OpenTracing
-
     # Generic client error.
     #
     class Error < StandardError; end
@@ -42,6 +39,10 @@ module IronBank
       reset_connection if auth.expired?
 
       @connection ||= Faraday.new(faraday_config) do |conn|
+        IronBank.configuration.middlewares.each do |klass, options|
+          conn.use klass, options
+        end
+
         conn.request  :json
         conn.request  :retry, IronBank.configuration.retry_options
 

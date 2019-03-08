@@ -4,9 +4,8 @@ module IronBank
   # The Zuora configuration class.
   #
   class Configuration
-    # Instrumentation
-    attr_accessor :instrumenter
-    attr_accessor :instrumenter_options
+    # middlewares
+    attr_accessor :middlewares
 
     # Logger
     attr_accessor :logger
@@ -26,15 +25,6 @@ module IronBank
     # Cache store instance, optionally used by certain resources.
     attr_accessor :cache
 
-    # Open Tracing
-    attr_accessor :open_tracing_enabled
-
-    # Open Tracing service name
-    attr_accessor :open_tracing_service_name
-
-    # Faraday retry options
-    attr_writer :retry_options
-
     # Directory where the XML describe files are located.
     attr_reader :schema_directory
 
@@ -42,12 +32,11 @@ module IronBank
     attr_reader :export_directory
 
     def initialize
-      @schema_directory          = "./config/schema"
-      @export_directory          = "./config/export"
-      @logger                    = IronBank::Logger.new
-      @auth_type                 = "token"
-      @open_tracing_enabled      = false
-      @open_tracing_service_name = "ironbank"
+      @schema_directory = "./config/schema"
+      @export_directory = "./config/export"
+      @logger           = IronBank::Logger.new
+      @auth_type        = "token"
+      @middlewares      = []
     end
 
     def schema_directory=(value)

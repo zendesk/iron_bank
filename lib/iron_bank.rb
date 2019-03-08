@@ -61,10 +61,6 @@ require "iron_bank/faraday_middleware/raise_error"
 require "iron_bank/faraday_middleware/renew_auth"
 require "iron_bank/faraday_middleware"
 
-# Helpers
-require "iron_bank/open_tracing"
-require "iron_bank/instrumentation"
-
 # Use default configuration
 IronBank.configure {}
 
