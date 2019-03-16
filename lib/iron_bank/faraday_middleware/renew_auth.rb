@@ -5,17 +5,17 @@ module IronBank
   # IronBank Faraday middleware module
   module FaradayMiddleware
     # This middleware reauthorize the request on unauthorized request
-    class RetriableAuth < Faraday::Middleware
+    class RenewAuth < Faraday::Response::Middleware
       def initialize(app, auth)
         @auth = auth
+
         super(app)
       end
 
-      def call(env)
+      def on_complete(env)
         @env = env
-        renew_auth_header if env.status == 401
 
-        @app.call(env)
+        renew_auth_header if env.status == 401
       end
 
       private

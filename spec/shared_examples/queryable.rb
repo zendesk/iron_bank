@@ -24,7 +24,7 @@ RSpec.shared_examples 'a queryable resource' do
       let(:id) { nil }
 
       it 'raises IronBank::NotFound error' do
-        expect { subject }.to raise_error(IronBank::NotFound)
+        expect { subject }.to raise_error(IronBank::NotFoundError)
       end
     end
   end

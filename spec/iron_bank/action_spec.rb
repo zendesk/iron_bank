@@ -55,7 +55,7 @@ RSpec.describe IronBank::Action do
       end
 
       specify do
-        expect { call }.to raise_error(IronBank::UnprocessableEntity)
+        expect { call }.to raise_error(IronBank::UnprocessableEntityError)
       end
     end
   end

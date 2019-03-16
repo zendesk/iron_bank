@@ -6,7 +6,7 @@ module IronBank
   module Queryable
     # We use the REST endpoint for the `find` method
     def find(id)
-      raise IronBank::NotFound unless id
+      raise IronBank::NotFoundError unless id
 
       response = IronBank.client.connection.get(
         "v1/object/#{object_name}/#{id}"

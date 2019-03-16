@@ -80,6 +80,7 @@ detectors:
       - IronBank::Client#connection
       - IronBank::Configuration#schema_directory=
       - IronBank::Configuration#initialize
+      - IronBank::Error#message_from_body
       - IronBank::Queryable#find_each
       - IronBank::Queryable#where
       - IronBank::Utils#camelize

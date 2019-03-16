@@ -13,7 +13,7 @@ module IronBank
     def call
       @body = IronBank.client.connection.post(endpoint, params).body
 
-      raise ::IronBank::UnprocessableEntity, errors unless success?
+      raise ::IronBank::UnprocessableEntityError, errors unless success?
 
       IronBank::Object.new(body).deep_underscore
     end
