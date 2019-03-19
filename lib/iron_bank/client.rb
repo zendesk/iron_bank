@@ -16,12 +16,6 @@ module IronBank
     #
     class InvalidHostname < Error; end
 
-    RETRIABLE_ERRORS = [
-      IronBank::LockCompetitionError,
-      IronBank::TemporaryError,
-      IronBank::UnauthorizedError
-    ].freeze
-
     # Alias each actions as a `Client` instance method
     IronBank::Actions.constants.each do |action|
       method_name = IronBank::Utils.underscore(action)
@@ -47,18 +41,9 @@ module IronBank
       validate_domain
       reset_connection if auth.expired?
 
-      retry_options = {
-        max:                 4,
-        interval:            0.1,
-        interval_randomness: 0.05,
-        backoff_factor:      5,
-        exceptions:          RETRIABLE_ERRORS,
-        retry_if:            ->(_, ex) { RETRIABLE_ERRORS.include?(ex.class) }
-      }
-
       @connection ||= Faraday.new(faraday_config) do |conn|
         conn.request  :json
-        conn.request  :retry, retry_options
+        conn.request  :retry, IronBank.configuration.retry_options
 
         conn.response :raise_error
         conn.response :renew_auth, auth
@@ -77,6 +62,23 @@ module IronBank
     end
 
     private
+
+    DEFAULT_RETRY_OPTIONS = begin
+      retriable_errors = [
+        IronBank::LockCompetitionError,
+        IronBank::TemporaryError,
+        IronBank::UnauthorizedError
+      ]
+
+      {
+        max:                 4,
+        interval:            0.1,
+        interval_randomness: 0.05,
+        backoff_factor:      5,
+        exceptions:          retriable_errors,
+        retry_if:            ->(_, ex) { retriable_errors.include?(ex.class) }
+      }
+    end.freeze
 
     attr_reader :domain, :client_id, :client_secret, :auth_type
 
