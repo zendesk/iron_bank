@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe IronBank::FaradayMiddleware::RetriableAuth do
+RSpec.describe IronBank::FaradayMiddleware::RenewAuth do
   let(:session)         { instance_double(IronBank::Authentications::Token) }
   let(:auth)            { instance_double(IronBank::Authentication) }
   let(:new_auth_header) { { 'Authorization' => 'Bearer foo' } }
@@ -50,10 +50,11 @@ RSpec.describe IronBank::FaradayMiddleware::RetriableAuth do
   def connection
     Faraday.new do |conn|
       # To simulate a second request with new auth headers
-      conn.request :retry, max: 2, exceptions: [IronBank::Unauthorized]
+      conn.request :retry, max: 2, exceptions: [IronBank::UnauthorizedError]
 
-      conn.use     IronBank::FaradayMiddleware::RaiseError
-      conn.use     described_class, auth
+      conn.response :raise_error
+      conn.response :renew_auth, auth
+
       conn.adapter :test, connection_stubs
     end
   end

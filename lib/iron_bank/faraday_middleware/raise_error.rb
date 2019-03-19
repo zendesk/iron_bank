@@ -9,8 +9,8 @@ module IronBank
     class RaiseError < Faraday::Response::Middleware
       private
 
-      def on_complete(response)
-        (error = IronBank::Error.from_response(response)) && raise(error)
+      def on_complete(env)
+        (error = IronBank::Error.from_response(env.response)) && raise(error)
       end
     end
   end

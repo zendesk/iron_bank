@@ -58,7 +58,7 @@ require 'iron_bank/version'
 require 'iron_bank/csv'
 require 'iron_bank/error'
 require 'iron_bank/faraday_middleware/raise_error'
-require 'iron_bank/faraday_middleware/retriable_auth'
+require 'iron_bank/faraday_middleware/renew_auth'
 require 'iron_bank/faraday_middleware'
 
 # Helpers
