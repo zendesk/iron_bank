@@ -64,9 +64,7 @@ detectors:
       - IronBank::Resources::ProductRatePlanChargeTier#self.load_records
 
   NilCheck:
-    exclude:
-      - IronBank::Local#load_records
-      - IronBank::Resources::ProductRatePlanChargeTier#self.load_records
+    enabled: false
 
   TooManyInstanceVariables:
     max_instance_variables: 6
