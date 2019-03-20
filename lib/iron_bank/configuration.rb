@@ -32,9 +32,6 @@ module IronBank
     # Open Tracing service name
     attr_accessor :open_tracing_service_name
 
-    # Faraday retry options
-    attr_writer :retry_options
-
     # Directory where the XML describe files are located.
     attr_reader :schema_directory
 
@@ -84,10 +81,6 @@ module IronBank
 
     def credentials?
       credentials.values.all?
-    end
-
-    def retry_options
-      @retry_options ||= IronBank::Client::DEFAULT_RETRY_OPTIONS
     end
   end
 end

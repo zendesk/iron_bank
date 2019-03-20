@@ -20,7 +20,6 @@ detectors:
       - IronBank::Configuration#logger
       - IronBank::Configuration#open_tracing_enabled
       - IronBank::Configuration#open_tracing_service_name
-      - IronBank::Configuration#retry_options
       - IronBank::Configuration#schema_directory
 
   BooleanParameter:
@@ -69,8 +68,6 @@ detectors:
 
   TooManyInstanceVariables:
     max_instance_variables: 6
-    exclude:
-      - IronBank::Configuration
 
   TooManyStatements:
     exclude:
