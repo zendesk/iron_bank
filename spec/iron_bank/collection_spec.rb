@@ -37,6 +37,8 @@ RSpec.describe IronBank::Collection do
 
     it { expect delegate_method(:length).to(:records) }
 
+    it { expect delegate_method(:map).to(:records) }
+
     it { expect delegate_method(:size).to(:records) }
   end
 end
