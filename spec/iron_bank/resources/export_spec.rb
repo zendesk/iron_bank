@@ -97,6 +97,12 @@ RSpec.describe IronBank::Resources::Export do
 
         expect(connection).to have_received(:get)
       end
+
+      it "is memoized" do
+        2.times { instance.content }
+
+        expect(connection).to have_received(:get).once
+      end
     end
   end
 end

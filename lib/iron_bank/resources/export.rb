@@ -27,7 +27,7 @@ module IronBank
       def content
         return unless status&.casecmp?("Completed")
 
-        IronBank.client.connection.get("/v1/files/#{file_id}").body
+        @content ||= IronBank.client.connection.get("/v1/files/#{file_id}").body
       end
     end
   end
