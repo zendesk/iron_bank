@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe IronBank::OpenTracing do
   class Sample
@@ -9,12 +9,12 @@ RSpec.describe IronBank::OpenTracing do
 
   let(:subject) { Sample.new }
 
-  describe '#open_tracing_options' do
+  describe "#open_tracing_options" do
     let(:options) do
       {
         distributed_tracing: true,
         split_by_domain:     false,
-        service_name:        'ironbank'
+        service_name:        "ironbank"
       }
     end
 
@@ -23,7 +23,7 @@ RSpec.describe IronBank::OpenTracing do
     it { expect(open_tracing_options).to eq(options) }
   end
 
-  describe '#open_tracing_enabled' do
+  describe "#open_tracing_enabled" do
     let(:open_tracing_enabled) { subject.open_tracing_enabled? }
 
     it { expect(open_tracing_enabled).to eq(false) }

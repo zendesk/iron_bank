@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples 'a Zuora action' do
+RSpec.shared_examples "a Zuora action" do
   let(:client)     { instance_double(IronBank::Client) }
   let(:connection) { instance_double(Faraday::Connection) }
   let(:response)   { instance_double(Faraday::Response, body: body) }
   let(:body)       { [{}] }
 
-  describe '::call' do
+  describe "::call" do
     before do
       allow(IronBank).to receive(:client).and_return(client)
       allow(client).to receive(:connection).and_return(connection)
@@ -14,7 +14,7 @@ RSpec.shared_examples 'a Zuora action' do
 
     subject(:call) { described_class.call(args) }
 
-    it 'sends a POST request to Zuora' do
+    it "sends a POST request to Zuora" do
       expect(connection).
         to receive(:post).
         with(endpoint, params).

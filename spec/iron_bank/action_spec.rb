@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe IronBank::Action do
   let(:connection) { instance_double(Faraday::Connection) }
   let(:client)     { instance_double(IronBank::Client, connection: connection) }
   let(:response)   { instance_double(Faraday::Response, body: body) }
-  let(:body)       { '' }
+  let(:body)       { "" }
 
   before do
     allow(IronBank).to receive(:client).and_return(client)
     allow(connection).to receive(:post).and_return(response)
   end
 
-  describe '.call' do
-    context 'without params' do
+  describe ".call" do
+    context "without params" do
       subject(:call) { described_class.call(anything) }
 
       specify do
@@ -22,14 +22,14 @@ RSpec.describe IronBank::Action do
       end
     end
 
-    context 'with params on success' do
+    context "with params on success" do
       subject(:call) { SampleAction.call(anything) }
 
       let(:body) do
         [
           {
-            'Success' => true,
-            'Id'      => 'account-id-123'
+            "Success" => true,
+            "Id"      => "account-id-123"
           }
         ]
       end
@@ -37,17 +37,17 @@ RSpec.describe IronBank::Action do
       it { expect(call).to eq(IronBank::Object.new(body).deep_underscore) }
     end
 
-    context 'with params on failure' do
+    context "with params on failure" do
       subject(:call) { SampleAction.call(anything) }
 
       let(:body) do
         [
           {
-            'Success' => false,
-            'Errors'  => [
+            "Success" => false,
+            "Errors"  => [
               {
-                'Code'    => 'MISSING_REQUIRED_VALUE',
-                'Message' => 'Missing required value: AccountId'
+                "Code"    => "MISSING_REQUIRED_VALUE",
+                "Message" => "Missing required value: AccountId"
               }
             ]
           }

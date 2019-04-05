@@ -33,7 +33,7 @@ module IronBank
 
       # Defined separately because the node name is not ruby-friendly
       def max_length
-        doc.at_xpath('.//maxlength').text.to_i
+        doc.at_xpath(".//maxlength").text.to_i
       end
 
       TEXT_VALUES.each do |val|
@@ -46,7 +46,7 @@ module IronBank
       end
 
       BOOLEAN_VALUES.each do |val|
-        define_method(:"#{val}?") { doc.at_xpath(".//#{val}").text == 'true' }
+        define_method(:"#{val}?") { doc.at_xpath(".//#{val}").text == "true" }
       end
 
       def inspect

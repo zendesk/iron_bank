@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe IronBank::Operation do
   let(:connection) { instance_double(Faraday::Connection) }
@@ -10,7 +10,7 @@ RSpec.describe IronBank::Operation do
     allow(IronBank).to receive(:client).and_return(client)
   end
 
-  describe '::call' do
+  describe "::call" do
     subject(:call) { described_class.call(anything) }
 
     specify do

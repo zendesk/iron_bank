@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe IronBank::Associations do
   # Sample Calculation class
@@ -28,10 +28,10 @@ RSpec.describe IronBank::Associations do
     end
   end
 
-  describe '.with_memoization' do
+  describe ".with_memoization" do
     let(:subject) { Calc.new(1, 2) }
 
-    it 'returns from the memo on second and more calls' do
+    it "returns from the memo on second and more calls" do
       is_expected.to receive(:calculate_sum).once
       3.times do
         subject.sum == 3

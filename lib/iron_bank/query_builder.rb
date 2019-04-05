@@ -26,7 +26,7 @@ module IronBank
     end
 
     def query_fields
-      fields.join(',')
+      fields.join(",")
     end
 
     def query_conditions
@@ -41,7 +41,7 @@ module IronBank
     def range_query_builder(field, value)
       value.each.with_object([]) do |option, range_query|
         range_query << "#{field}='#{option}'"
-      end.join(' OR ')
+      end.join(" OR ")
     end
 
     def hash_query_conditions
@@ -49,7 +49,7 @@ module IronBank
         # TODO: sanitize the value
         field = IronBank::Utils.camelize(field)
         filters << current_filter(field, value)
-      end.join(' AND ')
+      end.join(" AND ")
     end
 
     def current_filter(field, value)
@@ -66,7 +66,7 @@ module IronBank
       return if conditions.count <= 1
       return unless conditions.values.any? { |value| value.is_a?(Array) }
 
-      raise 'Filter ranges must be used in isolation.'
+      raise "Filter ranges must be used in isolation."
     end
   end
 end

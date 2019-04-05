@@ -14,7 +14,7 @@ module IronBank
 
       # NOTE: Zuora API endpoint is case-sensitive.
       def endpoint
-        'v1/action/queryMore'
+        "v1/action/queryMore"
       end
     end
   end

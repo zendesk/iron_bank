@@ -27,7 +27,7 @@ module IronBank
 
     def adapter
       @adapter ||=
-        if auth_type == 'cookie'
+        if auth_type == "cookie"
           IronBank::Authentications::Cookie
         else
           IronBank::Authentications::Token

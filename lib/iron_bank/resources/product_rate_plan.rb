@@ -21,7 +21,7 @@ module IronBank
       def active_currencies
         query_string = IronBank::QueryBuilder.zoql(
           self.class.object_name,
-          ['ActiveCurrencies'],
+          ["ActiveCurrencies"],
           id: id
         )
 

@@ -24,21 +24,21 @@ module IronBank
       with_schema
 
       # Contacts
-      with_one :bill_to, resource_name: 'Contact'
-      with_one :sold_to, resource_name: 'Contact'
+      with_one :bill_to, resource_name: "Contact"
+      with_one :sold_to, resource_name: "Contact"
       with_many :contacts
 
       # Subscriptions
       with_many :subscriptions
       with_many :active_subscriptions,
-                resource_name: 'Subscription',
-                conditions:    { status: 'Active' }
+                resource_name: "Subscription",
+                conditions:    { status: "Active" }
 
       # Invoices
       with_many :invoices
 
       # Payment Methods
-      with_one :default_payment_method, resource_name: 'PaymentMethod'
+      with_one :default_payment_method, resource_name: "PaymentMethod"
       with_many :payment_methods
 
       # Payments
@@ -48,7 +48,7 @@ module IronBank
       with_many :usages
 
       # Parent
-      with_one :parent, resource_name: 'Account'
+      with_one :parent, resource_name: "Account"
 
       def ultimate_parent
         root if parent

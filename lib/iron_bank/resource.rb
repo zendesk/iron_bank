@@ -10,7 +10,7 @@ module IronBank
     extend IronBank::Queryable
 
     def self.object_name
-      name.split('::').last
+      name.split("::").last
     end
 
     def self.with_local_records

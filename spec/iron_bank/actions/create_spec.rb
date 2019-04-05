@@ -1,36 +1,36 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'shared_examples/action'
+require "spec_helper"
+require "shared_examples/action"
 
 RSpec.describe IronBank::Actions::Create do
-  it_behaves_like 'a Zuora action' do
+  it_behaves_like "a Zuora action" do
     let(:args) do
       {
         type:    :account,
         objects: [
-          { name: 'test-account-1' },
-          { name: 'test-account-2' }
+          { name: "test-account-1" },
+          { name: "test-account-2" }
         ]
       }
     end
 
-    let(:endpoint) { 'v1/action/create' }
+    let(:endpoint) { "v1/action/create" }
 
     let(:params) do
       {
-        type:    'Account',
+        type:    "Account",
         objects: [
-          { 'Name' => 'test-account-1' },
-          { 'Name' => 'test-account-2' }
+          { "Name" => "test-account-1" },
+          { "Name" => "test-account-2" }
         ]
       }
     end
 
     let(:body) do
       [
-        { 'Success' => true, 'Id' => 'id-1' },
-        { 'Success' => true, 'Id' => 'id-2' }
+        { "Success" => true, "Id" => "id-1" },
+        { "Success" => true, "Id" => "id-2" }
       ]
     end
   end

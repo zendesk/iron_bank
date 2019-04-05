@@ -31,7 +31,7 @@ module IronBank
       end
 
       def header
-        { 'Authorization' => "Bearer #{use}" }
+        { "Authorization" => "Bearer #{use}" }
       end
 
       private
@@ -46,14 +46,14 @@ module IronBank
 
       def fetch_token
         response      = authenticate || {}
-        @access_token = response.fetch('access_token', nil)
-        @expires_at   = Time.now + response.fetch('expires_in', ONE_HOUR).to_i
+        @access_token = response.fetch("access_token", nil)
+        @expires_at   = Time.now + response.fetch("expires_in", ONE_HOUR).to_i
         validate_access_token
       end
       alias refetch_token fetch_token
 
       def authenticate
-        connection.post('/oauth/token', authentication_params).body
+        connection.post("/oauth/token", authentication_params).body
       end
 
       def connection
@@ -70,7 +70,7 @@ module IronBank
         {
           client_id:     client_id,
           client_secret: client_secret,
-          grant_type:    'client_credentials'
+          grant_type:    "client_credentials"
         }
       end
 

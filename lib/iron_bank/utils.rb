@@ -10,10 +10,10 @@ module IronBank
     def underscore(camel_cased_word)
       return camel_cased_word unless camel_cased_word =~ /[A-Z-]|::/
 
-      word = camel_cased_word.to_s.gsub(/::/, '/')
+      word = camel_cased_word.to_s.gsub(/::/, "/")
       word.gsub!(/([A-Z\d]+)([A-Z][a-z])/, '\1_\2')
       word.gsub!(/([a-z\d])([A-Z])/, '\1_\2')
-      word.tr!('-', '_')
+      word.tr!("-", "_")
       word.downcase
     end
 
@@ -24,8 +24,8 @@ module IronBank
       lower_camelize = type == :lower
 
       output = term.to_s.dup.tap do |copy|
-        copy.gsub!(/^_*/, '')
-        copy.gsub!(/__(NS|c)$/i, '') if custom_field || netsuite_field
+        copy.gsub!(/^_*/, "")
+        copy.gsub!(/__(NS|c)$/i, "") if custom_field || netsuite_field
 
         lower_camelize ? lower_camelize(copy) : upper_camelize(copy)
       end
@@ -40,7 +40,7 @@ module IronBank
     end
 
     def kebab(term)
-      underscore(term).tr!('_', '-')
+      underscore(term).tr!("_", "-")
     end
 
     def lower_camelize(term)

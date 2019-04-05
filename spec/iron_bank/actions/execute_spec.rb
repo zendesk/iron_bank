@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'shared_examples/action'
+require "spec_helper"
+require "shared_examples/action"
 
 RSpec.describe IronBank::Actions::Execute do
-  it_behaves_like 'a Zuora action' do
+  it_behaves_like "a Zuora action" do
     let(:args) do
       {
         ids:         %w[zuora-id-123 zuora-id-234 zuora-id-345],
@@ -13,13 +13,13 @@ RSpec.describe IronBank::Actions::Execute do
       }
     end
 
-    let(:endpoint) { 'v1/action/execute' }
+    let(:endpoint) { "v1/action/execute" }
 
     let(:params) do
       {
         ids:         %w[zuora-id-123 zuora-id-234 zuora-id-345],
         synchronous: false,
-        type:        'InvoiceSplit'
+        type:        "InvoiceSplit"
       }
     end
   end

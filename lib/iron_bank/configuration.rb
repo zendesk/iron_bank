@@ -42,12 +42,12 @@ module IronBank
     attr_reader :export_directory
 
     def initialize
-      @schema_directory          = './config/schema'
-      @export_directory          = './config/export'
+      @schema_directory          = "./config/schema"
+      @export_directory          = "./config/export"
       @logger                    = IronBank::Logger.new
-      @auth_type                 = 'token'
+      @auth_type                 = "token"
       @open_tracing_enabled      = false
-      @open_tracing_service_name = 'ironbank'
+      @open_tracing_service_name = "ironbank"
     end
 
     def schema_directory=(value)

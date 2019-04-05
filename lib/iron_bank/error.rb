@@ -82,23 +82,23 @@ module IronBank
   class LockCompetitionError < TemporaryError; end
 
   CODE_CLASSES = {
-    'API_DISABLED'           => ServerError,
-    'CANNOT_DELETE'          => UnprocessableEntityError,
-    'DUPLICATE_VALUE'        => ConflictError,
-    'INVALID_FIELD'          => BadRequestError,
-    'INVALID_ID'             => BadRequestError,
-    'INVALID_TYPE'           => BadRequestError,
-    'INVALID_VALUE'          => BadRequestError,
-    'LOCK_COMPETITION'       => LockCompetitionError,
-    'MALFORMED_QUERY'        => ClientError,
-    'MISSING_REQUIRED_VALUE' => ClientError,
-    'REQUEST_EXCEEDED_LIMIT' => TooManyRequestsError,
-    'REQUEST_EXCEEDED_RATE'  => TooManyRequestsError,
-    'TEMPORARY_ERROR'        => TemporaryError,
-    'TRANSACTION_FAILED'     => InternalServerError,
-    'TRANSACTION_TERMINATED' => InternalServerError,
-    'TRANSACTION_TIMEOUT'    => BadGatewayError,
-    'UNKNOWN_ERROR'          => InternalServerError
+    "API_DISABLED"           => ServerError,
+    "CANNOT_DELETE"          => UnprocessableEntityError,
+    "DUPLICATE_VALUE"        => ConflictError,
+    "INVALID_FIELD"          => BadRequestError,
+    "INVALID_ID"             => BadRequestError,
+    "INVALID_TYPE"           => BadRequestError,
+    "INVALID_VALUE"          => BadRequestError,
+    "LOCK_COMPETITION"       => LockCompetitionError,
+    "MALFORMED_QUERY"        => ClientError,
+    "MISSING_REQUIRED_VALUE" => ClientError,
+    "REQUEST_EXCEEDED_LIMIT" => TooManyRequestsError,
+    "REQUEST_EXCEEDED_RATE"  => TooManyRequestsError,
+    "TEMPORARY_ERROR"        => TemporaryError,
+    "TRANSACTION_FAILED"     => InternalServerError,
+    "TRANSACTION_TERMINATED" => InternalServerError,
+    "TRANSACTION_TIMEOUT"    => BadGatewayError,
+    "UNKNOWN_ERROR"          => InternalServerError
   }.freeze
 
   CODE_MATCHER = /(#{CODE_CLASSES.keys.join('|')})/.freeze

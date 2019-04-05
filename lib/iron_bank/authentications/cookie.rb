@@ -23,7 +23,7 @@ module IronBank
       end
 
       def header
-        { 'Cookie' => use }
+        { "Cookie" => use }
       end
 
       private
@@ -38,7 +38,7 @@ module IronBank
 
       def fetch_cookie
         response    = authenticate
-        @cookie     = response.headers['set-cookie']
+        @cookie     = response.headers["set-cookie"]
         @zsession   = fetch_zsession
         @expires_at = Time.now + ONE_HOUR
       end
@@ -49,7 +49,7 @@ module IronBank
       end
 
       def authenticate
-        connection.post('v1/connections', {})
+        connection.post("v1/connections", {})
       end
 
       def connection

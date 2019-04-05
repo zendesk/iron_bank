@@ -14,7 +14,7 @@ module IronBank
 
       def self.where(conditions)
         # If we are coming from a subclass, defer to Queryable#all
-        return super unless name.end_with?('ProductRatePlanChargeTier')
+        return super unless name.end_with?("ProductRatePlanChargeTier")
 
         CatalogTiers.constants.map do |tier_klass|
           CatalogTiers.const_get(tier_klass).where(conditions)
@@ -23,7 +23,7 @@ module IronBank
 
       def self.find_each
         return enum_for(:find_each) unless block_given?
-        return super unless name.end_with?('ProductRatePlanChargeTier')
+        return super unless name.end_with?("ProductRatePlanChargeTier")
 
         CatalogTiers.constants.each do |tier_klass|
           # Pass the block to each subclasses

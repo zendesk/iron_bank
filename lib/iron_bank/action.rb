@@ -31,7 +31,7 @@ module IronBank
     end
 
     def name
-      self.class.name.split('::').last
+      self.class.name.split("::").last
     end
 
     def success?

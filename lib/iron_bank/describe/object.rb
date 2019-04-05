@@ -31,22 +31,22 @@ module IronBank
       end
 
       def export
-        File.open(file_path, 'w') { |file| file << doc.to_xml }
+        File.open(file_path, "w") { |file| file << doc.to_xml }
       end
 
       def name
-        node = doc.at_xpath('.//object/name')
+        node = doc.at_xpath(".//object/name")
         raise InvalidXML unless node
 
         node.text
       end
 
       def label
-        doc.at_xpath('.//object/label').text
+        doc.at_xpath(".//object/label").text
       end
 
       def fields
-        @fields ||= doc.xpath('.//fields/field').map do |node|
+        @fields ||= doc.xpath(".//fields/field").map do |node|
           IronBank::Describe::Field.from_xml(node)
         end
       end
@@ -56,7 +56,7 @@ module IronBank
       end
 
       def related
-        @related ||= doc.xpath('.//related-objects/object').map do |node|
+        @related ||= doc.xpath(".//related-objects/object").map do |node|
           IronBank::Describe::Related.from_xml(node)
         end
       end
