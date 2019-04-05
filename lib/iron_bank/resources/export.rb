@@ -24,7 +24,7 @@ module IronBank
         new(IronBank::Object.new(response.body).deep_underscore)
       end
 
-      def download
+      def content
         return unless status&.casecmp?("Completed")
 
         IronBank.client.connection.get("/v1/files/#{file_id}").body

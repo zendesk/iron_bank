@@ -62,8 +62,8 @@ RSpec.describe IronBank::Resources::Export do
     end
   end
 
-  describe "#download" do
-    subject(:download_export) { instance.download }
+  describe "#content" do
+    subject(:content) { instance.content }
 
     let(:instance) do
       described_class.new(status: status, file_id: "zuora-file-id")
@@ -79,7 +79,7 @@ RSpec.describe IronBank::Resources::Export do
       let(:status) { "Completed" }
       let(:client) { instance_double(IronBank::Client, connection: connection) }
       let(:connection) { instance_double(Faraday::Connection) }
-      let(:response) { instance_double(Faraday::Response, body: 'foo') }
+      let(:response) { instance_double(Faraday::Response, body: "foo") }
 
       before do
         allow(IronBank).to receive(:client).and_return(client)
@@ -90,10 +90,10 @@ RSpec.describe IronBank::Resources::Export do
           and_return(response)
       end
 
-      it { is_expected.to eq('foo') }
+      it { is_expected.to eq("foo") }
 
       specify do
-        download_export
+        content
 
         expect(connection).to have_received(:get)
       end
