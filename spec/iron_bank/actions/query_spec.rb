@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'shared_examples/action'
+require "spec_helper"
+require "shared_examples/action"
 
 RSpec.describe IronBank::Actions::Query do
-  it_behaves_like 'a Zuora action' do
+  it_behaves_like "a Zuora action" do
     let(:args)     { anything }
-    let(:endpoint) { 'v1/action/query' }
+    let(:endpoint) { "v1/action/query" }
     let(:params)   { { 'queryString': args } }
   end
 end

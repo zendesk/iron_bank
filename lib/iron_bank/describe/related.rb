@@ -13,15 +13,15 @@ module IronBank
       end
 
       def type
-        @type ||= doc.attributes['href'].value.split('/').last
+        @type ||= doc.attributes["href"].value.split("/").last
       end
 
       def name
-        doc.at_xpath('.//name').text
+        doc.at_xpath(".//name").text
       end
 
       def label
-        doc.at_xpath('.//label').text
+        doc.at_xpath(".//label").text
       end
 
       def inspect

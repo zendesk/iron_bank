@@ -12,7 +12,7 @@ module IronBank
       end
 
       def self.from_connection(connection)
-        xml = connection.get('v1/describe').body
+        xml = connection.get("v1/describe").body
         new(Nokogiri::XML(xml), connection)
       rescue TypeError
         # NOTE: Zuora returns HTTP 401 (unauthorized) roughly 1 out of 3 times
@@ -43,7 +43,7 @@ module IronBank
       end
 
       def object_names
-        @object_names ||= doc.xpath('.//object/name').map(&:text)
+        @object_names ||= doc.xpath(".//object/name").map(&:text)
       end
     end
   end

@@ -10,12 +10,12 @@ module IronBank
       with_cache
 
       with_one :account
-      with_one :invoice_owner, resource_name: 'Account'
+      with_one :invoice_owner, resource_name: "Account"
 
-      with_one :original, resource_name: 'Subscription'
+      with_one :original, resource_name: "Subscription"
       with_one :previous,
-               resource_name: 'Subscription',
-               foreign_key:   'previous_subscription_id'
+               resource_name: "Subscription",
+               foreign_key:   "previous_subscription_id"
 
       with_many :rate_plans, alias: :plans
       with_many :usages

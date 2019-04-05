@@ -1,25 +1,25 @@
 # frozen_string_literal: true
 
-require 'simplecov'
+require "simplecov"
 SimpleCov.start do
-  add_filter '/spec/'
+  add_filter "/spec/"
 end
 
-require 'dotenv/load'
-require 'bundler/setup'
-require 'iron_bank'
-require 'webmock/rspec'
-require 'factory_bot'
-require 'support/factory_bot'
-require 'pry-byebug'
-require 'vcr'
-require 'support/vcr'
-require 'shoulda/matchers'
-require 'logger'
+require "dotenv/load"
+require "bundler/setup"
+require "iron_bank"
+require "webmock/rspec"
+require "factory_bot"
+require "support/factory_bot"
+require "pry-byebug"
+require "vcr"
+require "support/vcr"
+require "shoulda/matchers"
+require "logger"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
-  config.example_status_persistence_file_path = '.rspec_status'
+  config.example_status_persistence_file_path = ".rspec_status"
 
   config.expect_with :rspec do |c|
     c.syntax = :expect

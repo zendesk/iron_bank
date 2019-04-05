@@ -10,18 +10,18 @@ module IronBank
     SERVICES    = /\Aservices(\d+)\.zuora\.com(:\d+)?\z/i.freeze
     APISANDBOX  = /\Arest.apisandbox.zuora\.com\z/i.freeze
 
-    def self.base_url(domain = '')
+    def self.base_url(domain = "")
       new(domain).base_url
     end
 
     def base_url
       case domain
       when PRODUCTION
-        'https://rest.zuora.com/'
+        "https://rest.zuora.com/"
       when SERVICES
         "https://#{domain}/".downcase
       when APISANDBOX
-        'https://rest.apisandbox.zuora.com/'
+        "https://rest.apisandbox.zuora.com/"
       end
     end
 

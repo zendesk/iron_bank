@@ -1,34 +1,34 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'timecop'
+require "spec_helper"
+require "timecop"
 
 RSpec.describe IronBank::Authentications::Cookie do
   let(:initial_session) do
     OpenStruct.new(
       body:    { success: true },
-      headers: { 'set-cookie' => 'ZSession=123' }
+      headers: { "set-cookie" => "ZSession=123" }
     )
   end
 
   let(:refreshed_session) do
     OpenStruct.new(
       body:    { success: true },
-      headers: { 'set-cookie' => 'ZSession=456' }
+      headers: { "set-cookie" => "ZSession=456" }
     )
   end
 
   let(:initial_authorization_header) do
-    { 'Cookie' => initial_session.headers['set-cookie'] }
+    { "Cookie" => initial_session.headers["set-cookie"] }
   end
 
   let(:refreshed_authorization_header) do
-    { 'Cookie' => refreshed_session.headers['set-cookie'] }
+    { "Cookie" => refreshed_session.headers["set-cookie"] }
   end
 
-  let(:client_id)     { 'username-for-zuora' }
-  let(:client_secret) { 'password-for-zuora' }
-  let(:base_url)      { 'https://domain.com' }
+  let(:client_id)     { "username-for-zuora" }
+  let(:client_secret) { "password-for-zuora" }
+  let(:base_url)      { "https://domain.com" }
 
   let(:credentials) do
     {
@@ -64,22 +64,22 @@ RSpec.describe IronBank::Authentications::Cookie do
       and_return(first_response, second_response)
   end
 
-  describe '#header' do
+  describe "#header" do
     subject(:a_token) { described_class.new(credentials) }
 
-    context 'cookie not expired' do
+    context "cookie not expired" do
       before do
         Timecop.freeze(Time.local(2017))
       end
 
       after { Timecop.return }
 
-      it 'returns the authorization with cookie header' do
+      it "returns the authorization with cookie header" do
         expect(a_token.header).to eq(initial_authorization_header)
       end
     end
 
-    context 'token expired' do
+    context "token expired" do
       subject(:expired) do
         Timecop.travel(Time.local(2019))
         a_token.header
@@ -92,28 +92,28 @@ RSpec.describe IronBank::Authentications::Cookie do
 
       after { Timecop.return }
 
-      it 'renews the authorization with new cookie header' do
+      it "renews the authorization with new cookie header" do
         expect(expired).to eq(refreshed_authorization_header)
       end
     end
   end
 
-  describe '#expired?' do
+  describe "#expired?" do
     subject(:zsession) { described_class.new(credentials) }
 
-    context 'cookie not expired' do
+    context "cookie not expired" do
       before do
         Timecop.freeze(Time.local(2017))
       end
 
       after { Timecop.return }
 
-      it 'returns false' do
+      it "returns false" do
         expect(zsession.expired?).to be_falsey
       end
     end
 
-    context 'cookie expired' do
+    context "cookie expired" do
       subject(:expired) do
         Timecop.travel(Time.local(2019))
         zsession
@@ -126,7 +126,7 @@ RSpec.describe IronBank::Authentications::Cookie do
 
       after { Timecop.return }
 
-      it 'returns true' do
+      it "returns true" do
         expect(expired.expired?).to be_truthy
       end
     end

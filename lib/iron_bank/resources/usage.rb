@@ -8,7 +8,7 @@ module IronBank
       with_schema
 
       with_one :account
-      with_one :charge, resource_name: 'RatePlanCharge'
+      with_one :charge, resource_name: "RatePlanCharge"
       with_one :import
       with_one :subscription
     end

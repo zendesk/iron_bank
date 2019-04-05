@@ -1,22 +1,22 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe IronBank::FaradayMiddleware::RenewAuth do
   let(:session)         { instance_double(IronBank::Authentications::Token) }
   let(:auth)            { instance_double(IronBank::Authentication) }
-  let(:new_auth_header) { { 'Authorization' => 'Bearer foo' } }
+  let(:new_auth_header) { { "Authorization" => "Bearer foo" } }
 
-  let(:make_request) { connection.get('/resource') }
+  let(:make_request) { connection.get("/resource") }
 
   let(:connection_stubs) do
     Faraday::Adapter::Test::Stubs.new do |stub|
-      stub.get('/resource', new_auth_header) do
-        [200, { 'Content-Type' => 'application/json' }, '{"status": "ok"}']
+      stub.get("/resource", new_auth_header) do
+        [200, { "Content-Type" => "application/json" }, '{"status": "ok"}']
       end
 
-      stub.get('/resource') do
-        [401, { 'Content-Type' => 'application/json' }, '{"status": "bad"}']
+      stub.get("/resource") do
+        [401, { "Content-Type" => "application/json" }, '{"status": "bad"}']
       end
     end
   end
@@ -26,20 +26,20 @@ RSpec.describe IronBank::FaradayMiddleware::RenewAuth do
     allow(auth).to receive(:header).and_return(new_auth_header).once
   end
 
-  describe 'first request' do
+  describe "first request" do
     before { make_request }
 
     it { expect(auth).to have_received(:renew_session) }
     it { expect(auth).to have_received(:header) }
   end
 
-  describe 'second request' do
-    it 'includes the Authorization header with value' do
+  describe "second request" do
+    it "includes the Authorization header with value" do
       request_headers = make_request.env.request_headers
-      expect(request_headers['Authorization']).to eq('Bearer foo')
+      expect(request_headers["Authorization"]).to eq("Bearer foo")
     end
 
-    it 'returns ok' do
+    it "returns ok" do
       expect(make_request.body).to eq('{"status": "ok"}')
     end
   end

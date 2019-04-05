@@ -1,26 +1,26 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples 'a resource with metadata' do
+RSpec.shared_examples "a resource with metadata" do
   let(:schema)   { instance_double(IronBank::Describe::Object) }
   let(:excluded) { %w[ExcludedField] }
 
-  describe '#exclude_fields' do
+  describe "#exclude_fields" do
     subject { described_class.exclude_fields }
     it { is_expected.to be_an(Array) }
   end
 
-  describe '#fields' do
+  describe "#fields" do
     subject { described_class.fields }
 
-    context 'without a schema' do
+    context "without a schema" do
       it { is_expected.to eq([]) }
     end
 
-    context 'with a schema' do
+    context "with a schema" do
       let(:fields) do
         [
-          instance_double(IronBank::Describe::Field, name: 'AccountNumber'),
-          instance_double(IronBank::Describe::Field, name: 'ExcludedField')
+          instance_double(IronBank::Describe::Field, name: "AccountNumber"),
+          instance_double(IronBank::Describe::Field, name: "ExcludedField")
         ]
       end
 
@@ -41,14 +41,14 @@ RSpec.shared_examples 'a resource with metadata' do
     end
   end
 
-  describe '#query_fields' do
+  describe "#query_fields" do
     subject { described_class.query_fields }
 
-    context 'without a schema' do
+    context "without a schema" do
       it { is_expected.to eq([]) }
     end
 
-    context 'with a schema' do
+    context "with a schema" do
       let(:query_fields) { %w[AccountNumber ExcludedField] }
 
       before do
@@ -67,7 +67,7 @@ RSpec.shared_examples 'a resource with metadata' do
     end
   end
 
-  describe '#with_schema' do
+  describe "#with_schema" do
     let(:fields)  { %w[AccountNumber MyCustomField__c] }
     let(:methods) { %i[account_number my_custom_field__c] }
 
@@ -77,14 +77,14 @@ RSpec.shared_examples 'a resource with metadata' do
 
     subject(:with_schema) { described_class.with_schema }
 
-    it 'defines Ruby-friendly instance methods' do
+    it "defines Ruby-friendly instance methods" do
       with_schema
       expect(described_class.instance_methods).to include(*methods)
     end
 
-    describe 'the defined methods' do
+    describe "the defined methods" do
       let(:remote) do
-        { my_custom_field__c: 'custom-field-value-from-remote' }
+        { my_custom_field__c: "custom-field-value-from-remote" }
       end
 
       before { with_schema }
@@ -93,8 +93,8 @@ RSpec.shared_examples 'a resource with metadata' do
         described_class.new(remote).my_custom_field__c
       end
 
-      specify 'access the remote hash' do
-        expect(my_custom_field).to eq('custom-field-value-from-remote')
+      specify "access the remote hash" do
+        expect(my_custom_field).to eq("custom-field-value-from-remote")
       end
     end
   end

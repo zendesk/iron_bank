@@ -46,6 +46,10 @@ Metrics/LineLength:
 Style/ClassAndModuleChildren:
   EnforcedStyle: nested
 
+Style/MixinUsage:
+  Exclude:
+    - lib/iron_bank/resource.rb
+
 Style/OptionalArguments:
   Exclude:
     - lib/iron_bank/local.rb
@@ -56,6 +60,5 @@ Style/RescueStandardError:
   Exclude:
     - lib/iron_bank/csv.rb
 
-Style/MixinUsage:
-  Exclude:
-    - lib/iron_bank/resource.rb
+Style/StringLiterals:
+  EnforcedStyle: double_quotes

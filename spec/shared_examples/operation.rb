@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples 'a Zuora operation' do
+RSpec.shared_examples "a Zuora operation" do
   let(:connection)    { instance_double(Faraday::Connection) }
   let(:response_body) { anything }
 
@@ -20,7 +20,7 @@ RSpec.shared_examples 'a Zuora operation' do
     instance_double(Hash)
   end
 
-  describe '::call' do
+  describe "::call" do
     before do
       allow(IronBank).to receive(:client).and_return(client)
       allow(IronBank::Object).to receive(:new).with(args).and_return(object)
@@ -30,7 +30,7 @@ RSpec.shared_examples 'a Zuora operation' do
 
     subject(:call) { described_class.call(args) }
 
-    it 'sends a POST request to Zuora' do
+    it "sends a POST request to Zuora" do
       expect(connection).
         to receive(:post).
         with(endpoint, camelized_hash).

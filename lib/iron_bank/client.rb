@@ -26,7 +26,7 @@ module IronBank
       end
     end
 
-    def initialize(domain:, client_id:, client_secret:, auth_type: 'token')
+    def initialize(domain:, client_id:, client_secret:, auth_type: "token")
       @domain        = domain
       @client_id     = client_id
       @client_secret = client_secret
@@ -103,7 +103,7 @@ module IronBank
     end
 
     def headers
-      { 'Content-Type' => 'application/json' }.merge(auth.header)
+      { "Content-Type" => "application/json" }.merge(auth.header)
     end
 
     def reset_connection

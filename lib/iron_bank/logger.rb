@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'singleton'
-require 'logger'
+require "singleton"
+require "logger"
 
 module IronBank
   # Default logger for IronBank events
@@ -9,7 +9,7 @@ module IronBank
   class Logger
     extend Forwardable
 
-    PROGNAME = 'iron_bank'
+    PROGNAME = "iron_bank"
     LEVEL    = ::Logger::DEBUG
 
     def_delegators :@logger, :debug, :info, :warn, :error, :fatal
