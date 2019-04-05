@@ -24,7 +24,7 @@ module IronBank
 
     def export
       CSV.open(file_path, "w") do |csv|
-        # first row = CSV headers
+        # the first row contains the CSV headers
         write_headers(csv)
         write_records(csv)
       end
