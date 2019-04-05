@@ -8,11 +8,11 @@ module IronBank
       with_schema
 
       DEFAULT_CREATE_OPTIONS = {
-        format: 'csv',
+        format: "csv",
         zip:    false
       }.freeze
 
-      ENDPOINT = '/v1/object/export'
+      ENDPOINT = "/v1/object/export"
 
       def self.create(query, options = {})
         payload = IronBank::Object.new(
@@ -25,9 +25,9 @@ module IronBank
       end
 
       def download
-        return unless status&.casecmp?('Completed')
+        return unless status&.casecmp?("Completed")
 
-        IronBank.client.connection.get("/v1/files/#{file_id}")
+        IronBank.client.connection.get("/v1/files/#{file_id}").body
       end
     end
   end

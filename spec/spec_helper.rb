@@ -4,6 +4,7 @@ require "simplecov"
 SimpleCov.start do
   add_filter "/spec/"
 end
+SimpleCov.refuse_coverage_drop
 
 require "dotenv/load"
 require "bundler/setup"
