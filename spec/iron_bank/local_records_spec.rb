@@ -17,8 +17,9 @@ RSpec.describe IronBank::LocalRecords do
       end
 
       it "creates the local export directory if it does not exist" do
-        stub_const("IronBank::LocalRecords::RESOURCES", [])
+        stub_const("IronBank::LocalRecords::RESOURCE_QUERY_FIELDS", {})
         expect(FileUtils).to receive(:mkdir_p)
+
         export
       end
     end
@@ -29,8 +30,9 @@ RSpec.describe IronBank::LocalRecords do
       end
 
       it "creates the local export directory if it does not exist" do
-        stub_const("IronBank::LocalRecords::RESOURCES", [])
+        stub_const("IronBank::LocalRecords::RESOURCE_QUERY_FIELDS", {})
         expect(FileUtils).not_to receive(:mkdir_p)
+
         export
       end
     end
@@ -51,7 +53,12 @@ RSpec.describe IronBank::LocalRecords do
       end
 
       it "creates a CSV file" do
-        IronBank::LocalRecords::RESOURCES.each do |resource|
+        %w[
+          Product
+          ProductRatePlan
+          ProductRatePlanCharge
+          ProductRatePlanChargeTier
+        ].each do |resource|
           file_path = File.expand_path("#{resource}.csv", directory)
           expect(File).to receive(:open).with(file_path, "w")
         end
@@ -69,7 +76,10 @@ RSpec.describe IronBank::LocalRecords do
       end
 
       before do
-        stub_const("IronBank::LocalRecords::RESOURCES", %w[MyResource])
+        stub_const(
+          "IronBank::LocalRecords::RESOURCE_QUERY_FIELDS",
+          "MyResource" => ["*"]
+        )
 
         allow(FileUtils).to receive(:mkdir_p)
 

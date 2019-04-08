@@ -58,7 +58,12 @@ RSpec.describe IronBank::Configuration do
     end
 
     it "resets the local store for each resource defined in LocalRecords" do
-      IronBank::LocalRecords::RESOURCES.each do |resource|
+      %w[
+        Product
+        ProductRatePlan
+        ProductRatePlanCharge
+        ProductRatePlanChargeTier
+      ].each do |resource|
         klass = IronBank::Resources.const_get(resource)
         expect(klass).to receive(:reset_store)
       end

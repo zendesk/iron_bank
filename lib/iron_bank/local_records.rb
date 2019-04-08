@@ -6,12 +6,12 @@ module IronBank
   class LocalRecords
     private_class_method :new
 
-    RESOURCES = %w[
-      Product
-      ProductRatePlan
-      ProductRatePlanCharge
-      ProductRatePlanChargeTier
-    ].freeze
+    RESOURCE_QUERY_FIELDS = {
+      "Product"                   => ["*"],
+      "ProductRatePlan"           => ["*", "Product.Id"],
+      "ProductRatePlanCharge"     => ["*", "ProductRatePlan.Id"],
+      "ProductRatePlanChargeTier" => ["*", "ProductRatePlanCharge.Id"]
+    }.freeze
 
     def self.directory
       IronBank.configuration.export_directory
@@ -19,7 +19,7 @@ module IronBank
 
     def self.export
       FileUtils.mkdir_p(directory) unless Dir.exist?(directory)
-      RESOURCES.each { |resource| new(resource).save_file }
+      RESOURCE_QUERY_FIELDS.keys.each { |resource| new(resource).save_file }
     end
 
     def save_file
@@ -49,7 +49,9 @@ module IronBank
     end
 
     def export
-      @export ||= IronBank::Export.create("select * from #{resource}")
+      @export ||= IronBank::Export.create(
+        "select #{RESOURCE_QUERY_FIELDS[resource].join(', ')} from #{resource}"
+      )
     end
 
     def file_path

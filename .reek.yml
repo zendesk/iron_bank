@@ -1,5 +1,4 @@
 ---
-
 # Exclude vendor/bundle directory for Travis
 exclude_paths:
   - vendor/bundle
@@ -43,6 +42,7 @@ detectors:
       - IronBank::Object#underscore
       - IronBank::Actions::Subscribe#hash_args
       - IronBank::Utils#camelize
+      - IronBank::Local#underscore_header
 
   InstanceVariableAssumption:
     exclude:
@@ -60,7 +60,6 @@ detectors:
     exclude:
       - IronBank::Schema#self.import
       - IronBank::Local#where
-      - IronBank::Local#load_records
       - IronBank::LocalRecords#export
       - IronBank::Resources::ProductRatePlanChargeTier#self.load_records
 
