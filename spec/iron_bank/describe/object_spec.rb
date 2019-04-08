@@ -133,5 +133,16 @@ RSpec.describe IronBank::Describe::Object do
         object
       end
     end
+
+    context "Internal Server Error" do
+      before do
+        allow(connection).
+          to receive(:get).
+          with(endpoint).
+          and_raise(IronBank::InternalServerError)
+      end
+
+      it { is_expected.to be_nil }
+    end
   end
 end

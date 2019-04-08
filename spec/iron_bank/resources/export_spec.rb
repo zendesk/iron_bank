@@ -67,6 +67,29 @@ RSpec.describe IronBank::Resources::Export do
       described_class.new(status: status, file_id: "zuora-file-id")
     end
 
+    let(:fields) do
+      [
+        instance_double(IronBank::Describe::Field, name: "Id"),
+        instance_double(IronBank::Describe::Field, name: "Status"),
+        instance_double(IronBank::Describe::Field, name: "FileId")
+      ]
+    end
+
+    let(:schema) { instance_double(IronBank::Describe::Object, fields: fields) }
+
+    before do
+      allow(IronBank::Schema).to receive(:for).with("Export").and_return(schema)
+
+      described_class.with_schema
+    end
+
+    after do
+      # NOTE: Resetting the instance variable here, else it seems to leak the
+      #       `instance_double(IronBank::Describe::Object)` to the other
+      #       examples.
+      described_class.instance_variable_set :@schema, nil
+    end
+
     context "when status is nil (or anything but completed)" do
       let(:status) { nil }
 

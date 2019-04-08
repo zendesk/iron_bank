@@ -123,4 +123,22 @@ RSpec.describe IronBank::Client do
       end
     end
   end
+
+  describe "#describe" do
+    subject(:describe) { client.describe("AnObject") }
+
+    before do
+      allow(client).to receive(:connection)
+
+      allow(IronBank::Describe::Object).
+        to receive(:from_connection).
+        with(anything, "AnObject")
+    end
+
+    specify do
+      describe
+
+      expect(IronBank::Describe::Object).to have_received(:from_connection)
+    end
+  end
 end

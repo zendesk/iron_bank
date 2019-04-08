@@ -9,6 +9,29 @@ RSpec.describe IronBank::LocalRecords do
   describe "::export" do
     subject(:export) { described_class.export }
 
+    let(:fields) do
+      [
+        instance_double(IronBank::Describe::Field, name: "Id"),
+        instance_double(IronBank::Describe::Field, name: "Status"),
+        instance_double(IronBank::Describe::Field, name: "FileId")
+      ]
+    end
+
+    let(:schema) { instance_double(IronBank::Describe::Object, fields: fields) }
+
+    before do
+      allow(IronBank::Schema).to receive(:for).with("Export").and_return(schema)
+
+      IronBank::Export.with_schema
+    end
+
+    after do
+      # NOTE: Resetting the instance variable here, else it seems to leak the
+      #       `instance_double(IronBank::Describe::Object)` to the other
+      #       examples.
+      IronBank::Export.instance_variable_set :@schema, nil
+    end
+
     context "local export directory does not exist" do
       before do
         allow(Dir).to receive(:exist?).and_return(false)
