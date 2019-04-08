@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
 require "logger"
 
 RSpec.describe IronBank::Logger do

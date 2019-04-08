@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank::LocalRecords do
   describe "::directory" do
     subject { described_class.directory }

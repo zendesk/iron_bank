@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank::QueryBuilder do
   let(:object) { "Product" }
   let(:fields) { [] }

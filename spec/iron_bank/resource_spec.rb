@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
 require "shared_examples/associations"
 require "shared_examples/metadata"
 require "shared_examples/queryable"
@@ -75,22 +74,5 @@ RSpec.describe IronBank::Resource do
         from(remote).
         to(reloaded_remote)
     end
-  end
-
-  describe "#to_csv_row" do
-    let(:remote) do
-      {
-        id:           id,
-        custom_field: "custom-field-value"
-      }
-    end
-
-    before do
-      allow(described_class).to receive(:fields).and_return(%w[Id CustomField])
-    end
-
-    subject { resource.to_csv_row }
-
-    it { is_expected.to eq([id, "custom-field-value"]) }
   end
 end

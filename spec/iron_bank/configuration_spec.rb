@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank::Configuration do
   let(:default_schema) { "./config/schema" }
   let(:default_export) { "./config/export" }

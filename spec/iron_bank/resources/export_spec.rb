@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank::Resources::Export do
   describe "::create" do
     subject(:create_export) { described_class.create(query, options) }

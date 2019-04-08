@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank do
   it "has a version number" do
     expect(IronBank::VERSION).not_to be nil

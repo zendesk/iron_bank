@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank::Describe::Object do
   describe "::from_xml" do
     let(:file_path) { File.expand_path(file_name, "spec/fixtures/objects") }

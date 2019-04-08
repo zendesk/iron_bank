@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank::Resources::Invoice do
   describe "::exclude_fields" do
     let(:fields) do

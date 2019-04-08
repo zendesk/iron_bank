@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank::Object do
   describe "#deep_camelize" do
     subject { input.deep_camelize(type: type) }

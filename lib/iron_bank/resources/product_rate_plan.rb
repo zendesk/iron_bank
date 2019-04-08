@@ -11,6 +11,7 @@ module IronBank
       def self.exclude_fields
         %w[ActiveCurrencies]
       end
+
       with_schema
       with_local_records
       with_cache

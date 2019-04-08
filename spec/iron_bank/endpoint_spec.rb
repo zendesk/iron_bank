@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank::Endpoint do
   describe "::base_url" do
     subject(:base_url) { described_class.base_url(hostname) }

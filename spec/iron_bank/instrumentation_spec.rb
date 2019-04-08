@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank::Instrumentation do
   class Sample
     include IronBank::Instrumentation

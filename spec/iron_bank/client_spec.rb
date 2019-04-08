@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.shared_examples "a Zuora action called from the client" do
   let(:params) { anything }
 

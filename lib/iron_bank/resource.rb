@@ -55,12 +55,6 @@ module IronBank
       self
     end
 
-    def to_csv_row
-      self.class.fields.each.with_object([]) do |field, row|
-        row << remote[IronBank::Utils.underscore(field).to_sym]
-      end
-    end
-
     def remove_instance_vars
       # Substract predefined variables from the instance variables
       (instance_variables - [:@remote]).each do |var|

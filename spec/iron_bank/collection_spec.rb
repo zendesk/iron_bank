@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank::Collection do
   let(:klass) { IronBank::Resource }
   let(:records) { [] }
