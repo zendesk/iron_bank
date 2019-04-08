@@ -7,6 +7,7 @@ module IronBank
     def reload
       remove_instance_vars
       @remote = self.class.find(id, force: true).remote
+      self
     end
 
     private

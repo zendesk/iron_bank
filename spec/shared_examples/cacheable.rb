@@ -80,14 +80,27 @@ RSpec.shared_examples "a cacheable resource" do
 
       subject(:reload) { an_instance.reload }
 
-      it "remove instance vars and invalidates, writes to the cache" do
-        expect(an_instance.instance_variables).to eq [:@remote]
-
-        expect(cache).
+      before do
+        allow(cache).
           to receive(:fetch).
           with("resource-id", force: true).
           and_return(response)
+      end
+
+      it "forces a fetch for live data" do
         reload
+
+        expect(cache).to have_received(:fetch)
+      end
+
+      it "removes all instance variables before fetching live data" do
+        an_instance.instance_variable_set(:@foo, "bar")
+        reload
+        expect(an_instance.instance_variables).to eq [:@remote]
+      end
+
+      it "returns the instance itself" do
+        expect(reload).to be_a(described_class)
       end
     end
   end
