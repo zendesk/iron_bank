@@ -63,7 +63,9 @@ RSpec.describe IronBank::Resource do
       allow(described_class).to receive(:find).with(id).and_return(reloaded)
     end
 
-    it { is_expected.to eq(reloaded_remote) }
+    it "returns the instance" do
+      expect(reload).to eq(resource)
+    end
 
     it "removes instance vars and updates the remote hash for the resource" do
       expect(resource.instance_variables).to eq [:@remote]

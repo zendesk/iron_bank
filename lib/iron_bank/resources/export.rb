@@ -16,7 +16,7 @@ module IronBank
 
       def self.create(query, options = {})
         payload = IronBank::Object.new(
-          DEFAULT_CREATE_OPTIONS.merge(query: query).merge(options)
+          DEFAULT_CREATE_OPTIONS.merge(query: query, **options)
         ).deep_camelize
 
         response = IronBank.client.connection.post(ENDPOINT, payload)

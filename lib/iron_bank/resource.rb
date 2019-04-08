@@ -52,6 +52,7 @@ module IronBank
     def reload
       remove_instance_vars
       @remote = self.class.find(id).remote
+      self
     end
 
     def to_csv_row
