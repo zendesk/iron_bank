@@ -56,7 +56,9 @@ IronBank.configure do |config|
   config.export_directory  = 'directory-path' # export directory path
   config.schema_directory  = 'directory-path' # schema drirectory path
 
-  # Ironbank uses Faraday to send request to Zuora. In order too use custom
+  # Ironbank uses Faraday to send request to Zuora. Middlewares can be specified
+  # by adding the class name and class options to the `middlewares` 
+  # configuration.
   # Faraday middlewares, we can send in an array with cutomer middleware class
   # and options
   config.middlewares << [DummyMiddlewareClass, {}]
