@@ -7,7 +7,6 @@ require "faraday_middleware"
 require "fileutils"
 require "json"
 require "nokogiri"
-require "ddtrace"
 
 # An opinionated Ruby interface to the Zuora REST API
 module IronBank
