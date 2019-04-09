@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.shared_examples "a Zuora action called from the client" do
   let(:params) { anything }
 
@@ -123,6 +121,24 @@ RSpec.describe IronBank::Client do
         let(:action_name) { IronBank::Utils.underscore(action) }
         it_behaves_like "a Zuora action called from the client"
       end
+    end
+  end
+
+  describe "#describe" do
+    subject(:describe) { client.describe("AnObject") }
+
+    before do
+      allow(client).to receive(:connection)
+
+      allow(IronBank::Describe::Object).
+        to receive(:from_connection).
+        with(anything, "AnObject")
+    end
+
+    specify do
+      describe
+
+      expect(IronBank::Describe::Object).to have_received(:from_connection)
     end
   end
 end

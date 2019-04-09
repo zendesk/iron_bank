@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank::Error do
   describe "::from_response" do
     let(:response) { instance_double(Faraday::Response) }

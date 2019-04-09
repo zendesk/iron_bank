@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank::Utils do
   describe "::underscore" do
     subject { described_class.underscore(input) }

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
 require "timecop"
 
 RSpec.describe IronBank::Authentications::Token do

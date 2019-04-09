@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank::Describe::Object do
   describe "::from_xml" do
     let(:file_path) { File.expand_path(file_name, "spec/fixtures/objects") }
@@ -134,6 +132,17 @@ RSpec.describe IronBank::Describe::Object do
 
         object
       end
+    end
+
+    context "Internal Server Error" do
+      before do
+        allow(connection).
+          to receive(:get).
+          with(endpoint).
+          and_raise(IronBank::InternalServerError)
+      end
+
+      it { is_expected.to be_nil }
     end
   end
 end

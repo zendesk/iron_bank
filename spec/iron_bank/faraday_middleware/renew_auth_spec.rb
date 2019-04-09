@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank::FaradayMiddleware::RenewAuth do
   let(:session)         { instance_double(IronBank::Authentications::Token) }
   let(:auth)            { instance_double(IronBank::Authentication) }

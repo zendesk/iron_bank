@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
 require "shared_examples/local"
 require "shared_examples/cacheable"
 

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank::Operation do
   let(:connection) { instance_double(Faraday::Connection) }
   let(:client)     { instance_double(IronBank::Client, connection: connection) }

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
 require "shared_examples/associations"
 require "shared_examples/metadata"
 require "shared_examples/queryable"
@@ -61,34 +60,25 @@ RSpec.describe IronBank::Resource do
 
     before do
       allow(described_class).to receive(:find).with(id).and_return(reloaded)
+
+      resource.instance_variable_set(:@foo, "bar")
     end
 
-    it { is_expected.to eq(reloaded_remote) }
+    it "returns the instance" do
+      expect(reload).to eq(resource)
+    end
 
-    it "removes instance vars and updates the remote hash for the resource" do
-      expect(resource.instance_variables).to eq [:@remote]
-
+    it "updates the remote hash for the resource" do
       expect { resource.reload }.
         to change(resource, :remote).
         from(remote).
         to(reloaded_remote)
     end
-  end
 
-  describe "#to_csv_row" do
-    let(:remote) do
-      {
-        id:           id,
-        custom_field: "custom-field-value"
-      }
+    it "removes instance variables other than @remote" do
+      reload
+
+      expect(resource.instance_variables).to eq [:@remote]
     end
-
-    before do
-      allow(described_class).to receive(:fields).and_return(%w[Id CustomField])
-    end
-
-    subject { resource.to_csv_row }
-
-    it { is_expected.to eq([id, "custom-field-value"]) }
   end
 end

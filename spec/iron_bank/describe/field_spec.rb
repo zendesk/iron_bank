@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank::Describe::Field do
   let(:file_path) { File.expand_path(file_name, "spec/fixtures/fields") }
   let(:doc)       { File.open(file_path) { |file| Nokogiri::XML(file) } }

@@ -57,7 +57,7 @@ module IronBank
       @export_directory = value
       return unless defined? IronBank::Product
 
-      IronBank::LocalRecords::RESOURCES.each do |resource|
+      IronBank::LocalRecords::RESOURCE_QUERY_FIELDS.keys.each do |resource|
         IronBank::Resources.const_get(resource).reset_store
       end
     end

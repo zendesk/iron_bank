@@ -33,25 +33,33 @@ module IronBank
 
     private
 
+    # NOTE: Handle associations within the CSV export. E.g., when reading the
+    #       `ProductRatePlan.csv` file, we have `ProductRatePlan.Id` and
+    #       `Product.Id` fields. We want to end up with `id` and `product_id`
+    #       respectively.
+    def underscore_header
+      lambda do |header|
+        parts  = header.split(".")
+        header = parts.first.casecmp?(object_name) ? parts.last : parts.join
+
+        IronBank::Utils.underscore(header).to_sym
+      end
+    end
+
     def store
       @store ||= File.exist?(file_path) ? load_records : {}
     end
 
     def load_records
       CSV.foreach(file_path, csv_options).with_object({}) do |row, store|
-        # NOTE: when we move away from Ruby 2.2.x and 2.3.x we can uncomment
-        # this line, delete the other one, since `Hash#compact` is available in
-        # 2.4.x and we can remove two smells from `.reek` while we are at it
-        #
-        # store[row[:id]] = new(row.to_h.compact)
-        store[row[:id]] = new(row.to_h.reject { |_, value| value.nil? })
+        store[row[:id]] = new(row.to_h.compact)
       end
     end
 
     def csv_options
       {
         headers:           true,
-        header_converters: [->(h) { IronBank::Utils.underscore(h).to_sym }],
+        header_converters: [underscore_header],
         converters:        csv_converters
       }
     end

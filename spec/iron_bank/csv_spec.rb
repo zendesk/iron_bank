@@ -24,6 +24,18 @@ RSpec.describe IronBank::CSV do
           end
         end
       end
+
+      context "conversion throws an Exception" do
+        let(:input_string) { "1" }
+
+        before do
+          allow_any_instance_of(String).to receive(:encode).and_raise(Exception)
+        end
+
+        it "returns the original string when rescuing from all exceptions" do
+          expect(decimal_integer.call(input_string)).to eq(input_string)
+        end
+      end
     end
 
     context ":decimal_float" do
@@ -46,6 +58,18 @@ RSpec.describe IronBank::CSV do
           non_floats.each do |string|
             expect(decimal_float.call(string)).to eq(string)
           end
+        end
+      end
+
+      context "conversion throws an Exception" do
+        let(:input_string) { "1" }
+
+        before do
+          allow_any_instance_of(String).to receive(:encode).and_raise(Exception)
+        end
+
+        it "returns the original string when rescuing from all exceptions" do
+          expect(decimal_float.call(input_string)).to eq(input_string)
         end
       end
     end

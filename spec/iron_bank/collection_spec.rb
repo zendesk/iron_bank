@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank::Collection do
   let(:klass) { IronBank::Resource }
   let(:records) { [] }
@@ -36,6 +34,8 @@ RSpec.describe IronBank::Collection do
     it { expect delegate_method(:each).to(:records) }
 
     it { expect delegate_method(:length).to(:records) }
+
+    it { expect delegate_method(:map).to(:records) }
 
     it { expect delegate_method(:size).to(:records) }
   end

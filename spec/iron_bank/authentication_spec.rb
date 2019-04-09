@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank::Authentication do
   let(:client_id)     { "client-id-from-zuora" }
   let(:client_secret) { "client-secret-from-zuora" }

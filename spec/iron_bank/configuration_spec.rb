@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe IronBank::Configuration do
   let(:default_schema) { "./config/schema" }
   let(:default_export) { "./config/export" }
@@ -58,7 +56,12 @@ RSpec.describe IronBank::Configuration do
     end
 
     it "resets the local store for each resource defined in LocalRecords" do
-      IronBank::LocalRecords::RESOURCES.each do |resource|
+      %w[
+        Product
+        ProductRatePlan
+        ProductRatePlanCharge
+        ProductRatePlanChargeTier
+      ].each do |resource|
         klass = IronBank::Resources.const_get(resource)
         expect(klass).to receive(:reset_store)
       end

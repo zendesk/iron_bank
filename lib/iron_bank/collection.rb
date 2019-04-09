@@ -10,6 +10,7 @@ module IronBank
                    :[],
                    :each,
                    :length,
+                   :map,
                    :size
 
     def initialize(klass, conditions, records)

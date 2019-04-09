@@ -118,9 +118,6 @@ require "iron_bank/resources/rate_plan_charge"
 require "iron_bank/resources/rate_plan"
 require "iron_bank/resources/subscription"
 require "iron_bank/resources/usage"
-require "iron_bank/resources/catalog_tiers/discount_amount"
-require "iron_bank/resources/catalog_tiers/discount_percentage"
-require "iron_bank/resources/catalog_tiers/price"
 
 # Aliasing IronBank::Actions::* to IronBank::*
 IronBank::Actions.constants.each do |action|
