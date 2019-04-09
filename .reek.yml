@@ -1,5 +1,4 @@
 ---
-
 # Exclude vendor/bundle directory for Travis
 exclude_paths:
   - vendor/bundle
@@ -15,12 +14,8 @@ detectors:
       - IronBank::Configuration#client_secret
       - IronBank::Configuration#domain
       - IronBank::Configuration#export_directory
-      - IronBank::Configuration#instrumenter
-      - IronBank::Configuration#instrumenter_options
       - IronBank::Configuration#logger
-      - IronBank::Configuration#open_tracing_enabled
-      - IronBank::Configuration#open_tracing_service_name
-      - IronBank::Configuration#retry_options
+      - IronBank::Configuration#middlewares
       - IronBank::Configuration#schema_directory
 
   BooleanParameter:
@@ -63,6 +58,9 @@ detectors:
       - IronBank::Local#load_records
       - IronBank::LocalRecords#export
       - IronBank::Resources::ProductRatePlanChargeTier#self.load_records
+      - IronBank::Client#connection
+      - IronBank::Authentications::Token#connection
+      - IronBank::Authentications::Cookie#connection
 
   NilCheck:
     enabled: false
@@ -99,10 +97,6 @@ detectors:
       - IronBank::Object#convert
       - IronBank::Object#camelize_array
       - IronBank::Object#underscore_array
-      - IronBank::OpenTracing#open_tracing_enabled?
-      - IronBank::OpenTracing#open_tracing_options
       - IronBank::QueryBuilder#range_query_builder
       - IronBank::Utils#lower_camelize
       - IronBank::Utils#upper_camelize
-      - IronBank::Instrumentation#instrumenter
-      - IronBank::Instrumentation#instrumenter_options

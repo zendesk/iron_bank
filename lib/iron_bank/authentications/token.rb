@@ -5,8 +5,6 @@ module IronBank
     # Get a bearer token to enable authenticated calls to Zuora through OAuth.
     #
     class Token
-      include IronBank::OpenTracing
-
       # Generic token error.
       #
       class Error < StandardError; end
@@ -58,9 +56,11 @@ module IronBank
 
       def connection
         @connection ||= Faraday.new(url: base_url) do |conn|
-          conn.use      :ddtrace, open_tracing_options if open_tracing_enabled?
+          IronBank.configuration.middlewares.each do |klass, options|
+            conn.use klass, options
+          end
+
           conn.request  :url_encoded
-          conn.response :logger, IronBank.logger
           conn.response :json
           conn.adapter  Faraday.default_adapter
         end

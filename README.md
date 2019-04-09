@@ -31,7 +31,7 @@ configuration) when using it within [Rails][rails-website].
 
 Add the gem to your `Gemfile` with:
 
-```ruby
+```rb
 gem 'iron_bank'
 ```
 
@@ -44,9 +44,31 @@ $ rails generate iron_bank:install
 Use the `client_id` and `client_secret` from your Zuora OAuth client and add
 them to the generated `config/initializers/iron_bank.rb` file.
 
+## Configuration
+
+```rb
+# Configure Ironbank
+IronBank.configure do |config|
+  config.client_id         = 'client_id'
+  config.client_secret     = 'client_secret'
+  config.auth_type         = 'auth_type'
+  config.domain            = 'zuora-domain'   # zuora doamin
+  config.export_directory  = 'directory-path' # export directory path
+  config.schema_directory  = 'directory-path' # schema drirectory path
+
+  # Ironbank uses Faraday to send request to Zuora. Middlewares can be specified
+  # by adding the class name and class options to the `middlewares` 
+  # configuration.
+  # Faraday middlewares, we can send in an array with cutomer middleware class
+  # and options
+  config.middlewares << [DummyMiddlewareClass, {}]
+end
+
+```
+
 ## Usage
 
-```ruby
+```rb
 # make a query to Zuora using ZOQL
 IronBank::Query.call "select Name from Account where Id='zuora-account-id'"
 
@@ -73,7 +95,7 @@ it locally so that product catalog and related object queries look for
 
 You can export your product catalog locally using the `LocalRecords` class:
 
-```ruby
+```rb
 # Save CSV files in the directory specified by `config.export_directory`
 IronBank::LocalRecords.export
 ```
@@ -81,7 +103,7 @@ IronBank::LocalRecords.export
 Then, making a query/looking for a record will first search through the local
 records, then default to the API if no records are found.
 
-```ruby
+```rb
 product = IronBank::Product.find 'zuora-product-id'
 # => #<IronBank::Resources::Product>
 

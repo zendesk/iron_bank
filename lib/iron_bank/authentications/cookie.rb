@@ -5,8 +5,6 @@ module IronBank
     # Get a cookie to enable authenticated calls to Zuora through Session.
     #
     class Cookie
-      include IronBank::OpenTracing
-
       TEN_MINUTES = 600
       ONE_HOUR    = 3600
 
@@ -54,9 +52,11 @@ module IronBank
 
       def connection
         @connection ||= Faraday.new(faraday_config) do |conn|
-          conn.use      :ddtrace, open_tracing_options if open_tracing_enabled?
+          IronBank.configuration.middlewares.each do |klass, options|
+            conn.use klass, options
+          end
+
           conn.request  :url_encoded
-          conn.response :logger, IronBank.logger
           conn.response :json
           conn.adapter  Faraday.default_adapter
         end
