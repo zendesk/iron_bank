@@ -47,7 +47,6 @@ module IronBank
 
         conn.response :raise_error
         conn.response :renew_auth, auth
-        conn.response :logger, IronBank.logger
         conn.response :json, content_type: /\bjson$/
 
         conn.adapter  Faraday.default_adapter
