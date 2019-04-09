@@ -34,10 +34,10 @@ module IronBank
     private
 
     BACKOFF = {
-      max:                 3,
-      interval:            0.5,
-      interval_randomness: 0.5,
-      backoff_factor:      4
+      max:        3,
+      interval:   0.5,
+      randomness: 0.5,
+      factor:     4
     }.freeze
     private_constant :BACKOFF
 
@@ -69,9 +69,12 @@ module IronBank
       case status
       when "Pending", "Processing" then false
       when "Completed"             then true
-      else
-        raise IronBank::Error, "Export #{export.id} has status #{export.status}"
+      else                         raise_export_error
       end
+    end
+
+    def raise_export_error
+      raise IronBank::Error, "Export #{export.id} has status #{export.status}"
     end
 
     def max_query?
@@ -82,13 +85,9 @@ module IronBank
     end
 
     def backoff_time
-      backoff_interval = BACKOFF[:interval]
-
-      current_interval =
-        backoff_interval * (BACKOFF[:backoff_factor]**query_attempts)
-
-      random_interval =
-        rand * BACKOFF[:interval_randomness].to_f * backoff_interval
+      interval         = BACKOFF[:interval]
+      current_interval = interval * (BACKOFF[:factor]**query_attempts)
+      random_interval  = rand * BACKOFF[:randomness].to_f * interval
 
       current_interval + random_interval
     end
