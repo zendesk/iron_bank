@@ -9,12 +9,9 @@ SimpleCov.refuse_coverage_drop
 require "dotenv/load"
 require "bundler/setup"
 require "iron_bank"
-require "webmock/rspec"
 require "factory_bot"
 require "support/factory_bot"
 require "pry-byebug"
-require "vcr"
-require "support/vcr"
 require "shoulda/matchers"
 require "logger"
 

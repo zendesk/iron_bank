@@ -7,7 +7,6 @@ require "faraday_middleware"
 require "fileutils"
 require "json"
 require "nokogiri"
-require "ddtrace"
 
 # An opinionated Ruby interface to the Zuora REST API
 module IronBank
@@ -60,10 +59,6 @@ require "iron_bank/error"
 require "iron_bank/faraday_middleware/raise_error"
 require "iron_bank/faraday_middleware/renew_auth"
 require "iron_bank/faraday_middleware"
-
-# Helpers
-require "iron_bank/open_tracing"
-require "iron_bank/instrumentation"
 
 # Use default configuration
 IronBank.configure {}

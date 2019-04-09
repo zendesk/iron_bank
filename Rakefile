@@ -19,11 +19,6 @@ task test: :spec
 
 task default: %i[rubocop reek spec]
 
-desc "Delete the VCR cassettes folder"
-task :clean do
-  sh "rm -rf spec/vcr"
-end
-
 desc "Export the Zuora Schema using the Describe API"
 task :export_schema do
   require "dotenv/load"
