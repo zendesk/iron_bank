@@ -57,7 +57,7 @@ IronBank.configure do |config|
   config.schema_directory  = 'directory-path' # schema drirectory path
 
   # Ironbank uses Faraday to send request to Zuora. Middlewares can be specified
-  # by adding the class name and class options to the `middlewares` 
+  # by adding the class name and class options to the `middlewares`
   # configuration.
   # Faraday middlewares, we can send in an array with cutomer middleware class
   # and options
@@ -133,6 +133,11 @@ https://github.com/zendesk/iron_bank.
 - `AutoPay` field on the `Invoice` object is not queryable using ZOQL despite
   the metadata showing `<selectable>true</selectable>`, hence it has been added
   to the `exclude_fields` method.
+- Exporting the local records through `IronBank::LocalRecords.export` can take a
+  long time (especially the `ProductRatePlanChargeTier` records). In case the
+  task fails because the export is still processing, you can manually download
+  the export from Zuora by going to **Reporting** -> **Data Sources** and
+  looking for the `ProductRatePlanChargeTier.csv` export.
 
 ## Copyright and license
 

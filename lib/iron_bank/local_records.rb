@@ -34,10 +34,9 @@ module IronBank
     private
 
     BACKOFF = {
-      max:        3,
-      interval:   0.5,
-      randomness: 0.5,
-      factor:     4
+      max:        10,
+      interval:   1,
+      factor:     2
     }.freeze
     private_constant :BACKOFF
 
@@ -59,8 +58,9 @@ module IronBank
     end
 
     def export_query_info
-      "Waiting for export #{export.id} to complete " \
-        "(attempt #{query_attempts} of #{BACKOFF[:max]})"
+      "Waiting for export #{export.id} (#{resource}) to complete " \
+        "(attempt #{query_attempts} of #{BACKOFF[:max]}; #{backoff_time}s " \
+        "sleeping time)"
     end
 
     def completed?
@@ -85,11 +85,7 @@ module IronBank
     end
 
     def backoff_time
-      interval         = BACKOFF[:interval]
-      current_interval = interval * (BACKOFF[:factor]**query_attempts)
-      random_interval  = rand * BACKOFF[:randomness].to_f * interval
-
-      current_interval + random_interval
+      BACKOFF[:interval] * (BACKOFF[:factor]**query_attempts)
     end
   end
 end
