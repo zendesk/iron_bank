@@ -123,11 +123,11 @@ RSpec.describe IronBank::LocalRecords do
             to raise_error(IronBank::Error, "Export query attempts exceeded")
         end
 
-        it "attempts 4 queries" do
+        it "attempts 11 queries" do
           begin
             export
           rescue IronBank::Error
-            expect(export_instance).to have_received(:reload).exactly(4).times
+            expect(export_instance).to have_received(:reload).exactly(11).times
           end
         end
       end

@@ -34,9 +34,9 @@ module IronBank
     private
 
     BACKOFF = {
-      max:        10,
-      interval:   1,
-      factor:     2
+      max:      10,
+      interval: 1,
+      factor:   2
     }.freeze
     private_constant :BACKOFF
 
