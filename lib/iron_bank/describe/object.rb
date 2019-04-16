@@ -16,6 +16,7 @@ module IronBank
       end
 
       def self.from_connection(connection, name)
+        IronBank.logger.info "Describe (#{name})"
         xml = connection.get("v1/describe/#{name}").body
         new(Nokogiri::XML(xml))
       rescue TypeError
