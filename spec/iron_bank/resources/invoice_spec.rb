@@ -45,7 +45,10 @@ RSpec.describe IronBank::Resources::Invoice do
       end
 
       it "reloads the invoice to fetch the body" do
-        expect(invoice).to receive(:reload).and_return(remote_with_body)
+        expect(invoice).
+          to receive(:reload).
+          and_return(described_class.new(remote_with_body))
+
         expect(invoice.body).to eq(invoice_body)
       end
     end
