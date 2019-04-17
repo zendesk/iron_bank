@@ -7,8 +7,9 @@ module IronBank
     #
     class ProductRatePlanChargeTier < Resource
       # These fields are declared as `<selectable>true</selectable>` but only
-      # ZOQL export. To let live queries go through when the local records are
-      # not exported, we only allow querying the non-discount tiers.
+      # for <context>export</export>, AKA ZOQL export. To let live queries go
+      # through when the local records are not exported, we only allow querying
+      # the non-discount tiers.
       def self.exclude_fields
         %w[
           Active
