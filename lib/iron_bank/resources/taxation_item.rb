@@ -7,7 +7,11 @@ module IronBank
     #
     class TaxationItem < Resource
       def self.exclude_fields
-        %w[Balance]
+        %w[
+          Balance
+          CreditAmount
+          PaymentAmount
+        ]
       end
       with_schema
 
