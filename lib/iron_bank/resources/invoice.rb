@@ -26,6 +26,7 @@ module IronBank
       with_many :invoice_adjustments, alias: :adjustments
       with_many :invoice_items, alias: :items
       with_many :invoice_payments
+      with_many :taxation_items
 
       # We can only retrieve one invoice body at a time, hence Body is excluded
       # from the query fields, but is populated using the `find` class method

@@ -117,6 +117,7 @@ require "iron_bank/resources/rate_plan_charge_tier"
 require "iron_bank/resources/rate_plan_charge"
 require "iron_bank/resources/rate_plan"
 require "iron_bank/resources/subscription"
+require "iron_bank/resources/taxation_item"
 require "iron_bank/resources/usage"
 
 # Aliasing IronBank::Actions::* to IronBank::*
