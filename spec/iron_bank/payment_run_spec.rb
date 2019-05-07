@@ -21,7 +21,7 @@ RSpec.describe IronBank::PaymentRun do
     let(:conn)     { instance_double(Faraday::Connection) }
     let(:client)   { instance_double(IronBank::Client, connection: conn) }
     let(:response) { instance_double(Faraday::Response, body: body) }
-    let(:body)     { { success: success, fooBar: "baz" } }
+    let(:body)     { { "success" => success, "fooBar" => "baz" } }
 
     before do
       allow(IronBank).to receive(:client).and_return(client)

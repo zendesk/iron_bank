@@ -10,7 +10,7 @@ module IronBank
     def self.create(params)
       payload = IronBank::Object.new(params).deep_camelize(type: :lower)
       body    = IronBank.client.connection.post(ENDPOINT, payload).body
-      success = body.fetch('success', false)
+      success = body.fetch("success", false)
 
       raise ::IronBank::UnprocessableEntityError, body unless success
 
