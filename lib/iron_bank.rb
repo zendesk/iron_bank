@@ -87,6 +87,7 @@ require "iron_bank/describe/tenant"
 require "iron_bank/object"
 require "iron_bank/schema"
 require "iron_bank/query_builder"
+require "iron_bank/payment_run"
 
 # Operations
 require "iron_bank/operation"
