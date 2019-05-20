@@ -20,11 +20,13 @@ module IronBank
       end
 
       def params
-        if limit.zero?
-          { queryString: zoql }
-        else
-          { queryString: zoql, conf: { batchSize: limit } }
-        end
+        return required_params if limit.zero?
+
+        required_params.merge(conf: { batchSize: limit })
+      end
+
+      def required_params
+        { queryString: zoql }
       end
     end
   end
