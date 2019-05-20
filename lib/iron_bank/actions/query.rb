@@ -6,10 +6,27 @@ module IronBank
     # https://knowledgecenter.zuora.com/DC_Developers/K_Zuora_Object_Query_Language
     #
     class Query < Action
+      def self.call(zoql, limit: 0)
+        new(zoql, limit).call
+      end
+
       private
 
+      attr_reader :zoql, :limit
+
+      def initialize(zoql, limit)
+        @zoql  = zoql
+        @limit = limit
+      end
+
       def params
-        { 'queryString': args }
+        return required_params if limit.zero?
+
+        required_params.merge(conf: { batchSize: limit })
+      end
+
+      def required_params
+        { queryString: zoql }
       end
     end
   end
