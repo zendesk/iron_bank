@@ -5,7 +5,7 @@ RSpec.describe IronBank::CSV do
     context ":decimal_integer" do
       let(:decimal_integer) { CSV::Converters[:decimal_integer] }
 
-      context "when the string is a decimal integer" do
+      context "when the field is a decimal integer" do
         let(:integers) { %w[1 10 100 1000] }
 
         it "returns the original string converter to an integer" do
@@ -15,7 +15,7 @@ RSpec.describe IronBank::CSV do
         end
       end
 
-      context "when the string is not a decimal integer" do
+      context "when the field is not a decimal integer" do
         let(:non_integers) { %w[1.0 1. 0.1 0b10 doo] }
 
         it "returns the original string" do
@@ -25,15 +25,11 @@ RSpec.describe IronBank::CSV do
         end
       end
 
-      context "conversion throws an Exception" do
-        let(:input_string) { "1" }
+      context "when the field is nil" do
+        let(:field) { nil }
 
-        before do
-          allow_any_instance_of(String).to receive(:encode).and_raise(Exception)
-        end
-
-        it "returns the original string when rescuing from all exceptions" do
-          expect(decimal_integer.call(input_string)).to eq(input_string)
+        it "returns the original string" do
+          expect(decimal_integer.call(field)).to eq(field)
         end
       end
     end
@@ -41,7 +37,7 @@ RSpec.describe IronBank::CSV do
     context ":decimal_float" do
       let(:decimal_float) { CSV::Converters[:decimal_float] }
 
-      context "when the string is a decimal float" do
+      context "when the field is a decimal float" do
         let(:floats) { %w[1.0 1. .1 0.1 0.1000] }
 
         it "returns the original string converter to a float" do
@@ -51,7 +47,7 @@ RSpec.describe IronBank::CSV do
         end
       end
 
-      context "when the string is not a decimal float" do
+      context "when the field is not a decimal float" do
         let(:non_floats) { %w[1 10 100 0b10 doo] }
 
         it "returns the original string" do
@@ -61,15 +57,11 @@ RSpec.describe IronBank::CSV do
         end
       end
 
-      context "conversion throws an Exception" do
-        let(:input_string) { "1" }
+      context "when the field is nil" do
+        let(:field) { nil }
 
-        before do
-          allow_any_instance_of(String).to receive(:encode).and_raise(Exception)
-        end
-
-        it "returns the original string when rescuing from all exceptions" do
-          expect(decimal_float.call(input_string)).to eq(input_string)
+        it "returns the original string" do
+          expect(decimal_float.call(field)).to eq(field)
         end
       end
     end
