@@ -28,7 +28,9 @@ module IronBank
         sleep backoff_time
       end
 
-      File.open(file_path, "w") { |file| file.write(export.content) }
+      File.open(file_path, "w") do |file|
+        file.write(export.content.force_encoding("UTF-8"))
+      end
     end
 
     private

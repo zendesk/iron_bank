@@ -90,7 +90,7 @@ RSpec.describe IronBank::LocalRecords do
 
     context "for one resource" do
       let(:csv_file)       { instance_double(File) }
-      let(:export_content) { "fieldName\nrowValueA\nrowValueB" }
+      let(:export_content) { +"fieldName\nrowValueA\nrowValueB" }
 
       let(:export_instance) do
         instance_double(IronBank::Export, id: "zuora-export-id", status: status)
