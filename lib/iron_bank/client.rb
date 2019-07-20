@@ -45,8 +45,8 @@ module IronBank
         conn.request  :json
         conn.request  :retry, config.retry_options
 
-        conn.response :raise_error
-        conn.response :renew_auth, auth
+        conn.use FaradayMiddleware::Response::RaiseError
+        conn.use FaradayMiddleware::Response::RenewAuth, auth
         conn.response :json, content_type: /\bjson$/
 
         conn.adapter  Faraday.default_adapter
