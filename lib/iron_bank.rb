@@ -56,9 +56,8 @@ require "iron_bank/utils"
 require "iron_bank/version"
 require "iron_bank/csv"
 require "iron_bank/error"
-require "iron_bank/faraday_middleware/raise_error"
-require "iron_bank/faraday_middleware/renew_auth"
-require "iron_bank/faraday_middleware"
+require "iron_bank/faraday_middleware/response/raise_error"
+require "iron_bank/faraday_middleware/response/renew_auth"
 
 # Use default configuration
 IronBank.configure {}

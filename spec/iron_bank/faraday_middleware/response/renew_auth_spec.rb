@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe IronBank::FaradayMiddleware::RenewAuth do
+RSpec.describe IronBank::FaradayMiddleware::Response::RenewAuth do
   let(:session)         { instance_double(IronBank::Authentications::Token) }
   let(:auth)            { instance_double(IronBank::Authentication) }
   let(:new_auth_header) { { "Authorization" => "Bearer foo" } }
@@ -50,8 +50,8 @@ RSpec.describe IronBank::FaradayMiddleware::RenewAuth do
       # To simulate a second request with new auth headers
       conn.request :retry, max: 2, exceptions: [IronBank::UnauthorizedError]
 
-      conn.response :raise_error
-      conn.response :renew_auth, auth
+      conn.use IronBank::FaradayMiddleware::Response::RaiseError
+      conn.use IronBank::FaradayMiddleware::Response::RenewAuth, auth
 
       conn.adapter :test, connection_stubs
     end
