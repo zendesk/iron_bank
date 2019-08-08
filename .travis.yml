@@ -2,6 +2,9 @@ cache: bundler
 
 language: ruby
 
+addons:
+  srcclr: true
+
 rvm:
   - 2.4.6
   - 2.5.5
@@ -18,6 +21,7 @@ before_install:
 
 env:
   global:
+    - SECURITYSCAN="srcclr"
     - ZUORA_CLIENT_ID=something
     - ZUORA_CLIENT_SECRET=secret
     - ZUORA_DOMAIN=rest.apisandbox.zuora.com
