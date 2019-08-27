@@ -36,7 +36,11 @@ module IronBank
       where({})
     end
 
-    def where(conditions)
+    def first
+      where({}, limit: 1).first
+    end
+
+    def where(conditions, limit: 0)
       query_string = IronBank::QueryBuilder.zoql(
         object_name,
         query_fields,
@@ -46,7 +50,7 @@ module IronBank
       # FIXME: need to use logger instance instead
       # puts "query: #{query_string}"
 
-      records = IronBank::Query.call(query_string)[:records]
+      records = IronBank::Query.call(query_string, limit: limit)[:records]
       return [] unless records
 
       records.each.with_object([]) do |data, result|

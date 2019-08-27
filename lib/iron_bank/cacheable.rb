@@ -32,7 +32,7 @@ module IronBank
         cache.fetch(id, force: force) { super(id) }
       end
 
-      def where(conditions)
+      def where(conditions, limit: 0)
         # Conditions can be empty when called from #all, it does not make sense
         # to try to cache all records returned then.
         return super if conditions.empty?
