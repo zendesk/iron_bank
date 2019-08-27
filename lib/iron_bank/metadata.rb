@@ -4,10 +4,12 @@ module IronBank
   # Metadata to provide accessors to Zuora resources.
   #
   module Metadata
-    # Can be overriden to exclude specific fields for a given resource, see
-    # `Account` class for an example
     def exclude_fields
-      []
+      return [] unless (excluded = IronBank.configuration.excluded_fields)
+
+      # Return the field for the given resource name
+      # (where the module is extended from)
+      excluded.fetch(object_name, [])
     end
 
     def fields

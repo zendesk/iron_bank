@@ -15,3 +15,6 @@
 
 # byebug history
 .byebug_history
+
+# do not version specific excluded fields
+excluded_fields.yml

@@ -25,6 +25,9 @@ module IronBank
     # Cache store instance, optionally used by certain resources.
     attr_accessor :cache
 
+    # File path for excluded fields (when querying using ZOQL)
+    attr_accessor :excluded_fields_file
+
     # Directory where the XML describe files are located.
     attr_reader :schema_directory
 
@@ -77,6 +80,16 @@ module IronBank
 
     def retry_options
       @retry_options ||= IronBank::Client::DEFAULT_RETRY_OPTIONS
+    end
+
+    def excluded_fields
+      return {} unless excluded_fields_file
+
+      @excluded_fields ||= Psych.
+        load_file(excluded_fields_file).
+        tap do |excluded|
+          raise "Excluded fields must be a hash" unless excluded.is_a?(Hash)
+      end
     end
   end
 end
