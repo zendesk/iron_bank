@@ -34,6 +34,15 @@ module IronBank
       @import = nil
     end
 
+    def self.excluded_fields
+      {}.tap do |object_fields|
+        IronBank::Resources.constants.each do |resource|
+          object_fields[resource.to_s] =
+            IronBank::Describe::ExcludedFields.call(object_name: resource)
+        end
+      end
+    end
+
     def export
       tenant.objects.compact.each do |object|
         begin
