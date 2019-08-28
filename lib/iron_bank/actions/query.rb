@@ -6,7 +6,9 @@ module IronBank
     # https://knowledgecenter.zuora.com/DC_Developers/K_Zuora_Object_Query_Language
     #
     class Query < Action
-      def self.call(zoql, limit: 0)
+      DEFAULT_ZUORA_LIMIT = 0
+
+      def self.call(zoql, limit: DEFAULT_ZUORA_LIMIT)
         new(zoql, limit).call
       end
 

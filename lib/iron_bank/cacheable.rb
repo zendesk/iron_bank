@@ -32,7 +32,8 @@ module IronBank
         cache.fetch(id, force: force) { super(id) }
       end
 
-      def where(conditions, limit: 0)
+      def where(conditions,
+                limit: IronBank::Actions::Query::DEFAULT_ZUORA_LIMIT)
         # Conditions can be empty when called from #all, it does not make sense
         # to try to cache all records returned then.
         return super if conditions.empty?

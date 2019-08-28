@@ -23,7 +23,7 @@ module IronBank
       store.any? ? store.values.first : super
     end
 
-    def where(conditions, limit: 0)
+    def where(conditions, limit: IronBank::Actions::Query::DEFAULT_ZUORA_LIMIT)
       records = store.values.select do |record|
         conditions.all? { |field, value| record.public_send(field) == value }
       end

@@ -40,7 +40,7 @@ module IronBank
       where({}, limit: 1).first
     end
 
-    def where(conditions, limit: 0)
+    def where(conditions, limit: IronBank::Actions::Query::DEFAULT_ZUORA_LIMIT)
       query_string = IronBank::QueryBuilder.zoql(
         object_name,
         query_fields,

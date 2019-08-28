@@ -96,12 +96,28 @@ RSpec.shared_examples "a queryable resource" do
     end
   end
 
-  describe ":all" do
+  describe "::all" do
     subject(:all) { described_class.all }
 
     it "delegates to where without conditions" do
       expect(described_class).to receive(:where).with({})
+
       all
+    end
+  end
+
+  describe "::first" do
+    subject(:first) { described_class.first }
+
+    let(:result) { { foo: "bar" } }
+
+    it "delegates to where without conditions and returns the first result" do
+      expect(described_class).
+        to receive(:where).
+        with({}, limit: 1).
+        and_return([result])
+
+      expect(first).to eq(result)
     end
   end
 
