@@ -6,7 +6,19 @@ module IronBank
     # `<selectable>true</true>` in their Describe API... /rant
     #
     class ExcludedFields
-      FAULT_FIELD = /invalid field for query: \w+\.(\w+)/.freeze
+      GENERIC_FAULT_FIELD = /invalid field for query: \w+\.(\w+)/.freeze
+
+      INVOICE_BILL_RUN_ID_FAULT = /Cannot use the BillRunId field in the select clause/.freeze
+
+      INVOICE_BODY_FAULT = /Can only query one invoice body at a time/.freeze
+
+      CATALOG_TIER_PRICE_FAULT = /You can only use Price or DiscountAmount or DiscountPercentage/.freeze
+
+      CATALOG_CHARGE_ACTIVE_CURRENCIES_FAULT = /When querying for active currencies/.freeze
+
+      CHARGE_ROLLOVER_BALANCE_FAULT = /You can only query RolloverBalance in particular/.freeze
+
+      CHARGE_OTHER_THAN_PRICE_FAULT = /OveragePrice, Price, IncludedUnits, DiscountAmount or DiscountPercentage/.freeze
 
       private_class_method :new
 
@@ -55,7 +67,35 @@ module IronBank
 
         true
       rescue IronBank::InternalServerError => error
-        @last_failed_field = FAULT_FIELD.match(error.message)[1]
+        case (message = error.message)
+        when GENERIC_FAULT_FIELD
+          @last_failed_field = $1 # last match
+        when INVOICE_BILL_RUN_ID_FAULT
+          @last_failed_field = "BillRunId"
+        when INVOICE_BODY_FAULT
+          @last_failed_field = "Body"
+        when CATALOG_TIER_PRICE_FAULT
+          # FIXME: Refactor method to accept an array or a single value instead
+          #        of calling it twice like here
+          @last_failed_field = "DiscountAmount"
+          remove_last_failure_field
+          @last_failed_field = "DiscountPercentage"
+        when CATALOG_CHARGE_ACTIVE_CURRENCIES_FAULT
+          @last_failed_field = "ActiveCurrencies"
+        when CHARGE_ROLLOVER_BALANCE_FAULT
+          @last_failed_field = "RolloverBalance"
+        when CHARGE_OTHER_THAN_PRICE_FAULT
+          # FIXME: Same note as above
+          @last_failed_field = "OveragePrice"
+          remove_last_failure_field
+          @last_failed_field = "IncludedUnits"
+          remove_last_failure_field
+          @last_failed_field = "DiscountAmount"
+          remove_last_failure_field
+          @last_failed_field = "DiscountPercentage"
+        else
+          raise "Could not parse error message: #{message}"
+        end
 
         IronBank.logger.info "Invalid field '#{@last_failed_field}' for "\
           "#{object_name} query"

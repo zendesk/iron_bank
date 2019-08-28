@@ -6,19 +6,6 @@ module IronBank
     # holds many invoice items.
     #
     class Invoice < Resource
-      # These fields are declared as `<selectable>true</selectable>` but Zuora
-      # returns a QueryError when trying to query an invoice with them. Also,
-      # the `Body` field can only be retrieved for a single invoice at a time.
-      def self.exclude_fields
-        %w[
-          AutoPay
-          BillRunId
-          BillToContactSnapshotId
-          Body
-          RegenerateInvoicePDF
-          SoldToContactSnapshotId
-        ]
-      end
       with_schema
 
       with_one :account

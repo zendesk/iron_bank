@@ -6,13 +6,6 @@ module IronBank
     # item.
     #
     class TaxationItem < Resource
-      def self.exclude_fields
-        %w[
-          Balance
-          CreditAmount
-          PaymentAmount
-        ]
-      end
       with_schema
 
       with_one :invoice

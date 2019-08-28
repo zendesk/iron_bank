@@ -10,11 +10,6 @@ module IronBank
     # is *at least* one tier per active currency.
     #
     class ProductRatePlanCharge < Resource
-      # `DiscountClass` seems to not be a queryable field, despite the result
-      # from the describe call for product rate plan charge.
-      def self.exclude_fields
-        %w[DiscountClass]
-      end
       with_schema
       with_local_records
       with_cache

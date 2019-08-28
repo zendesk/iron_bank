@@ -6,17 +6,6 @@ module IronBank
     # billed for, in his/her currency.
     #
     class RatePlanChargeTier < Resource
-      # Excluding 'DiscountAmount' & 'DiscountPercentage', as Zuora stores these
-      # values in the 'Price' field.
-      def self.exclude_fields
-        %w[
-          Currency
-          DiscountAmount
-          DiscountPercentage
-          IncludedUnits
-          OveragePrice
-        ]
-      end
       with_schema
       with_cache
 

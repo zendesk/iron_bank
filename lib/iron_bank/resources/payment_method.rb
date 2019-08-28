@@ -8,6 +8,7 @@ module IronBank
     #
     class PaymentMethod < Resource
       with_schema
+
       with_one :account
     end
   end

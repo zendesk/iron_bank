@@ -5,12 +5,6 @@ module IronBank
     # An invoice item holds a charge that is billed to a customer.
     #
     class InvoiceItem < Resource
-      def self.exclude_fields
-        %w[
-          AppliedToChargeNumber
-          Balance
-        ]
-      end
       with_schema
 
       with_one :invoice

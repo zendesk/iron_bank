@@ -6,6 +6,7 @@ module IronBank
     #
     class Import < Resource
       with_schema
+
       with_many :usages
     end
   end
