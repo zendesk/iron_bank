@@ -4,8 +4,8 @@ RSpec.shared_examples "a resource with metadata" do
   let(:schema)   { instance_double(IronBank::Describe::Object) }
   let(:excluded) { %w[ExcludedField] }
 
-  describe "#exclude_fields" do
-    subject { described_class.exclude_fields }
+  describe "#excluded_fields" do
+    subject { described_class.excluded_fields }
     it { is_expected.to be_an(Array) }
   end
 
@@ -27,17 +27,16 @@ RSpec.shared_examples "a resource with metadata" do
       before do
         allow(IronBank::Schema).to receive(:for).and_return(schema)
         allow(schema).to receive(:fields).and_return(fields)
-        allow(described_class).to receive(:exclude_fields).and_return(excluded)
       end
 
       after do
-        # NOTE: Not resetting the instance variable here seems to leak the
+        # NOTE: Not resetting the instance variables here seems to leak the
         #       `instance_double(IronBank::Describe::Object)` to the other
         #       examples.
-        described_class.instance_variable_set :@schema, nil
+        described_class.remove_instance_variable :@schema
       end
 
-      it { is_expected.to eq(%w[AccountNumber]) }
+      it { is_expected.to eq(%w[AccountNumber ExcludedField]) }
     end
   end
 
@@ -54,13 +53,14 @@ RSpec.shared_examples "a resource with metadata" do
       before do
         allow(IronBank::Schema).to receive(:for).and_return(schema)
         allow(schema).to receive(:query_fields).and_return(query_fields)
-        allow(described_class).to receive(:exclude_fields).and_return(excluded)
+        allow(described_class).to receive(:excluded_fields).and_return(excluded)
       end
 
       after do
-        # FIXME: Not resetting the instance variable here seems to leak the
-        # `instance_double(IronBank::Describe::Object)` to the other examples.
-        described_class.instance_variable_set :@schema, nil
+        # NOTE: Not resetting the instance variable here seems to leak the
+        #       `instance_double(IronBank::Describe::Object)` to the other
+        #       examples.
+        described_class.remove_instance_variable :@schema
       end
 
       it { is_expected.to eq(%w[AccountNumber]) }

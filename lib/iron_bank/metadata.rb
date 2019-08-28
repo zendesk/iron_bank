@@ -4,7 +4,7 @@ module IronBank
   # Metadata to provide accessors to Zuora resources.
   #
   module Metadata
-    def exclude_fields
+    def excluded_fields
       return [] unless (excluded = IronBank.configuration.excluded_fields)
 
       # Return the field for the given resource name
@@ -15,13 +15,13 @@ module IronBank
     def fields
       return [] unless schema
 
-      @fields ||= schema.fields.map(&:name) - exclude_fields
+      @fields ||= schema.fields.map(&:name)
     end
 
     def query_fields
       return [] unless schema
 
-      @query_fields ||= schema.query_fields - exclude_fields
+      @query_fields ||= schema.query_fields - excluded_fields
     end
 
     def schema

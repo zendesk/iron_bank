@@ -7,19 +7,27 @@ module IronBank
     # `<selectable>true</true>` in their Describe API... /rant
     #
     class ExcludedFields
-      GENERIC_FAULT_FIELD = /invalid field for query: \w+\.(\w+)/.freeze
+      extend Forwardable
 
-      INVOICE_BILL_RUN_ID_FAULT = /Cannot use the BillRunId field in the select clause/.freeze
-
-      INVOICE_BODY_FAULT = /Can only query one invoice body at a time/.freeze
-
-      CATALOG_TIER_PRICE_FAULT = /You can only use Price or DiscountAmount or DiscountPercentage/.freeze
-
-      CATALOG_CHARGE_ACTIVE_CURRENCIES_FAULT = /When querying for active currencies/.freeze
-
-      CHARGE_ROLLOVER_BALANCE_FAULT = /You can only query RolloverBalance in particular/.freeze
-
-      CHARGE_OTHER_THAN_PRICE_FAULT = /OveragePrice, Price, IncludedUnits, DiscountAmount or DiscountPercentage/.freeze
+      # FIXME
+      # rubocop:disable Metrics/LineLength
+      FAULT_FIELD_MESSAGES = Regexp.union(
+        # Generic fault field
+        /invalid field for query: \w+\.(\w+)/,
+        # Invoice Bill Run is not selectable in ZOQL
+        /Cannot use the (BillRunId) field in the select clause/,
+        # Invoice Body, implemented as a separate call
+        /Can only query one invoice (body) at a time/,
+        # Catalog tier should only query the price field
+        /use Price or (DiscountAmount) or (DiscountPercentage)/,
+        # Catalog plan currencies, implemented as a separate call
+        /When querying for (active currencies)/,
+        # Catalog charge rollover balance
+        /You can only query (RolloverBalance) in particular/,
+        # (Subscription) charge should only query the price field
+        /(OveragePrice), Price, (IncludedUnits), (DiscountAmount) or (DiscountPercentage)/
+      ).freeze
+      # rubocop:enable Metrics/LineLength
 
       private_class_method :new
 
@@ -28,78 +36,66 @@ module IronBank
       end
 
       def call
-        remove_last_failure_field until valid_query?
+        remove_last_failure_fields until valid_query?
 
         excluded_fields
       end
 
       private
 
-      attr_reader :object_name, :excluded_fields, :last_failed_field
+      attr_reader :object_name, :excluded_fields, :last_failed_fields
+
+      def_delegators "IronBank.logger", :info
 
       def initialize(object_name)
-        @object_name       = object_name
-        @excluded_fields   = []
-        @last_failed_field = nil
+        @object_name        = object_name
+        @excluded_fields    = []
+        @last_failed_fields = nil
       end
 
       def object
         IronBank::Resources.const_get(object_name)
       end
 
-      def remove_last_failure_field
-        # Zuora's response is lower cased, where the query fields are case
-        # sensitive (well, at least the custom fields)...
-        failed_field = object.query_fields.detect do |field|
-          field.casecmp?(last_failed_field)
+      def remove_last_failure_fields
+        query_fields = object.query_fields
+
+        failed_fields = query_fields.select do |field|
+          last_failed_fields.any? { |failed| field.casecmp?(failed) }
         end
 
-        @excluded_fields << failed_field
+        @excluded_fields += failed_fields
 
         # Remove the field for the next query
-        object.query_fields.delete(failed_field)
+        query_fields.delete_if { |field| failed_fields.include?(field) }
       end
 
       def valid_query?
         object.first
-        IronBank.logger.info "Successful query for #{object_name}"
+        info "Successful query for #{object_name}"
 
         true
       rescue IronBank::InternalServerError => e
-        case (message = e.message)
-        when GENERIC_FAULT_FIELD
-          @last_failed_field = Regexp.last_match(1) # last match
-        when INVOICE_BILL_RUN_ID_FAULT
-          @last_failed_field = "BillRunId"
-        when INVOICE_BODY_FAULT
-          @last_failed_field = "Body"
-        when CATALOG_TIER_PRICE_FAULT
-          # FIXME: Refactor method to accept an array or a single value instead
-          #        of calling it twice like here
-          @last_failed_field = "DiscountAmount"
-          remove_last_failure_field
-          @last_failed_field = "DiscountPercentage"
-        when CATALOG_CHARGE_ACTIVE_CURRENCIES_FAULT
-          @last_failed_field = "ActiveCurrencies"
-        when CHARGE_ROLLOVER_BALANCE_FAULT
-          @last_failed_field = "RolloverBalance"
-        when CHARGE_OTHER_THAN_PRICE_FAULT
-          # FIXME: Same note as above
-          @last_failed_field = "OveragePrice"
-          remove_last_failure_field
-          @last_failed_field = "IncludedUnits"
-          remove_last_failure_field
-          @last_failed_field = "DiscountAmount"
-          remove_last_failure_field
-          @last_failed_field = "DiscountPercentage"
-        else
+        @last_failed_fields = extract_fields_from_exception(e)
+
+        false
+      end
+
+      def extract_fields_from_exception(exception)
+        message = exception.message
+
+        unless FAULT_FIELD_MESSAGES.match(message)
           raise "Could not parse error message: #{message}"
         end
 
-        IronBank.logger.info "Invalid field '#{@last_failed_field}' for "\
-          "#{object_name} query"
+        failed_fields = Regexp.last_match.
+                        captures.
+                        compact.
+                        map { |capture| capture.delete(" ") }
 
-        false
+        info "Invalid fields '#{failed_fields}' for #{object_name} query"
+
+        failed_fields
       end
     end
   end
