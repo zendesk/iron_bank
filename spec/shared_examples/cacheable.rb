@@ -21,7 +21,7 @@ RSpec.shared_examples "a cacheable resource" do
       subject(:where_without_cache) { described_class.where(conditions) }
 
       it "makes a live query" do
-        expect(IronBank::Resource).to receive(:where).with(conditions)
+        expect(IronBank::Resource).to receive(:where).with(conditions, limit: 0)
         where_without_cache
       end
     end

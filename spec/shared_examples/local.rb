@@ -132,7 +132,7 @@ RSpec.shared_examples "a resource with local records" do
       subject(:where) { described_class.where(conditions) }
 
       it "makes a live query" do
-        expect(IronBank::Resource).to receive(:where).with(conditions)
+        expect(IronBank::Resource).to receive(:where).with(conditions, limit: 0)
         where
       end
     end
