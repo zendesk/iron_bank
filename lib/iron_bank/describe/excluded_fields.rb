@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module IronBank
   module Describe
     # Returns an array of non-queryable fields for the given object in the
@@ -27,9 +28,7 @@ module IronBank
       end
 
       def call
-        until valid_query?
-          remove_last_failure_field
-        end
+        remove_last_failure_field until valid_query?
 
         excluded_fields
       end
@@ -66,10 +65,10 @@ module IronBank
         IronBank.logger.info "Successful query for #{object_name}"
 
         true
-      rescue IronBank::InternalServerError => error
-        case (message = error.message)
+      rescue IronBank::InternalServerError => e
+        case (message = e.message)
         when GENERIC_FAULT_FIELD
-          @last_failed_field = $1 # last match
+          @last_failed_field = Regexp.last_match(1) # last match
         when INVOICE_BILL_RUN_ID_FAULT
           @last_failed_field = "BillRunId"
         when INVOICE_BODY_FAULT
