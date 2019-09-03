@@ -85,6 +85,12 @@ module IronBank
     def excluded_fields
       return {} unless excluded_fields_file
 
+      unless File.exist?(excluded_fields_file)
+        IronBank.logger.warn "Cannot open #{excluded_fields_file}"
+
+        return {}
+      end
+
       @excluded_fields ||= Psych.
                            load_file(excluded_fields_file).
                            tap do |excluded|

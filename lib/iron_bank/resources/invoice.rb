@@ -6,6 +6,11 @@ module IronBank
     # holds many invoice items.
     #
     class Invoice < Resource
+      # See the comment for the instance method `#body`
+      def self.excluded_fields
+        super + %w[Body]
+      end
+
       with_schema
 
       with_one :account

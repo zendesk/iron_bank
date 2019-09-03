@@ -15,7 +15,7 @@ module IronBank
     def fields
       return [] unless schema
 
-      @fields ||= schema.fields.map(&:name)
+      @fields ||= schema.fields.map(&:name) - excluded_fields
     end
 
     def query_fields

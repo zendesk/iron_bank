@@ -5,6 +5,10 @@ module IronBank
     # A rate plan charge belongs to a subscription rate plan.
     #
     class RatePlanCharge < Resource
+      def self.excluded_fields
+        super + %w[RolloverBalance]
+      end
+
       with_schema
       with_cache
 
@@ -15,7 +19,7 @@ module IronBank
       with_many :rate_plan_charge_tiers, alias: :tiers
 
       def rollover_balance
-        # FIXME
+        remote[:rollover_balance] || reload.remote[:rollover_balance]
       end
     end
   end

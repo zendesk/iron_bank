@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe IronBank::Resources::Invoice do
+  before { IronBank::Schema.reset }
+
   describe "#body" do
     let(:invoice)      { described_class.new(remote) }
     let(:invoice_body) { "base-64-encoded-invoice-pdf" }
