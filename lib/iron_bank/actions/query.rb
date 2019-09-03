@@ -6,6 +6,11 @@ module IronBank
     # https://knowledgecenter.zuora.com/DC_Developers/K_Zuora_Object_Query_Language
     #
     class Query < Action
+      # Zuora's default is 2,000 records, but we simply use `0` here to not pass
+      # the parameter to Zuora APIs during the query call.
+      #
+      # See https://knowledgecenter.zuora.com/DC_Developers/BC_ZOQL#Limits
+      #
       DEFAULT_ZUORA_LIMIT = 0
 
       def self.call(zoql, limit: DEFAULT_ZUORA_LIMIT)

@@ -17,6 +17,9 @@ module IronBank
 
     # This methods leverages the fact that Zuora only returns 2,000 records at a
     # time, hance providing a default batch size
+    #
+    # See https://knowledgecenter.zuora.com/DC_Developers/BC_ZOQL#Limits
+    #
     def find_each
       return enum_for(:find_each) unless block_given?
 
@@ -41,14 +44,10 @@ module IronBank
     end
 
     def where(conditions, limit: IronBank::Actions::Query::DEFAULT_ZUORA_LIMIT)
-      query_string = IronBank::QueryBuilder.zoql(
-        object_name,
-        query_fields,
-        conditions
-      )
+      query_string = IronBank::QueryBuilder.
+                     zoql(object_name, query_fields, conditions)
 
-      # FIXME: need to use logger instance instead
-      # puts "query: #{query_string}"
+      IronBank.logger.info "query: #{query_string}"
 
       records = IronBank::Query.call(query_string, limit: limit)[:records]
       return [] unless records
