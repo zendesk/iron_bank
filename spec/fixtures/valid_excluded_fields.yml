@@ -2,5 +2,5 @@
 Account:
   - Foo__c
 
-Invoicie:
+Invoice:
   - TaxMessage
