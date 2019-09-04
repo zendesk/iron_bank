@@ -5,11 +5,11 @@ module IronBank
   #
   module Metadata
     def excluded_fields
-      return [] unless (excluded = IronBank.configuration.excluded_fields)
+      return [] unless (fields = IronBank.configuration.excluded_fields)
 
       # Return the field for the given resource name
       # (where the module is extended from)
-      excluded.fetch(object_name, [])
+      fields.fetch(object_name, [])
     end
 
     def fields

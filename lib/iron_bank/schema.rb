@@ -35,9 +35,9 @@ module IronBank
     end
 
     def self.excluded_fields
-      {}.tap do |object_fields|
-        IronBank::Resources.constants.each do |resource|
-          object_fields[resource.to_s] =
+      @excluded_fields ||= begin
+        IronBank::Resources.constants.each.with_object({}) do |resource, fields|
+          fields[resource.to_s] =
             IronBank::Describe::ExcludedFields.call(object_name: resource)
         end
       end

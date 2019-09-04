@@ -114,6 +114,7 @@ RSpec.describe IronBank::Schema do
     subject(:excluded_fields) { described_class.excluded_fields }
 
     before { allow(IronBank::Describe::ExcludedFields).to receive(:call) }
+    after  { described_class.remove_instance_variable(:@excluded_fields) }
 
     it { is_expected.to be_a(Hash) }
 
