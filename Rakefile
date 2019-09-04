@@ -21,16 +21,31 @@ task default: %i[rubocop reek spec]
 
 desc "Export the Zuora Schema using the Describe API"
 task :export_schema do
+  setup_iron_bank
+  IronBank::Schema.export
+end
+
+desc "Query Zuora for fields that we should not use in a query"
+task :excluded_fields, [:filename] do |_t, args|
+  require "psych"
+  setup_iron_bank
+
+  destination = args[:filename] || IronBank.configuration.excluded_fields_file
+  fields      = IronBank::Schema.excluded_fields
+
+  File.open(destination, "w") { |file| file.write(Psych.dump(fields)) }
+end
+
+# Helper function to set up an `IronBank::Client` instance
+def setup_iron_bank
   require "dotenv/load"
   require "iron_bank"
 
-  # Set up the client
-  IronBank.client = IronBank::Client.new(
-    domain:        ENV["ZUORA_DOMAIN"],
-    client_id:     ENV["ZUORA_CLIENT_ID"],
-    client_secret: ENV["ZUORA_CLIENT_SECRET"],
-    auth_type:     ENV["ZUORA_AUTH_TYPE"]
-  )
-
-  IronBank::Schema.export
+  IronBank.configure do |config|
+    config.client_id            = ENV["ZUORA_CLIENT_ID"]
+    config.client_secret        = ENV["ZUORA_CLIENT_SECRET"]
+    config.auth_type            = ENV.fetch("ZUORA_AUTH_TYPE", "token")
+    config.domain               = ENV["ZUORA_DOMAIN"]
+    config.excluded_fields_file = ENV["ZUORA_EXCLUDED_FIELDS_FILE"]
+  end
 end
