@@ -9,8 +9,6 @@ module IronBank
     class ExcludedFields
       extend Forwardable
 
-      # FIXME
-      # rubocop:disable Metrics/LineLength
       FAULT_FIELD_MESSAGES = Regexp.union(
         # Generic fault field
         /invalid field for query: \w+\.(\w+)/,
@@ -25,9 +23,14 @@ module IronBank
         # Catalog charge rollover balance
         /You can only query (RolloverBalance) in particular/,
         # (Subscription) charge should only query the price field
-        /(OveragePrice), Price, (IncludedUnits), (DiscountAmount) or (DiscountPercentage)/
+        %r{
+          (OveragePrice),
+          \ Price,
+          \ (IncludedUnits),
+          \ (DiscountAmount)
+          \ or\ (DiscountPercentage)
+        }x
       ).freeze
-      # rubocop:enable Metrics/LineLength
 
       private_class_method :new
 
