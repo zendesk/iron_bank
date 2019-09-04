@@ -38,6 +38,12 @@ RSpec.describe IronBank::Describe::ExcludedFields do
     end
 
     it { is_expected.to eq(["FooBar"]) }
+
+    it "makes two queries" do
+      call
+
+      expect(object).to have_received(:first).twice
+    end
   end
 
   describe "cannot parse error message" do

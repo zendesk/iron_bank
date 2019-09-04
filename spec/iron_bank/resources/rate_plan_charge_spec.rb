@@ -7,6 +7,11 @@ RSpec.describe IronBank::Resources::RatePlanCharge do
     let(:id) { "a-zuora-rate-plan-charge-id" }
   end
 
+  describe "::excluded_fields" do
+    subject { described_class.excluded_fields }
+    it { is_expected.to eq(["RolloverBalance"]) }
+  end
+
   describe "#rollover_balance" do
     let(:rate_plan_charge) { described_class.new(remote) }
     let(:rollover_balance) { "anything" }

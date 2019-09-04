@@ -3,6 +3,11 @@
 RSpec.describe IronBank::Resources::Invoice do
   before { IronBank::Schema.reset }
 
+  describe "::excluded_fields" do
+    subject { described_class.excluded_fields }
+    it { is_expected.to eq(["Body"]) }
+  end
+
   describe "#body" do
     let(:invoice)      { described_class.new(remote) }
     let(:invoice_body) { "base-64-encoded-invoice-pdf" }

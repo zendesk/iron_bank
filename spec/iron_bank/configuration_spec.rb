@@ -69,4 +69,46 @@ RSpec.describe IronBank::Configuration do
       set_export
     end
   end
+
+  describe "#excluded_fields" do
+    subject(:excluded_fields) { configuration.excluded_fields }
+
+    before { configuration.excluded_fields_file = filepath }
+
+    context "no file specified" do
+      let(:filepath) { nil }
+      it { is_expected.to eq({}) }
+    end
+
+    context "file not present" do
+      let(:filepath) { "missing.yml" }
+
+      before { allow(IronBank.logger).to receive(:warn) }
+
+      it { is_expected.to eq({}) }
+
+      it "warns the user" do
+        excluded_fields
+
+        expect(IronBank.logger).
+          to have_received(:warn).
+          with("Cannot open #{filepath}")
+      end
+    end
+
+    context "file specified, YAML containing a hash" do
+      let(:filepath) { "spec/fixtures/valid_excluded_fields.yml" }
+
+      it { is_expected.to be_a(Hash) }
+    end
+
+    context "file specified, but YAML does not contain a hash" do
+      let(:filepath) { "spec/fixtures/invalid_excluded_fields.yml" }
+
+      specify do
+        expect { excluded_fields }.
+          to raise_error(RuntimeError, "Excluded fields must be a hash")
+      end
+    end
+  end
 end

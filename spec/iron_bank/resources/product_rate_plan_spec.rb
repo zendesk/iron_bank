@@ -8,6 +8,11 @@ RSpec.describe IronBank::Resources::ProductRatePlan do
   it_behaves_like "a resource with local records"
   it_behaves_like "a cacheable resource"
 
+  describe "::excluded_fields" do
+    subject { described_class.excluded_fields }
+    it { is_expected.to eq(["ActiveCurrencies"]) }
+  end
+
   describe "#active_currencies" do
     let(:client) { instance_double(IronBank::Client) }
     let(:plan)   { described_class.new(id: "a-plan-id") }
