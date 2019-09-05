@@ -86,7 +86,7 @@ module IronBank
       return {} unless excluded_fields_file
 
       unless File.exist?(excluded_fields_file)
-        IronBank.logger.warn "Cannot open #{excluded_fields_file}"
+        IronBank.logger.warn "File does not exist: #{excluded_fields_file}"
 
         return {}
       end

@@ -92,7 +92,7 @@ RSpec.describe IronBank::Configuration do
 
         expect(IronBank.logger).
           to have_received(:warn).
-          with("Cannot open #{filepath}")
+          with("File does not exist: #{filepath}")
       end
     end
 
