@@ -7,6 +7,7 @@ module IronBank
     #
     class Amendment < Resource
       with_schema
+
       with_one :subscription
     end
   end

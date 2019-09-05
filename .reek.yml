@@ -13,6 +13,7 @@ detectors:
       - IronBank::Configuration#client_id
       - IronBank::Configuration#client_secret
       - IronBank::Configuration#domain
+      - IronBank::Configuration#excluded_fields
       - IronBank::Configuration#export_directory
       - IronBank::Configuration#logger
       - IronBank::Configuration#middlewares
@@ -54,13 +55,14 @@ detectors:
 
   NestedIterators:
     exclude:
-      - IronBank::Schema#self.import
+      - IronBank::Authentications::Cookie#connection
+      - IronBank::Authentications::Token#connection
+      - IronBank::Client#connection
+      - IronBank::Describe::ExcludedFields#remove_last_failure_fields
       - IronBank::Local#where
       - IronBank::LocalRecords#export
       - IronBank::Resources::ProductRatePlanChargeTier#self.load_records
-      - IronBank::Client#connection
-      - IronBank::Authentications::Token#connection
-      - IronBank::Authentications::Cookie#connection
+      - IronBank::Schema#self.import
 
   NilCheck:
     enabled: false
@@ -71,21 +73,15 @@ detectors:
       - IronBank::Configuration
 
   TooManyStatements:
+    max_statements: 10
     exclude:
-      - IronBank::Associations::ClassMethods#with_many
-      - IronBank::Associations::ClassMethods#with_one
-      - IronBank::Authentications::Cookie#connection
-      - IronBank::Authentications::Token#connection
       - IronBank::Client#connection
-      - IronBank::Configuration#schema_directory=
-      - IronBank::Configuration#initialize
-      - IronBank::Error#message_from_body
-      - IronBank::Queryable#find_each
-      - IronBank::Queryable#where
       - IronBank::Utils#camelize
-      - IronBank::Utils#underscore
-      - IronBank::Resources::ProductRatePlanChargeTier#self.load_records
       - IronBank::Error#self.from_response
+
+  UncommunicativeVariableName:
+    exclude:
+      - IronBank::Describe::ExcludedFields#valid_query?
 
   UtilityFunction:
     exclude:

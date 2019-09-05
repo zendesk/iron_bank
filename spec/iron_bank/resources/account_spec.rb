@@ -21,19 +21,6 @@ RSpec.describe IronBank::Resources::Account do
     described_class.instance_variable_set :@schema, nil
   end
 
-  describe "::exclude_fields" do
-    let(:excluded_fields) do
-      %w[
-        TaxExemptEntityUseCode
-        TotalDebitMemoBalance
-        UnappliedCreditMemoAmount
-      ]
-    end
-
-    subject { described_class.exclude_fields }
-    it      { is_expected.to eq(excluded_fields) }
-  end
-
   describe "instance methods" do
     let(:instance) do
       described_class.new(

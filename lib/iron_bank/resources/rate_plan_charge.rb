@@ -5,18 +5,10 @@ module IronBank
     # A rate plan charge belongs to a subscription rate plan.
     #
     class RatePlanCharge < Resource
-      def self.exclude_fields
-        %w[
-          DiscountAmount
-          DiscountClass
-          DiscountPercentage
-          IncludedUnits
-          OveragePrice
-          Price
-          RevenueRecognitionRuleName
-          RolloverBalance
-        ]
+      def self.excluded_fields
+        super + %w[RolloverBalance]
       end
+
       with_schema
       with_cache
 
@@ -25,6 +17,10 @@ module IronBank
       with_one :rate_plan, alias: :plan
 
       with_many :rate_plan_charge_tiers, alias: :tiers
+
+      def rollover_balance
+        remote[:rollover_balance] || reload.remote[:rollover_balance]
+      end
     end
   end
 end

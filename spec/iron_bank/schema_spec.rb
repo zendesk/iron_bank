@@ -109,4 +109,22 @@ RSpec.describe IronBank::Schema do
     subject { described_class.for("Account") }
     it { is_expected.to be_a(IronBank::Describe::Object) }
   end
+
+  describe "::excluded_fields" do
+    subject(:excluded_fields) { described_class.excluded_fields }
+
+    before { allow(IronBank::Describe::ExcludedFields).to receive(:call) }
+    after  { described_class.remove_instance_variable(:@excluded_fields) }
+
+    it { is_expected.to be_a(Hash) }
+
+    it "calls the ExcludedFields service for all resources" do
+      excluded_fields
+
+      expect(IronBank::Describe::ExcludedFields).
+        to have_received(:call).
+        exactly(IronBank::Resources.constants.size).
+        times
+    end
+  end
 end

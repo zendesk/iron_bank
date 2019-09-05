@@ -1,0 +1,6 @@
+---
+Account:
+  - Foo__c
+
+Invoice:
+  - TaxMessage

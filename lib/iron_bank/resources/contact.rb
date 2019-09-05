@@ -7,6 +7,7 @@ module IronBank
     #
     class Contact < Resource
       with_schema
+
       with_one :account
     end
   end

@@ -6,10 +6,10 @@ module IronBank
     # charges. It represents what a customer is subscribing to.
     #
     class ProductRatePlan < Resource
-      # Zuora limitation: we cannot query for `ActiveCurrencies` with any other
-      # fields, so instead we define a separate `#active_currencies` method.
-      def self.exclude_fields
-        %w[ActiveCurrencies]
+      # NOTE: Zuora doesn't let us query for more than one product rate plan
+      #       `ActiveCurrencies` at a time
+      def self.excluded_fields
+        super + %w[ActiveCurrencies]
       end
 
       with_schema

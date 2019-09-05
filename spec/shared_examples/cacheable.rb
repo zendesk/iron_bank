@@ -11,6 +11,7 @@ RSpec.shared_examples "a cacheable resource" do
 
       it "makes a live query" do
         expect(IronBank::Resource).to receive(:find).with(id)
+
         find_without_cache
       end
     end
@@ -22,6 +23,7 @@ RSpec.shared_examples "a cacheable resource" do
 
       it "makes a live query" do
         expect(IronBank::Resource).to receive(:where).with(conditions, limit: 0)
+
         where_without_cache
       end
     end
@@ -43,6 +45,7 @@ RSpec.shared_examples "a cacheable resource" do
 
       it "fetches the cache using the id as the cache key" do
         expect(cache).to receive(:fetch).with(id, force: false)
+
         find_with_cache
       end
     end
@@ -58,6 +61,7 @@ RSpec.shared_examples "a cacheable resource" do
 
       it "fetches the cache using a key made out of conditions + class name" do
         expect(cache).to receive(:fetch).with(cache_key)
+
         where_with_cache
       end
     end
@@ -69,6 +73,7 @@ RSpec.shared_examples "a cacheable resource" do
 
       it "delegates to the class method" do
         expect(described_class).to receive(:cache)
+
         cache_instance_method
       end
     end
@@ -96,6 +101,7 @@ RSpec.shared_examples "a cacheable resource" do
       it "removes all instance variables before fetching live data" do
         an_instance.instance_variable_set(:@foo, "bar")
         reload
+
         expect(an_instance.instance_variables).to eq [:@remote]
       end
 

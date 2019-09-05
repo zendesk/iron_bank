@@ -132,7 +132,7 @@ https://github.com/zendesk/iron_bank.
 
 - `AutoPay` field on the `Invoice` object is not queryable using ZOQL despite
   the metadata showing `<selectable>true</selectable>`, hence it has been added
-  to the `exclude_fields` method.
+  to the `excluded_fields` method.
 - Exporting the local records through `IronBank::LocalRecords.export` can take a
   long time (especially the `ProductRatePlanChargeTier` records). In case the
   task fails because the export is still processing, you can manually download

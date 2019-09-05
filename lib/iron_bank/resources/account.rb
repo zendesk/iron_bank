@@ -9,18 +9,6 @@ module IronBank
     # method (usually a credit card, but PayPal is also accepted by Zuora).
     #
     class Account < Resource
-      # Tenants without credit memo activated cannot query these fields BUT they
-      # are still described as `selectable` through the metadata.
-      #
-      # Similarly, accounts with `TaxExemptStatus` set to `No` cannot query
-      # the `TaxExemptEntityUseCode` related fields.
-      def self.exclude_fields
-        %w[
-          TaxExemptEntityUseCode
-          TotalDebitMemoBalance
-          UnappliedCreditMemoAmount
-        ]
-      end
       with_schema
 
       # Contacts

@@ -4,22 +4,24 @@ module IronBank
   # Metadata to provide accessors to Zuora resources.
   #
   module Metadata
-    # Can be overriden to exclude specific fields for a given resource, see
-    # `Account` class for an example
-    def exclude_fields
-      []
+    def excluded_fields
+      return [] unless (fields = IronBank.configuration.excluded_fields)
+
+      # Return the field for the given resource name
+      # (where the module is extended from)
+      fields.fetch(object_name, [])
     end
 
     def fields
       return [] unless schema
 
-      @fields ||= schema.fields.map(&:name) - exclude_fields
+      @fields ||= schema.fields.map(&:name) - excluded_fields
     end
 
     def query_fields
       return [] unless schema
 
-      @query_fields ||= schema.query_fields - exclude_fields
+      @query_fields ||= schema.query_fields - excluded_fields
     end
 
     def schema

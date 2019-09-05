@@ -8,10 +8,9 @@ RSpec.describe IronBank::Resources::ProductRatePlan do
   it_behaves_like "a resource with local records"
   it_behaves_like "a cacheable resource"
 
-  describe "::exclude_fields" do
-    let(:fields) { %w[ActiveCurrencies] }
-    subject { described_class.exclude_fields }
-    it { is_expected.to eq(fields) }
+  describe "::excluded_fields" do
+    subject { described_class.excluded_fields }
+    it { is_expected.to eq(["ActiveCurrencies"]) }
   end
 
   describe "#active_currencies" do

@@ -6,14 +6,12 @@ require "bundler/setup"
 require "iron_bank"
 require "pry-byebug"
 
-credentials = {
-  domain:        ENV["ZUORA_DOMAIN"],
-  client_id:     ENV["ZUORA_CLIENT_ID"],
-  client_secret: ENV["ZUORA_CLIENT_SECRET"],
-  auth_type:     ENV["ZUORA_AUTH_TYPE"]
-}
-
-# If credentials are present in environment variables
-IronBank.client = IronBank::Client.new(credentials) if credentials.values.all?
+IronBank.configure do |config|
+  config.client_id            = ENV["ZUORA_CLIENT_ID"]
+  config.client_secret        = ENV["ZUORA_CLIENT_SECRET"]
+  config.auth_type            = ENV.fetch("ZUORA_AUTH_TYPE", "token")
+  config.domain               = ENV["ZUORA_DOMAIN"]
+  config.excluded_fields_file = ENV["ZUORA_EXCLUDED_FIELDS_FILE"]
+end
 
 Pry.start

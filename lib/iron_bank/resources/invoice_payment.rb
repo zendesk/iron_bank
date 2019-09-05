@@ -6,6 +6,7 @@ module IronBank
     #
     class InvoicePayment < Resource
       with_schema
+
       with_one :invoice
       with_one :payment
     end

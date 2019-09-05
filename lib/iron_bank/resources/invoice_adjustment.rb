@@ -6,6 +6,7 @@ module IronBank
     #
     class InvoiceAdjustment < Resource
       with_schema
+
       with_one :account
       with_one :invoice
     end

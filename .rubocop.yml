@@ -56,6 +56,10 @@ Style/OptionalArguments:
     - lib/iron_bank/queryable.rb
     - lib/iron_bank/resource.rb
 
+Style/RegexpLiteral:
+  Exclude:
+    - lib/iron_bank/describe/excluded_fields.rb
+
 Style/RescueStandardError:
   Exclude:
     - lib/iron_bank/csv.rb

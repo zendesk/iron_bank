@@ -21,6 +21,7 @@ RSpec.shared_examples "a resource with local records" do
 
       it "loads the CSV file and return the record without making a request" do
         expect(IronBank::Resource).not_to receive(:find)
+
         find
       end
 
@@ -49,6 +50,7 @@ RSpec.shared_examples "a resource with local records" do
 
       it "loads the CSV file and return the record without making a request" do
         expect(IronBank::Resource).not_to receive(:all)
+
         all
       end
 
@@ -66,6 +68,7 @@ RSpec.shared_examples "a resource with local records" do
 
       it "loads the CSV file and return the record without making a request" do
         expect(IronBank::Resource).not_to receive(:where)
+
         where
       end
 
@@ -97,6 +100,7 @@ RSpec.shared_examples "a resource with local records" do
 
       it "makes a live query" do
         expect(IronBank::Resource).to receive(:find).with(id)
+
         find
       end
     end
@@ -107,6 +111,7 @@ RSpec.shared_examples "a resource with local records" do
 
         it "yields and make a live query" do
           expect(IronBank::Resource).to receive(:find_each)
+
           find_each
         end
       end
@@ -122,6 +127,7 @@ RSpec.shared_examples "a resource with local records" do
 
       it "makes a live query" do
         expect(IronBank::Resource).to receive(:all)
+
         all
       end
     end
@@ -142,6 +148,7 @@ RSpec.shared_examples "a resource with local records" do
 
       it "makes a live query" do
         expect(IronBank::Resource).to receive(:where).with(conditions, limit: 0)
+
         where
       end
     end
