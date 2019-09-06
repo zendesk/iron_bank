@@ -8,7 +8,7 @@ RSpec.describe IronBank::Describe::ExcludedFields do
 
     before do
       allow(Object.const_get("IronBank::Resources::#{object_name}")).
-        to receive(:first) # Successful query
+        to receive(:where).with(id: "XYZ") # Successful query
     end
 
     it { is_expected.to eq([]) }
@@ -29,7 +29,7 @@ RSpec.describe IronBank::Describe::ExcludedFields do
       # Querying `Object#first`:
       #   - for the first time raises an exception
       #   - following calls are successful
-      allow(object).to receive(:first) do
+      allow(object).to receive(:where).with(id: "XYZ") do
         num_query += 1
         raise IronBank::InternalServerError, error_message if num_query == 1
       end
@@ -42,7 +42,7 @@ RSpec.describe IronBank::Describe::ExcludedFields do
     it "makes two queries" do
       call
 
-      expect(object).to have_received(:first).twice
+      expect(object).to have_received(:where).twice
     end
   end
 
@@ -51,7 +51,8 @@ RSpec.describe IronBank::Describe::ExcludedFields do
 
     before do
       allow(Object.const_get("IronBank::Resources::#{object_name}")).
-        to receive(:first).
+        to receive(:where).
+        with(id: "XYZ").
         and_raise(IronBank::InternalServerError)
     end
 
