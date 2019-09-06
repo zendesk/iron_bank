@@ -74,7 +74,10 @@ module IronBank
       end
 
       def valid_query?
-        object.first
+        # Querying using the ID (indexed field) should return an empty
+        # collectio fast when it's successful
+        object.where(id: "XYZ")
+
         info "Successful query for #{object_name}"
 
         true
