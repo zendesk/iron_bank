@@ -15,7 +15,7 @@ module IronBank
     # NOTE: For some resources, fields are queryable with some restrictions,
     #       e.g. the `Invoice#body` can only be added to the list of fields if
     #       there is only one invoice in the query response.
-    def separate_query_fields
+    def single_resource_query_fields
       []
     end
 

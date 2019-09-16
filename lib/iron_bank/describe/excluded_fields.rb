@@ -41,7 +41,7 @@ module IronBank
       def call
         remove_last_failure_fields until valid_query?
 
-        excluded_fields - separate_query_fields
+        excluded_fields - single_resource_query_fields
       end
 
       private
@@ -49,7 +49,7 @@ module IronBank
       attr_reader :object_name, :last_failed_fields
 
       def_delegators "IronBank.logger", :info
-      def_delegators :object, :separate_query_fields
+      def_delegators :object, :single_resource_query_fields
 
       def initialize(object_name)
         @object_name        = object_name

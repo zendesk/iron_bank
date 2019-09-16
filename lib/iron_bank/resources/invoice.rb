@@ -8,10 +8,10 @@ module IronBank
     class Invoice < Resource
       # See the comment for the instance method `#body`
       def self.excluded_fields
-        super + separate_query_fields
+        super + single_resource_query_fields
       end
 
-      def self.separate_query_fields
+      def self.single_resource_query_fields
         %w[Body]
       end
 
