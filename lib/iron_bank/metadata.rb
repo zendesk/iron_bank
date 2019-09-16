@@ -12,6 +12,13 @@ module IronBank
       fields.fetch(object_name, [])
     end
 
+    # NOTE: For some resources, fields are queryable with some restrictions,
+    #       e.g. the `Invoice#body` can only be added to the list of fields if
+    #       there is only one invoice in the query response.
+    def separate_query_fields
+      []
+    end
+
     def fields
       return [] unless schema
 

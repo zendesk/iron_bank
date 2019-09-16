@@ -9,7 +9,11 @@ module IronBank
       # NOTE: Zuora doesn't let us query for more than one product rate plan
       #       `ActiveCurrencies` at a time
       def self.excluded_fields
-        super + %w[ActiveCurrencies]
+        super + separate_query_fields
+      end
+
+      def self.separate_query_fields
+        %w[ActiveCurrencies]
       end
 
       with_schema

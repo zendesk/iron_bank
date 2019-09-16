@@ -9,6 +9,11 @@ RSpec.shared_examples "a resource with metadata" do
     it { is_expected.to be_an(Array) }
   end
 
+  describe "#separate_query_fields" do
+    subject { described_class.excluded_fields }
+    it { is_expected.to be_an(Array) }
+  end
+
   describe "#fields" do
     subject { described_class.fields }
 

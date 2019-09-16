@@ -41,23 +41,27 @@ module IronBank
       def call
         remove_last_failure_fields until valid_query?
 
-        excluded_fields
+        excluded_fields - separate_query_fields
       end
 
       private
 
-      attr_reader :object_name, :excluded_fields, :last_failed_fields
+      attr_reader :object_name, :last_failed_fields
 
       def_delegators "IronBank.logger", :info
+      def_delegators :object, :separate_query_fields
 
       def initialize(object_name)
         @object_name        = object_name
-        @excluded_fields    = []
         @last_failed_fields = nil
       end
 
       def object
         IronBank::Resources.const_get(object_name)
+      end
+
+      def excluded_fields
+        @excluded_fields ||= object.excluded_fields.dup
       end
 
       def remove_last_failure_fields
@@ -67,7 +71,7 @@ module IronBank
           last_failed_fields.any? { |failed| field.casecmp?(failed) }
         end
 
-        @excluded_fields += failed_fields
+        excluded_fields.push(*failed_fields)
 
         # Remove the field for the next query
         query_fields.delete_if { |field| failed_fields.include?(field) }

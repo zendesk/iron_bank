@@ -6,7 +6,11 @@ module IronBank
     #
     class RatePlanCharge < Resource
       def self.excluded_fields
-        super + %w[RolloverBalance]
+        super + separate_query_fields
+      end
+
+      def self.separate_query_fields
+        %w[RolloverBalance]
       end
 
       with_schema
