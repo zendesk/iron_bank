@@ -41,10 +41,12 @@ module IronBank
       def call
         remove_last_failure_fields until valid_query?
 
-        excluded_fields - single_resource_query_fields
+        (excluded_fields - single_resource_query_fields).sort
       end
 
       private
+
+      INVALID_OBJECT_ID = "InvalidObjectId"
 
       attr_reader :object_name, :last_failed_fields
 
@@ -78,9 +80,9 @@ module IronBank
       end
 
       def valid_query?
-        # Querying using the ID (indexed field) should return an empty
-        # collectio fast when it's successful
-        object.where(id: "XYZ")
+        # Querying using the ID (which is an indexed field) should return an
+        # empty collection very quickly when successful
+        object.where(id: INVALID_OBJECT_ID)
 
         info "Successful query for #{object_name}"
 
