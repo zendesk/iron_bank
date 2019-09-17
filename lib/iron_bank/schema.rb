@@ -31,7 +31,11 @@ module IronBank
     end
 
     def self.reset
-      @import = nil
+      remove_instance_variable(:@import)
+
+      IronBank::Resources.constants.each do |resource|
+        IronBank::Resources.const_get(resource).reset
+      end
     end
 
     def self.excluded_fields

@@ -26,12 +26,12 @@ RSpec.describe IronBank::Configuration do
       set_schema
     end
 
-    it "calls #with_schema on each resource, except modules" do
+    it "resets each resource, except modules" do
       IronBank::Resources.constants.each do |resource|
         klass = IronBank::Resources.const_get(resource)
         next unless klass.is_a?(Class)
 
-        expect(klass).to receive(:with_schema)
+        expect(klass).to receive(:with_schema).twice
       end
 
       set_schema

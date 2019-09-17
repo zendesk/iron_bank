@@ -103,4 +103,26 @@ RSpec.shared_examples "a resource with metadata" do
       end
     end
   end
+
+  describe "#reset" do
+    subject(:reset) { described_class.reset }
+
+    before { allow(described_class).to receive(:with_schema) }
+
+    it "removes all instance variables" do
+      reset
+
+      vars = %i[@fields @query_fields @schema].map do |var|
+        described_class.instance_variable_defined?(var)
+      end
+
+      expect(vars).to all(be false)
+    end
+
+    it "calls #with_schema" do
+      reset
+
+      expect(described_class).to have_received(:with_schema)
+    end
+  end
 end
