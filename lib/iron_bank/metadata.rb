@@ -35,6 +35,14 @@ module IronBank
       @schema ||= IronBank::Schema.for(object_name)
     end
 
+    def reset
+      %i[@fields @query_fields @schema].each do |var|
+        remove_instance_variable(var) if instance_variable_defined?(var)
+      end
+
+      with_schema
+    end
+
     def with_schema
       fields.each do |field|
         field_name = IronBank::Utils.underscore(field).to_sym

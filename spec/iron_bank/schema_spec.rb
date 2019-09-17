@@ -47,15 +47,34 @@ RSpec.describe IronBank::Schema do
   describe "::reset" do
     before do
       IronBank::Schema.instance_variable_set :@import, anything
+
+      allow(IronBank::Schema).
+        to receive(:remove_instance_variable).
+        with(:@import)
+
+      IronBank::Resources.constants.each do |resource|
+        object = IronBank::Resources.const_get(resource)
+
+        allow(object).to receive(:reset)
+      end
     end
 
     subject(:reset) { described_class.reset }
 
-    it "nil the @import instance variable" do
-      expect { reset }.
-        to change { IronBank::Schema.instance_variable_get :@import }.
-        from(anything).
-        to(nil)
+    it "removes the @import instance variable" do
+      reset
+
+      expect(IronBank::Schema).to have_received(:remove_instance_variable)
+    end
+
+    it "calls #reset on each resource" do
+      reset
+
+      IronBank::Resources.constants.each do |resource|
+        object = IronBank::Resources.const_get(resource)
+
+        expect(object).to have_received(:reset)
+      end
     end
   end
 
