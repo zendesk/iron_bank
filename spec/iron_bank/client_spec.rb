@@ -144,30 +144,29 @@ RSpec.describe IronBank::Client do
 
   describe "DEFAULT_RETRY_OPTIONS" do
     describe "retry_if" do
-      subject do
-        described_class::DEFAULT_RETRY_OPTIONS[:retry_if].
-          call(anything, exception)
-      end
+      let(:prok) { described_class::DEFAULT_RETRY_OPTIONS[:retry_if] }
 
-      context "IronBank::LockCompetitionError" do
+      subject { prok.call(anything, exception) }
+
+      context "for a IronBank::LockCompetitionError" do
         let(:exception) { IronBank::LockCompetitionError.new }
 
         it { is_expected.to be true }
       end
 
-      context "IronBank::TemporaryError" do
+      context "for a IronBank::TemporaryError" do
         let(:exception) { IronBank::TemporaryError.new }
 
         it { is_expected.to be true }
       end
 
-      context "IronBank::UnauthorizedError" do
+      context "for a IronBank::UnauthorizedError" do
         let(:exception) { IronBank::UnauthorizedError.new }
 
         it { is_expected.to be true }
       end
 
-      context "not retriable" do
+      context "for a non-retriable error" do
         let(:exception) { StandardError.new }
 
         it { is_expected.to be false }

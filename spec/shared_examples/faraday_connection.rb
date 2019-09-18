@@ -33,9 +33,7 @@ RSpec.shared_examples "Faraday::Connection configuration block" do
   end
 
   describe "IronBank configurable middlewares" do
-    before do
-      allow(connection).to receive(:use)
-    end
+    before { allow(connection).to receive(:use) }
 
     context "no middleware configured" do
       it "does not configure the Faraday::Connection to use any" do
