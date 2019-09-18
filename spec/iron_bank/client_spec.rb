@@ -141,4 +141,37 @@ RSpec.describe IronBank::Client do
       expect(IronBank::Describe::Object).to have_received(:from_connection)
     end
   end
+
+  describe "DEFAULT_RETRY_OPTIONS" do
+    describe "retry_if" do
+      subject do
+        described_class::DEFAULT_RETRY_OPTIONS[:retry_if].
+          call(anything, exception)
+      end
+
+      context "IronBank::LockCompetitionError" do
+        let(:exception) { IronBank::LockCompetitionError.new }
+
+        it { is_expected.to be true }
+      end
+
+      context "IronBank::TemporaryError" do
+        let(:exception) { IronBank::TemporaryError.new }
+
+        it { is_expected.to be true }
+      end
+
+      context "IronBank::UnauthorizedError" do
+        let(:exception) { IronBank::UnauthorizedError.new }
+
+        it { is_expected.to be true }
+      end
+
+      context "not retriable" do
+        let(:exception) { StandardError.new }
+
+        it { is_expected.to be false }
+      end
+    end
+  end
 end
