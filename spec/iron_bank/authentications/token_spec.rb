@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "timecop"
+require "shared_examples/faraday_connection"
 
 RSpec.describe IronBank::Authentications::Token do
   let(:initial_token) do
@@ -62,7 +63,9 @@ RSpec.describe IronBank::Authentications::Token do
 
   before do
     allow(Faraday).to receive(:new).and_return(connection)
-    allow(connection).to receive(:post).
+
+    allow(connection).
+      to receive(:post).
       and_return(first_response, second_response)
   end
 
@@ -145,4 +148,6 @@ RSpec.describe IronBank::Authentications::Token do
       end
     end
   end
+
+  include_examples "Faraday::Connection configuration block"
 end
