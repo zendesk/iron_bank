@@ -38,6 +38,9 @@ module IronBank
       # Parent
       with_one :parent, resource_name: "Account"
 
+      # Communication Profile
+      with_one :communication_profile
+
       def ultimate_parent
         root if parent
       end
