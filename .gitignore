@@ -18,3 +18,6 @@
 
 # do not version specific excluded fields
 excluded_fields.yml
+
+# do not version users (but let the fixtures be versioned)
+users.csv

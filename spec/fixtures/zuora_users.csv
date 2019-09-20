@@ -1,0 +1,2 @@
+User ID,User Name,First Name,Last Name,Status,Work Email,Created On,Zuora Billing Role,Zuora Payment Role,Zuora Commerce Role,Zuora Platform Role,Zuora Finance Role,Zuora Reporting Role,Zuora Insights Role,Last Login
+zuora-user-id-23456,jane.doe@mail.com,Jane,Doe,Active,jane.doe@mail.com,01/01/2000,Zuora Billing Standard User,Zuora Payments Standard User,Zuora Commerce Admin User,Administrator,N/A,Zuora Reporting Standard User,N/A,12/31/2000

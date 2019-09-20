@@ -12,6 +12,7 @@ IronBank.configure do |config|
   config.auth_type            = ENV.fetch("ZUORA_AUTH_TYPE", "token")
   config.domain               = ENV["ZUORA_DOMAIN"]
   config.excluded_fields_file = ENV["ZUORA_EXCLUDED_FIELDS_FILE"]
+  config.zuora_users_file     = ENV["ZUORA_USERS_FILE"]
 end
 
 Pry.start

@@ -88,6 +88,7 @@ require "iron_bank/object"
 require "iron_bank/schema"
 require "iron_bank/query_builder"
 require "iron_bank/payment_run"
+require "iron_bank/user"
 
 # Operations
 require "iron_bank/operation"
