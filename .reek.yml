@@ -18,7 +18,7 @@ detectors:
       - IronBank::Configuration#logger
       - IronBank::Configuration#middlewares
       - IronBank::Configuration#schema_directory
-      - IronBank::Configuration#zuora_users_file
+      - IronBank::Configuration#users_file
 
   BooleanParameter:
     exclude:

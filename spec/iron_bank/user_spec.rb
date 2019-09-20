@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 RSpec.describe IronBank::User do
-  before { IronBank.configuration.zuora_users_file = users_file }
+  before { IronBank.configuration.users_file = users_file }
 
   after  do
-    IronBank.configuration.zuora_users_file = nil
+    IronBank.configuration.users_file = nil
 
     if described_class.instance_variable_defined?(:@store)
       described_class.remove_instance_variable(:@store)

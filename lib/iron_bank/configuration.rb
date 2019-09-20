@@ -35,7 +35,7 @@ module IronBank
     attr_reader :export_directory
 
     # File path for Zuora users export
-    attr_accessor :zuora_users_file
+    attr_accessor :users_file
 
     def initialize
       @schema_directory = "./config/schema"

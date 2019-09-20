@@ -2,7 +2,7 @@
 
 module IronBank
   # A Zuora user, only available if the user data has been exported and provided
-  # to IronBank through the `zuora_users_file` configuration option.
+  # to IronBank through the `users_file` configuration option.
   #
   # Cf. https://knowledgecenter.zuora.com/CF_Users_and_Administrators/A_Administrator_Settings/Manage_Users#Export_User_Data_to_a_CSV_File
   #
@@ -10,27 +10,24 @@ module IronBank
     extend IronBank::Local
     extend SingleForwardable
 
-    def_delegators "IronBank.configuration", :zuora_users_file
+    def_delegators "IronBank.configuration", :users_file
 
     class << self
       def store
-        return {} unless zuora_users_file
+        return {} unless users_file
 
         @store ||= begin
-          if File.exist?(zuora_users_file)
+          if File.exist?(users_file)
             load_records
           else
-            IronBank.logger.warn "File does not exist: #{zuora_users_file}"
+            IronBank.logger.warn "File does not exist: #{users_file}"
             {}
           end
         end
       end
 
       def load_records
-        CSV.foreach(
-          zuora_users_file,
-          headers: true
-        ).with_object({}) do |row, store|
+        CSV.foreach(users_file, headers: true).with_object({}) do |row, store|
           store[row["User ID"]] = new(row.to_h.compact)
         end
       end
