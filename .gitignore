@@ -19,5 +19,5 @@
 # do not version specific excluded fields
 excluded_fields.yml
 
-# do not version users (but let the fixtures be versioned)
+# do not version exported users
 users.csv
