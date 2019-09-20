@@ -34,6 +34,9 @@ module IronBank
     # Directory where the local records are exported.
     attr_reader :export_directory
 
+    # File path for Zuora users export
+    attr_accessor :users_file
+
     def initialize
       @schema_directory = "./config/schema"
       @export_directory = "./config/export"
