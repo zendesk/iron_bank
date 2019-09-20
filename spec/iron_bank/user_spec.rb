@@ -16,12 +16,12 @@ RSpec.describe IronBank::User do
   describe ".store" do
     subject(:store) { described_class.store }
 
-    context "no zuora users file configured" do
+    context "when no zuora users file is configured" do
       let(:users_file) { nil }
       it { is_expected.to eq({}) }
     end
 
-    context "zuora users file does not exist" do
+    context "when the configured zuora users file does not exist" do
       let(:users_file) { "foo.csv" }
 
       before { allow(IronBank.logger).to receive(:warn) }
@@ -37,7 +37,7 @@ RSpec.describe IronBank::User do
       it { is_expected.to eq({}) }
     end
 
-    context "zuora users file exist" do
+    context "when the configured zuora users file does exist" do
       let(:users_file) { "spec/fixtures/zuora_users.csv" }
 
       it "creates a Hash of Zuora User ID => Zuora User instance" do
@@ -56,13 +56,16 @@ RSpec.describe IronBank::User do
   describe ".find" do
     subject(:find)   { described_class.find(user_id) }
 
-    context "user not found" do
-      let(:user_id) { "not_found" }
+    context "when a user is not found" do
+      let(:user_id) { "user-id-666" }
 
-      it { is_expected.to be nil }
+      it "raises a NotFoundError" do
+        expect { find }.
+          to raise_error(IronBank::NotFoundError, "user id: #{user_id}")
+      end
     end
 
-    context "user found" do
+    context "when a user is found" do
       let(:user_id) { "zuora-user-id-23456" }
 
       it { is_expected.to be_a(IronBank::User) }

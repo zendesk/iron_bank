@@ -8,10 +8,12 @@ module IronBank
   #
   class User
     extend IronBank::Local
+    extend SingleForwardable
+
+    def_delegators "IronBank.configuration", :zuora_users_file
 
     class << self
       def store
-        zuora_users_file = IronBank.configuration.zuora_users_file
         return {} unless zuora_users_file
 
         @store ||= begin
@@ -25,9 +27,10 @@ module IronBank
       end
 
       def load_records
-        file = IronBank.configuration.zuora_users_file
-
-        CSV.foreach(file, headers: true).with_object({}) do |row, store|
+        CSV.foreach(
+          zuora_users_file,
+          headers: true
+        ).with_object({}) do |row, store|
           store[row["User ID"]] = new(row.to_h.compact)
         end
       end
@@ -37,7 +40,7 @@ module IronBank
       end
 
       def find(user_id)
-        store[user_id]
+        store[user_id] || raise(IronBank::NotFoundError, "user id: #{user_id}")
       end
     end
 
