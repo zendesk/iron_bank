@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    iron_bank (4.3.0)
+    iron_bank (4.3.1)
       faraday (~> 0)
       faraday_middleware (~> 0)
       nokogiri (~> 1)
@@ -35,7 +35,7 @@ GEM
     equalizer (0.0.11)
     factory_bot (5.0.2)
       activesupport (>= 4.2.0)
-    faraday (0.15.4)
+    faraday (0.16.2)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.13.1)
       faraday (>= 0.7.4, < 1.0)
