@@ -9,7 +9,7 @@ RSpec.describe IronBank::Resources::RatePlanCharge do
 
   describe "::excluded_fields" do
     subject { described_class.excluded_fields }
-    it { is_expected.to eq(["RolloverBalance"]) }
+    it { is_expected.to eq(%w[RolloverBalance Price]) }
   end
 
   describe "#rollover_balance" do
