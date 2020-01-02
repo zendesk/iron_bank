@@ -9,6 +9,7 @@ module IronBank
     def_delegators :@records,
                    :[],
                    :each,
+                   :empty?,
                    :length,
                    :map,
                    :size
