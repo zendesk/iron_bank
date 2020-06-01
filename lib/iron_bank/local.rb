@@ -55,7 +55,7 @@ module IronBank
     end
 
     def load_records
-      CSV.foreach(file_path, csv_options).with_object({}) do |row, store|
+      CSV.foreach(file_path, **csv_options).with_object({}) do |row, store|
         store[row[:id]] = new(row.to_h.compact)
       end
     end

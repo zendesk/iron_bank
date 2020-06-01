@@ -25,7 +25,7 @@ module IronBank
 
     return unless configuration.credentials?
 
-    self.client ||= IronBank::Client.new(configuration.credentials)
+    self.client ||= IronBank::Client.new(**configuration.credentials)
   end
 
   def self.logger

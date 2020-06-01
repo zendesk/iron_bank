@@ -51,7 +51,7 @@ module IronBank
       end
 
       def connection
-        @connection ||= Faraday.new(faraday_config) do |conn|
+        @connection ||= Faraday.new(**faraday_config) do |conn|
           IronBank.configuration.middlewares.each do |klass, options|
             conn.use klass, options
           end
