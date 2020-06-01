@@ -13,7 +13,7 @@ This gem provides opinionated resources to interact with the Zuora API through
 their REST interface. It defines **associations** between them, as well as a
 simple **declaration API** (`with_one`, `with_many`) to extend them.
 
-This gem is tested against Ruby `>= 2.4`.
+This gem is tested against Ruby `>= 2.5`.
 
 Please use [GitHub Issues][issues] to report bugs.
 
@@ -23,8 +23,7 @@ You will need:
 
 - a **Zuora tenant** (apisandbox, services, performances or production)
 - an **administrator access** to this tenant (to gain API access)
-- and an **OAuth client** for this user
-  ([Zuora documentation][zuora-doc-oauth])
+- and an **OAuth client** for this user ([Zuora documentation][zuora-doc-oauth])
 
 IronBank is a pure Ruby client, but we do provide a generator (for the
 configuration) when using it within [Rails][rails-website].
@@ -89,9 +88,9 @@ account.active_subscriptions
 
 ## Local records
 
-If your product catalog does not change often, you may want to export
-it locally so that product catalog and related object queries look for
-**local records** first, then **fallback** to the API if no records are found.
+If your product catalog does not change often, you may want to export it locally
+so that product catalog and related object queries look for **local records**
+first, then **fallback** to the API if no records are found.
 
 You can export your product catalog locally using the `LocalRecords` class:
 
@@ -155,10 +154,12 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 
 [issues]: https://github.com/zendesk/iron_bank/issues
-[travis-status]: https://travis-ci.com/zendesk/iron_bank.svg?token=Qzkq5papoR7sdedznjeb&branch=master
+[travis-status]:
+  https://travis-ci.com/zendesk/iron_bank.svg?token=Qzkq5papoR7sdedznjeb&branch=master
 [travis-build]: https://travis-ci.com/zendesk/iron_bank
 [zuora-describe]: https://www.zuora.com/developer/api-reference/#tag/Describe
 [zuora-dev]: https://developer.zuora.com
-[zuora-doc-oauth]: https://knowledgecenter.zuora.com/CF_Users_and_Administrators/A_Administrator_Settings/Manage_Users#Create_an_OAuth_Client_for_a_User
+[zuora-doc-oauth]:
+  https://knowledgecenter.zuora.com/CF_Users_and_Administrators/A_Administrator_Settings/Manage_Users#Create_an_OAuth_Client_for_a_User
 [zuora-website]: https://www.zuora.com
 [rails-website]: https://rubyonrails.org/
