@@ -19,7 +19,7 @@ module IronBank
 
     def self.export
       FileUtils.mkdir_p(directory) unless Dir.exist?(directory)
-      RESOURCE_QUERY_FIELDS.keys.each { |resource| new(resource).save_file }
+      RESOURCE_QUERY_FIELDS.each_key { |resource| new(resource).save_file }
     end
 
     def save_file

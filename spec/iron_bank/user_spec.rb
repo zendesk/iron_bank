@@ -6,9 +6,7 @@ RSpec.describe IronBank::User do
   after  do
     IronBank.configuration.users_file = nil
 
-    if described_class.instance_variable_defined?(:@store)
-      described_class.remove_instance_variable(:@store)
-    end
+    described_class.remove_instance_variable(:@store) if described_class.instance_variable_defined?(:@store)
   end
 
   let(:users_file) { "spec/fixtures/zuora_users.csv" }

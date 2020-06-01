@@ -49,12 +49,10 @@ module IronBank
 
     def export
       tenant.objects.compact.each do |object|
-        begin
-          object.export
-        rescue IronBank::Describe::Object::InvalidXML
-          # TODO: log the object error
-          next
-        end
+        object.export
+      rescue IronBank::Describe::Object::InvalidXML
+        # TODO: log the object error
+        next
       end
     end
 

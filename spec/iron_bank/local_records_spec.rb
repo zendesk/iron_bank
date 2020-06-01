@@ -124,11 +124,9 @@ RSpec.describe IronBank::LocalRecords do
         end
 
         it "attempts 11 queries" do
-          begin
-            export
-          rescue IronBank::Error
-            expect(export_instance).to have_received(:reload).exactly(11).times
-          end
+          export
+        rescue IronBank::Error
+          expect(export_instance).to have_received(:reload).exactly(11).times
         end
       end
 

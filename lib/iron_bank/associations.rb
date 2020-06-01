@@ -60,9 +60,7 @@ module IronBank
     def with_memoization(name)
       # NOTE: We use `instance_variables.include?` instead of `defined?`.
       # Later it will always evaluate to `true` because it's an expression.
-      if instance_variables.include?(:"@#{name}")
-        return instance_variable_get(:"@#{name}")
-      end
+      return instance_variable_get(:"@#{name}") if instance_variables.include?(:"@#{name}")
 
       memoizable = yield
       instance_variable_set(:"@#{name}", memoizable)

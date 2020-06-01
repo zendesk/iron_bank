@@ -43,7 +43,7 @@ module IronBank
       alias refetch_cookie fetch_cookie
 
       def fetch_zsession
-        /ZSession=([^\;]+)/.match(cookie)[0]
+        /ZSession=([^;]+)/.match(cookie)[0]
       end
 
       def authenticate

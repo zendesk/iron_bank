@@ -3,14 +3,31 @@ require: rubocop-performance
 AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
-  TargetRubyVersion: 2.4
 
 Layout/DotPosition:
   EnforcedStyle: trailing
 
-Layout/AlignHash:
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: true
+
+Layout/HashAlignment:
   EnforcedHashRocketStyle: table
   EnforcedColonStyle: table
+
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+
+Lint/DeprecatedOpenSSLConstant:
+  Enabled: true
+
+Lint/MixedRegexpCaptureTypes:
+  Enabled: true
+
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
 
 Lint/UselessAssignment:
   Exclude:
@@ -39,10 +56,6 @@ Metrics/MethodLength:
     - lib/iron_bank/error.rb
     - lib/iron_bank/client.rb
 
-Metrics/LineLength:
-  Exclude:
-    - lib/iron_bank.rb
-
 Style/ClassAndModuleChildren:
   EnforcedStyle: nested
 
@@ -50,11 +63,32 @@ Style/MixinUsage:
   Exclude:
     - lib/iron_bank/resource.rb
 
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/ExponentialNotation:
+  Enabled: true
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
 Style/OptionalArguments:
   Exclude:
     - lib/iron_bank/local.rb
     - lib/iron_bank/queryable.rb
     - lib/iron_bank/resource.rb
+
+Style/RedundantRegexpCharacterClass:
+  Enabled: true
+
+Style/RedundantRegexpEscape:
+  Enabled: true
 
 Style/RegexpLiteral:
   Exclude:
@@ -64,5 +98,5 @@ Style/RescueStandardError:
   Exclude:
     - lib/iron_bank/csv.rb
 
-Style/StringLiterals:
-  EnforcedStyle: double_quotes
+Style/SlicingWithRange:
+  Enabled: true
