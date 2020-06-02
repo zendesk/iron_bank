@@ -11,7 +11,7 @@ RSpec.shared_examples "Faraday::Connection configuration block" do
   end
 
   subject(:faraday_connection) do
-    described_class.new(credentials).send(:connection)
+    described_class.new(**credentials).send(:connection)
   end
 
   it "uses URL encoded format for the request" do

@@ -17,7 +17,7 @@ module IronBank
     end
 
     def create_session
-      @session = adapter.new(params)
+      @session = adapter.new(**params)
     end
     alias renew_session create_session
 

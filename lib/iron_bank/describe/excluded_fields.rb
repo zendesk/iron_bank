@@ -96,9 +96,7 @@ module IronBank
       def extract_fields_from_exception(exception)
         message = exception.message
 
-        unless FAULT_FIELD_MESSAGES.match(message)
-          raise "Could not parse error message: #{message}"
-        end
+        raise "Could not parse error message: #{message}" unless FAULT_FIELD_MESSAGES.match(message)
 
         failed_fields = Regexp.last_match.
                         captures.

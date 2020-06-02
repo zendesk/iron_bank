@@ -29,10 +29,10 @@ RSpec.describe IronBank::Client do
       and_return(anything)
   end
 
-  let(:client) { described_class.new(config) }
+  let(:client) { described_class.new(**config) }
 
   describe "::new" do
-    subject(:new_client) { described_class.new(config) }
+    subject(:new_client) { described_class.new(**config) }
 
     it { is_expected.to be_an_instance_of(IronBank::Client) }
 
@@ -43,7 +43,7 @@ RSpec.describe IronBank::Client do
 
       specify do
         expect { new_client }.
-          to raise_error(ArgumentError, "missing keyword: client_id")
+          to raise_error(ArgumentError, /missing keyword: :?client_id/)
       end
     end
 
@@ -54,7 +54,7 @@ RSpec.describe IronBank::Client do
 
       specify do
         expect { new_client }.
-          to raise_error(ArgumentError, "missing keyword: client_secret")
+          to raise_error(ArgumentError, /missing keyword: :?client_secret/)
       end
     end
 
@@ -65,7 +65,7 @@ RSpec.describe IronBank::Client do
 
       specify do
         expect { new_client }.
-          to raise_error(ArgumentError, "missing keyword: domain")
+          to raise_error(ArgumentError, /missing keyword: :?domain/)
       end
     end
   end

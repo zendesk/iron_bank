@@ -26,7 +26,7 @@ RSpec.describe IronBank::Resource do
         resource.define_singleton_method(:name) { "resource-name" }
       end
 
-      it { is_expected.to match(/name=\"resource-name\"/) }
+      it { is_expected.to match(/name="resource-name"/) }
     end
   end
 

@@ -70,7 +70,7 @@ RSpec.describe IronBank::Authentications::Token do
   end
 
   describe "#header" do
-    subject(:a_token) { described_class.new(credentials) }
+    subject(:a_token) { described_class.new(**credentials) }
 
     context "token not expired" do
       before do
@@ -116,7 +116,7 @@ RSpec.describe IronBank::Authentications::Token do
   end
 
   describe "#expired?" do
-    subject(:a_token) { described_class.new(credentials) }
+    subject(:a_token) { described_class.new(**credentials) }
 
     context "token not expired" do
       before do

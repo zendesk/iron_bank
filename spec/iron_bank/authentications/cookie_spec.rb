@@ -67,7 +67,7 @@ RSpec.describe IronBank::Authentications::Cookie do
   end
 
   describe "#header" do
-    subject(:a_token) { described_class.new(credentials) }
+    subject(:a_token) { described_class.new(**credentials) }
 
     context "cookie not expired" do
       before do
@@ -101,7 +101,7 @@ RSpec.describe IronBank::Authentications::Cookie do
   end
 
   describe "#expired?" do
-    subject(:zsession) { described_class.new(credentials) }
+    subject(:zsession) { described_class.new(**credentials) }
 
     context "cookie not expired" do
       before do

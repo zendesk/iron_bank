@@ -43,7 +43,7 @@ module IronBank
       alias refetch_cookie fetch_cookie
 
       def fetch_zsession
-        /ZSession=([^\;]+)/.match(cookie)[0]
+        /ZSession=([^;]+)/.match(cookie)[0]
       end
 
       def authenticate
@@ -51,7 +51,7 @@ module IronBank
       end
 
       def connection
-        @connection ||= Faraday.new(faraday_config) do |conn|
+        @connection ||= Faraday.new(**faraday_config) do |conn|
           IronBank.configuration.middlewares.each do |klass, options|
             conn.use klass, options
           end
