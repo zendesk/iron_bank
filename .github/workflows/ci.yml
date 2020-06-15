@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    name: Ruby
+
+    strategy:
+      matrix:
+        ruby:
+          - 2.5
+          - 2.6
+          - 2.7
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: zendesk/checkout@v2
+
+      - uses: zendesk/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+
+      - uses: zendesk/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ matrix.ruby }}-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Install Dependencies
+        run: |
+          bundle config deployment true
+          bundle config path vendor/bundle
+          bundle install --jobs 4
+
+      - name: Run Tests
+        run: bundle exec rake
+        env:
+          ZUORA_CLIENT_ID: something
+          ZUORA_CLIENT_SECRET: secret
+          ZUORA_DOMAIN: rest.apisandbox.zuora.com
