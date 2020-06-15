@@ -1,0 +1,27 @@
+name: Test
+on: [push]
+jobs:
+  test:
+    strategy:
+      matrix:
+        ruby: [2.5, 2.6, 2.7]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+
+      - name: Install Dependencies
+        run: bundle install
+
+      - name: Run Tests
+        run: bundle exec rake
+        env:
+          ZUORA_CLIENT_ID: something
+          ZUORA_CLIENT_SECRET: secret
+          ZUORA_DOMAIN: rest.apisandbox.zuora.com

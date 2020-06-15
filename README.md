@@ -1,7 +1,5 @@
 # Iron Bank
 
-[![Build Status][travis-status]][travis-build]
-
 An opinionated Ruby interface to the [Zuora REST API][zuora-dev].
 
 > We who serve the Iron Bank face death full as often as you who serve the Iron
@@ -154,9 +152,6 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 
 [issues]: https://github.com/zendesk/iron_bank/issues
-[travis-status]:
-  https://travis-ci.com/zendesk/iron_bank.svg?token=Qzkq5papoR7sdedznjeb&branch=master
-[travis-build]: https://travis-ci.com/zendesk/iron_bank
 [zuora-describe]: https://www.zuora.com/developer/api-reference/#tag/Describe
 [zuora-dev]: https://developer.zuora.com
 [zuora-doc-oauth]:
