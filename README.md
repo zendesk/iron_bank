@@ -1,6 +1,6 @@
 # Iron Bank
 
-![CI](https://github.com/zendesk/iron_bank/workflows/CI/badge.svg?branch=master)
+![CI](https://github.com/zendesk/iron_bank/workflows/CI/badge.svg?branch=main)
 
 An opinionated Ruby interface to the [Zuora REST API][zuora-dev].
 
