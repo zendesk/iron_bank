@@ -25,7 +25,7 @@ module IronBank
     def save_file
       until completed? || max_query?
         IronBank.logger.info(export_query_info)
-        sleep backoff_time
+        sleep BACKOFF[:interval]
       end
 
       File.open(file_path, "w") do |file|
@@ -61,7 +61,7 @@ module IronBank
 
     def export_query_info
       "Waiting for export #{export.id} (#{resource}) to complete " \
-        "(attempt #{query_attempts} of #{@query_max_attempts}; #{backoff_time}s " \
+        "(attempt #{query_attempts} of #{@query_max_attempts}; #{BACKOFF[:interval]}s " \
         "sleeping time)"
     end
 
@@ -84,10 +84,6 @@ module IronBank
       return false unless @query_attempts > @query_max_attempts
 
       raise IronBank::Error, "Export query attempts exceeded"
-    end
-
-    def backoff_time
-      BACKOFF[:interval]
     end
   end
 end
