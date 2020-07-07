@@ -17,9 +17,9 @@ module IronBank
       IronBank.configuration.export_directory
     end
 
-    def self.export
+    def self.export(max_attempts = 180)
       FileUtils.mkdir_p(directory) unless Dir.exist?(directory)
-      RESOURCE_QUERY_FIELDS.each_key { |resource| new(resource).save_file }
+      RESOURCE_QUERY_FIELDS.each_key { |resource| new(resource, max_attempts).save_file }
     end
 
     def save_file
@@ -36,17 +36,17 @@ module IronBank
     private
 
     BACKOFF = {
-      max:      10,
-      interval: 1,
-      factor:   2
+      interval: 5
     }.freeze
+
     private_constant :BACKOFF
 
-    attr_reader :resource, :query_attempts
+    attr_reader :resource, :query_attempts, :query_max_attempts
 
-    def initialize(resource)
-      @resource       = resource
-      @query_attempts = 0
+    def initialize(resource, max_attempts)
+      @resource           = resource
+      @query_attempts     = 0
+      @query_max_attempts = max_attempts
     end
 
     def export
@@ -61,7 +61,7 @@ module IronBank
 
     def export_query_info
       "Waiting for export #{export.id} (#{resource}) to complete " \
-        "(attempt #{query_attempts} of #{BACKOFF[:max]}; #{backoff_time}s " \
+        "(attempt #{query_attempts} of #{@query_max_attempts}; #{backoff_time}s " \
         "sleeping time)"
     end
 
@@ -81,13 +81,13 @@ module IronBank
 
     def max_query?
       @query_attempts += 1
-      return false unless @query_attempts > BACKOFF[:max]
+      return false unless @query_attempts > @query_max_attempts
 
       raise IronBank::Error, "Export query attempts exceeded"
     end
 
     def backoff_time
-      BACKOFF[:interval] * (BACKOFF[:factor]**query_attempts)
+      BACKOFF[:interval]
     end
   end
 end
