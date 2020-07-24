@@ -17,7 +17,10 @@ module IronBank
       IronBank.configuration.export_directory
     end
 
-    def self.export(max_attempts = 180)
+    # Example usages
+    # IronBank::LocalRecords.export
+    # IronBank::LocalRecords.export(max_attempts: 260)
+    def self.export(max_attempts: 180)
       FileUtils.mkdir_p(directory) unless Dir.exist?(directory)
       RESOURCE_QUERY_FIELDS.each_key { |resource| new(resource, max_attempts).save_file }
     end
@@ -61,7 +64,7 @@ module IronBank
 
     def export_query_info
       "Waiting for export #{export.id} (#{resource}) to complete " \
-        "(attempt #{query_attempts} of #{@query_max_attempts}; #{BACKOFF[:interval]}s " \
+        "(attempt #{query_attempts} of #{query_max_attempts}; #{BACKOFF[:interval]}s " \
         "sleeping time)"
     end
 
@@ -81,7 +84,7 @@ module IronBank
 
     def max_query?
       @query_attempts += 1
-      return false unless @query_attempts > @query_max_attempts
+      return false unless @query_attempts > query_max_attempts
 
       raise IronBank::Error, "Export query attempts exceeded"
     end
