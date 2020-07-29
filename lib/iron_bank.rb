@@ -17,6 +17,8 @@ module IronBank
 
     # Configurable options such as schema directory.
     attr_accessor :configuration
+
+    attr_accessor :configurations, :clients
   end
 
   def self.configure
@@ -26,6 +28,46 @@ module IronBank
     return unless configuration.credentials?
 
     self.client ||= IronBank::Client.new(**configuration.credentials)
+  end
+
+  # def self.configure_instance(&block)
+  #   return unless block_given?
+
+  #   IronBank::Instance.new(&block)
+  # end
+
+  def self.configure_instance(instance_name = nil)
+    unless instance_name
+      puts 'Instance name is required'
+      return
+    end
+
+    self.configurations ||= {}
+    self.configurations[instance_name] = Configuration.new
+    config = self.configurations[instance_name]
+    yield(config)
+    return unless config.credentials?
+
+    self.clients ||= {}
+    self.clients[instance_name] = IronBank::Client.new(**config.credentials)
+  end
+
+  def self.with_instance(instance_name)
+    unless self.configurations && self.configurations[instance_name]
+      puts "Instance #{instance_name} is not setup"
+      return
+    end
+
+    backup_configuration = self.configuration
+    backup_client = self.client
+
+    self.configuration = self.configurations[instance_name]
+    self.client = self.clients[instance_name]
+
+    yield
+
+    self.configuration = backup_configuration
+    self.client = backup_client
   end
 
   def self.logger

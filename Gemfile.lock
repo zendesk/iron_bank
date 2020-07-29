@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/nguyenquangminh0711/ruby_jard
+  revision: c7a5720e540a065f5aad11a5878d8a8515ba250c
+  specs:
+    ruby_jard (0.2.2)
+      byebug (~> 11.1.0)
+      pry (~> 0.13.0)
+      tty-screen (~> 0.8.1)
+
 PATH
   remote: .
   specs:
@@ -92,6 +101,7 @@ GEM
     simplecov-html (0.12.2)
     thread_safe (0.3.6)
     timecop (0.9.1)
+    tty-screen (0.8.1)
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
     unicode-display_width (1.7.0)
@@ -112,6 +122,7 @@ DEPENDENCIES
   rspec (~> 3.0)
   rubocop (~> 0.67)
   rubocop-performance (~> 1.0)
+  ruby_jard!
   shoulda-matchers (~> 4.0)
   simplecov (~> 0.15)
   timecop (~> 0.9)

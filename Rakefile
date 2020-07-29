@@ -36,6 +36,34 @@ task :excluded_fields, [:filename] do |_t, args|
   File.open(destination, "w") { |file| file.write(Psych.dump(fields)) }
 end
 
+task :multi_client do
+  pp 'In multi_client'
+  setup_iron_bank
+  setup_iron_bank_instance
+  # zuora = setup_iron_bank_instance
+  # products = IronBank::Product.all
+  # products = zuora.all
+  products = nil
+  IronBank.with_instance('559') { products = IronBank::Product.all }
+  # account = IronBank::Account.find("8a8083ff6df4b4c60173931d1d745aaf")
+  pp products
+  # pp account
+end
+
+def setup_iron_bank_instance
+  require "dotenv/load"
+  require "iron_bank"
+
+  IronBank.configure_instance('559') do |config|
+    config.client_id            = ENV["ZUORA_CLIENT_ID"]
+    config.client_secret        = ENV["ZUORA_CLIENT_SECRET"]
+    config.auth_type            = ENV.fetch("ZUORA_AUTH_TYPE", "token")
+    config.domain               = ENV["ZUORA_DOMAIN"]
+    config.schema_directory     = "#{File.dirname(__FILE__)}/tmp/schema"
+    config.excluded_fields_file = ENV["ZUORA_EXCLUDED_FIELDS_FILE"]
+  end
+end
+
 # Helper function to set up an `IronBank::Client` instance
 def setup_iron_bank
   require "dotenv/load"
@@ -46,6 +74,7 @@ def setup_iron_bank
     config.client_secret        = ENV["ZUORA_CLIENT_SECRET"]
     config.auth_type            = ENV.fetch("ZUORA_AUTH_TYPE", "token")
     config.domain               = ENV["ZUORA_DOMAIN"]
+    config.schema_directory     = "#{File.dirname(__FILE__)}/tmp/schema"
     config.excluded_fields_file = ENV["ZUORA_EXCLUDED_FIELDS_FILE"]
   end
 end
