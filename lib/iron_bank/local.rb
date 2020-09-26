@@ -25,7 +25,9 @@ module IronBank
 
     def where(conditions, limit: IronBank::Actions::Query::DEFAULT_ZUORA_LIMIT)
       records = store.values.select do |record|
-        conditions.all? { |field, value| record.public_send(field) == value }
+        conditions.all? do |field, match_value|
+          value_matches?(record.public_send(field), match_value)
+        end
       end
 
       records.any? ? records : super
@@ -80,6 +82,15 @@ module IronBank
         "#{object_name}.csv",
         IronBank.configuration.export_directory
       )
+    end
+
+    # :reek:UtilityFunction
+    def value_matches?(record_value, match_value)
+      if match_value.is_a? Array
+        match_value.include? record_value
+      else
+        record_value == match_value
+      end
     end
   end
 end
