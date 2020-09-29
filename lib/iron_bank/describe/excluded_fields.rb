@@ -87,7 +87,7 @@ module IronBank
         info "Successful query for #{object_name}"
 
         true
-      rescue IronBank::InternalServerError => e
+      rescue IronBank::InternalServerError, IronBank::BadRequestError => e
         @last_failed_fields = extract_fields_from_exception(e)
 
         false
