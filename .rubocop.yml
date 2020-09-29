@@ -3,31 +3,14 @@ require: rubocop-performance
 AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
+  NewCops: enable
 
 Layout/DotPosition:
   EnforcedStyle: trailing
 
-Layout/EmptyLinesAroundAttributeAccessor:
-  Enabled: true
-
 Layout/HashAlignment:
   EnforcedHashRocketStyle: table
   EnforcedColonStyle: table
-
-Layout/SpaceAroundMethodCallOperator:
-  Enabled: true
-
-Lint/DeprecatedOpenSSLConstant:
-  Enabled: true
-
-Lint/MixedRegexpCaptureTypes:
-  Enabled: true
-
-Lint/RaiseException:
-  Enabled: true
-
-Lint/StructNewOverride:
-  Enabled: true
 
 Lint/UselessAssignment:
   Exclude:
@@ -66,29 +49,11 @@ Style/MixinUsage:
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
-Style/ExponentialNotation:
-  Enabled: true
-
-Style/HashEachMethods:
-  Enabled: true
-
-Style/HashTransformKeys:
-  Enabled: true
-
-Style/HashTransformValues:
-  Enabled: true
-
 Style/OptionalArguments:
   Exclude:
     - lib/iron_bank/local.rb
     - lib/iron_bank/queryable.rb
     - lib/iron_bank/resource.rb
-
-Style/RedundantRegexpCharacterClass:
-  Enabled: true
-
-Style/RedundantRegexpEscape:
-  Enabled: true
 
 Style/RegexpLiteral:
   Exclude:
@@ -97,6 +62,3 @@ Style/RegexpLiteral:
 Style/RescueStandardError:
   Exclude:
     - lib/iron_bank/csv.rb
-
-Style/SlicingWithRange:
-  Enabled: true

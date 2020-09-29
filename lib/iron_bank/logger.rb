@@ -14,7 +14,7 @@ module IronBank
 
     def_delegators :@logger, :debug, :info, :warn, :error, :fatal
 
-    def initialize(logger: ::Logger.new(STDOUT), level: LEVEL)
+    def initialize(logger: ::Logger.new($stdout), level: LEVEL)
       @logger          = logger
       @logger.progname = PROGNAME
       @logger.level    = level

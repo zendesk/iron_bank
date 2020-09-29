@@ -24,6 +24,8 @@ module IronBank
       def initialize(zoql, limit)
         @zoql  = zoql
         @limit = limit
+
+        super(zoql: zoql, limit: limit)
       end
 
       def params

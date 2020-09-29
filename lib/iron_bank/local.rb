@@ -8,11 +8,11 @@ module IronBank
       store[id] || super
     end
 
-    def find_each
+    def find_each(&block)
       return enum_for(:find_each) unless block_given?
 
       values = store.values
-      values.any? ? values.each { |record| yield record } : super
+      values.any? ? values.each(&block) : super
     end
 
     def all

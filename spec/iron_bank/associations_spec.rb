@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe IronBank::Associations do
+  # rubocop:disable Lint/ConstantDefinitionInBlock
+  # justification: constant defined for spec purpose only
+  #
   # Sample Calculation class
   class Calc
     include IronBank::Associations
@@ -36,4 +39,5 @@ RSpec.describe IronBank::Associations do
       end
     end
   end
+  # rubocop:enable Lint/ConstantDefinitionInBlock
 end
