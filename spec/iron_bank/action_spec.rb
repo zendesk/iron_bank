@@ -58,9 +58,12 @@ RSpec.describe IronBank::Action do
     end
   end
 
+  # rubocop:disable Lint/ConstantDefinitionInBlock
+  # justification: constant defined for spec purpose only
   class SampleAction < IronBank::Action
     def params
       {}
     end
   end
+  # rubocop:enable Lint/ConstantDefinitionInBlock
 end

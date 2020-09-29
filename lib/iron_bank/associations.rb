@@ -12,7 +12,7 @@ module IronBank
           :resource_name,
           IronBank::Utils.camelize(name)
         )
-        foreign_key = options.fetch(:foreign_key, name.to_s + "_id")
+        foreign_key = options.fetch(:foreign_key, "#{name}_id")
 
         define_method(name) do
           return unless (foreign_key_value = public_send(foreign_key))
@@ -37,7 +37,7 @@ module IronBank
 
         foreign_key = options.fetch(
           :foreign_key,
-          IronBank::Utils.underscore(object_name) + "_id"
+          "#{IronBank::Utils.underscore(object_name)}_id"
         )
 
         define_method(name) do

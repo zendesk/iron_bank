@@ -3,7 +3,7 @@
 RSpec.describe IronBank::Local do
   describe "::where" do
     subject do
-      TestLocaleModuleResource = Struct.new(:id, :name, :type) do
+      Struct.new(:id, :name, :type) do
         extend IronBank::Local
       end
     end
