@@ -11,7 +11,7 @@ on:
 jobs:
   main:
     name: Execute Rake Default Task
-    runs-on: [self-hosted, zendesk-stable]
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -30,11 +30,8 @@ jobs:
       - uses: zendesk/cache@v2
         with:
           path: vendor/bundle
-          key:
-            ${{ runner.os }}-gems-${{ matrix.ruby }}-${{
-            hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
+          key: ${{ runner.os }}-gems-${{ matrix.ruby }}-${{hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-gems-
 
       - name: Install Dependencies
         run: |
@@ -48,29 +45,3 @@ jobs:
           ZUORA_CLIENT_ID: something
           ZUORA_CLIENT_SECRET: secret
           ZUORA_DOMAIN: rest.apisandbox.zuora.com
-
-      # Only run SonarQube once per job, instead of being part of all Ruby matrix versions
-      - name: SonarQube Scan Pull Request
-        if: github.event_name == 'pull_request' && matrix.ruby == 2.7
-        run: |
-          sonar-scanner \
-          -Dsonar.host.url="${{ secrets.SONARQUBE_HOST }}" \
-          -Dsonar.login="${{ secrets.SONARQUBE_TOKEN }}" \
-          -Dsonar.sourceEncoding=UTF-8 \
-          -Dsonar.pullrequest.base="${{ github.base_ref }}" \
-          -Dsonar.pullrequest.branch="${{ github.head_ref }}" \
-          -Dsonar.pullrequest.key="${{ github.event.number }}" \
-          -Dsonar.pullrequest.github.repository="zendesk/${{ github.event.repository.name }}" \
-          -Dsonar.scm.revision="${{ github.event.pull_request.head.sha }}"
-
-      # Only run SonarQube once per job, instead of being part of all Ruby matrix versions
-      - name: SonarQube Scan Merge to Main
-        if:
-          github.event_name == 'push' && github.ref == 'refs/heads/main' &&
-          matrix.ruby == 2.7
-        run: |
-          sonar-scanner \
-          -Dsonar.host.url="${{ secrets.SONARQUBE_HOST }}" \
-          -Dsonar.login="${{ secrets.SONARQUBE_TOKEN }}" \
-          -Dsonar.sourceEncoding=UTF-8 \
-          -Dsonar.branch.name=main
