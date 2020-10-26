@@ -24,9 +24,7 @@ jobs:
             --output "./sonar-scanner-cli.zip" \
             "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION.zip"
           unzip "./sonar-scanner-cli.zip" -d "/opt"
-          ln --force --symbolic \
-            "/opt/sonar-scanner-$SONAR_SCANNER_VERSION/bin/sonar-scanner" \
-            /usr/local/bin
+          echo "/opt/sonar-scanner-$SONAR_SCANNER_VERSION/bin" >> $GITHUB_PATH
 
       - name: SonarQube Scan Pull Request
         if: github.event_name == 'pull_request'
