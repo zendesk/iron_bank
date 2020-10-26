@@ -10,7 +10,7 @@ on:
 
 jobs:
   main:
-    name: Execute Rake Default Task
+    name: Unit Tests
     runs-on: ubuntu-latest
 
     strategy:

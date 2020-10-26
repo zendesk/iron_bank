@@ -16,19 +16,20 @@ jobs:
     steps:
       - uses: zendesk/checkout@v2
 
-      - uses: zendesk/setup-ruby@v1
-        with:
-          ruby-version: 2.7
+      - name: Install SonarQube SonarScanner
+        env:
+          SONAR_SCANNER_VERSION: 4.5.0.2216
+        run: |
+          curl --location --silent \
+            --output "./sonar-scanner-cli.zip" \
+            "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION.zip"
+          unzip "./sonar-scanner-cli.zip" -d "/opt"
+          ln --force --symbolic \
+            "/opt/sonar-scanner-$SONAR_SCANNER_VERSION/bin/sonar-scanner" \
+            /usr/local/bin
 
-      - uses: zendesk/cache@v2
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{hashFiles('**/Gemfile.lock') }}
-          restore-keys: ${{ runner.os }}-gems-
-
-      # Only run SonarQube once per job, instead of being part of all Ruby matrix versions
       - name: SonarQube Scan Pull Request
-        if: github.event_name == 'pull_request' && matrix.ruby == 2.7
+        if: github.event_name == 'pull_request'
         run: |
           sonar-scanner \
           -Dsonar.host.url="${{ secrets.SONARQUBE_HOST }}" \
@@ -40,11 +41,8 @@ jobs:
           -Dsonar.pullrequest.github.repository="zendesk/${{ github.event.repository.name }}" \
           -Dsonar.scm.revision="${{ github.event.pull_request.head.sha }}"
 
-      # Only run SonarQube once per job, instead of being part of all Ruby matrix versions
       - name: SonarQube Scan Merge to Main
-        if:
-          github.event_name == 'push' && github.ref == 'refs/heads/main' &&
-          matrix.ruby == 2.7
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           sonar-scanner \
           -Dsonar.host.url="${{ secrets.SONARQUBE_HOST }}" \
