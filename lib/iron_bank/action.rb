@@ -39,9 +39,11 @@ module IronBank
     end
 
     def response_object
-      return {} unless body.is_a?(Array)
+      @response_object ||= begin
+        return {} unless body.is_a?(Array)
 
-      @response_object ||= ::IronBank::Object.new(body.first).deep_underscore
+        ::IronBank::Object.new(body.first).deep_underscore
+      end
     end
 
     def errors

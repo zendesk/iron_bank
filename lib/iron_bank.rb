@@ -60,9 +60,7 @@ require "iron_bank/faraday_middleware/response/raise_error"
 require "iron_bank/faraday_middleware/response/renew_auth"
 
 # Use default configuration
-# rubocop:disable Lint/EmptyBlock
 IronBank.configure {}
-# rubocop:enable Lint/EmptyBlock
 
 # Actions
 require "iron_bank/action"
