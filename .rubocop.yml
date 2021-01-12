@@ -4,6 +4,7 @@ AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
   NewCops: enable
+  SuggestExtensions: false
 
 Layout/DotPosition:
   EnforcedStyle: trailing
