@@ -9,7 +9,7 @@ module IronBank
     end
 
     def find_each(&block)
-      return enum_for(:find_each) unless block_given?
+      return enum_for(:find_each) unless block
 
       values = store.values
       values.any? ? values.each(&block) : super
