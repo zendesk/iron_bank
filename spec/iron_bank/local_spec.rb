@@ -24,15 +24,15 @@ RSpec.describe IronBank::Local do
 
     context "when condition is single value" do
       it "returns matches against value" do
-        expect(subject.where(id: "id1")).to contain_exactly(resource1)
-        expect(subject.where(type: "Foo")).to contain_exactly(resource1, resource2)
+        expect(subject.where({ id: "id1" })).to contain_exactly(resource1)
+        expect(subject.where({ type: "Foo" })).to contain_exactly(resource1, resource2)
       end
     end
 
     context "when condition is an array of values" do
       it "returns matches against any element of the array" do
-        expect(subject.where(id: %w[id1 id3])).to contain_exactly(resource1, resource3)
-        expect(subject.where(type: %w[Foo Bar])).to contain_exactly(resource1, resource2, resource3)
+        expect(subject.where({ id: %w[id1 id3] })).to contain_exactly(resource1, resource3)
+        expect(subject.where({ type: %w[Foo Bar] })).to contain_exactly(resource1, resource2, resource3)
       end
     end
   end
