@@ -82,7 +82,7 @@ module IronBank
       def valid_query?
         # Querying using the ID (which is an indexed field) should return an
         # empty collection very quickly when successful
-        object.where(id: INVALID_OBJECT_ID)
+        object.where({ id: INVALID_OBJECT_ID })
 
         info "Successful query for #{object_name}"
 
