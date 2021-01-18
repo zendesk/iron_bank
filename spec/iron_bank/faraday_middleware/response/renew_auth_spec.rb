@@ -24,6 +24,8 @@ RSpec.describe IronBank::FaradayMiddleware::Response::RenewAuth do
     allow(auth).to receive(:header).and_return(new_auth_header).once
   end
 
+  after { Faraday.default_connection = nil }
+
   describe "first request" do
     before { make_request }
 

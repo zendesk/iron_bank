@@ -29,21 +29,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bump",                "~> 0.5"
-  spec.add_development_dependency "bundler",             "~> 2.0"
-  spec.add_development_dependency "dotenv",              "~> 2.2"
-  spec.add_development_dependency "factory_bot",         "~> 6.0"
-  spec.add_development_dependency "pry-byebug",          "~> 3.4"
-  spec.add_development_dependency "rake",                "~> 13.0"
-  spec.add_development_dependency "reek",                "~> 6.0"
-  spec.add_development_dependency "rspec",               "~> 3.0"
-  spec.add_development_dependency "rubocop",             "~> 1.0"
-  spec.add_development_dependency "rubocop-performance", "~> 1.0"
-  spec.add_development_dependency "shoulda-matchers",    "~> 4.0"
-  spec.add_development_dependency "simplecov",           "~> 0.15"
-  spec.add_development_dependency "timecop",             "~> 0.9"
-
-  spec.add_runtime_dependency "faraday",            "~> 1"
-  spec.add_runtime_dependency "faraday_middleware", "~> 1"
-  spec.add_runtime_dependency "nokogiri",           "~> 1"
+  spec.add_dependency "faraday",            "~> 1"
+  spec.add_dependency "faraday_middleware", "~> 1"
+  spec.add_dependency "nokogiri",           "~> 1"
 end
