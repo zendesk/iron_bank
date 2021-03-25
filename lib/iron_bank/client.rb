@@ -5,6 +5,10 @@ module IronBank
   # authenticated request, reusing the same session cookie for future requests.
   #
   class Client
+    extend Forwardable
+
+    def_delegators :connection, :get, :post, :put, :patch, :delete
+
     # Generic client error.
     #
     class Error < StandardError; end

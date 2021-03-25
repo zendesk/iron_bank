@@ -23,6 +23,12 @@ module IronBank
       # FIXME: a subscription can only have at most one amendment (no amendment
       # for the last version) but there are no `AmendmentId` on a subscription.
       with_many :amendments
+
+      def self.update(id, params)
+        endpoint = "v1/subcriptions/#{id}"
+        formatted = IronBank::Object.new(params).deep_camelize(type: :lower)
+        IronBank.client.put(endpoint, formatted).body
+      end
     end
   end
 end

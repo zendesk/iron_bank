@@ -7,6 +7,7 @@ module IronBank
     #
     class Amend < Action
       def call
+        puts "HELLO FROM LOCAL IRON BANK"
         # NOTE: The amend response wraps all results in an object, which is
         #       inconsistent with the rest of the `/v1/action` responses.
         super[:results]

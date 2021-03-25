@@ -5,6 +5,7 @@ require "csv"
 require "faraday"
 require "faraday_middleware"
 require "fileutils"
+require "forwardable"
 require "json"
 require "nokogiri"
 
