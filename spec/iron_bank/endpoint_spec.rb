@@ -40,6 +40,11 @@ RSpec.describe IronBank::Endpoint do
         it { is_expected.to eq("https://services666.zuora.com/") }
       end
 
+      context "no digits services hostname" do
+        let(:hostname) { "services.zuora.com" }
+        it { is_expected.to eq("https://services.zuora.com/") }
+      end
+
       context "uppercase services hostname" do
         let(:hostname) { "SERVICES123.ZUORA.COM" }
         it { is_expected.to eq("https://services123.zuora.com/") }
@@ -53,6 +58,11 @@ RSpec.describe IronBank::Endpoint do
       context "prefixed with 'rest' services hostname" do
         let(:hostname) { "restservices666.zuora.com:12345" }
         it { is_expected.to eq("https://restservices666.zuora.com:12345/") }
+      end
+
+      context "prefixed with 'rest.' services hostname" do
+        let(:hostname) { "rest.test.zuora.com:12345" }
+        it { is_expected.to eq("https://rest.test.zuora.com:12345/") }
       end
     end
 
