@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    iron_bank (5.2.1)
+    iron_bank (5.2.2)
       faraday (~> 1)
       faraday_middleware (~> 1)
       nokogiri (~> 1)
