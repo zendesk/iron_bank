@@ -31,6 +31,12 @@ module IronBank
       @query_fields ||= schema.query_fields - excluded_fields
     end
 
+    def query_custom_fields
+      return [] unless schema
+
+      @query_custom_fields ||= schema.query_custom_fields - excluded_fields
+    end
+
     def schema
       @schema ||= IronBank::Schema.for(object_name)
     end

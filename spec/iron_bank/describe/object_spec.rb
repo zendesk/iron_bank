@@ -25,6 +25,7 @@ RSpec.describe IronBank::Describe::Object do
             AccountNumber
             AdditionalEmailAddresses
             AllowInvoiceEdit
+            MyCustomField__c
             Name
           ]
         end
@@ -34,8 +35,15 @@ RSpec.describe IronBank::Describe::Object do
       end
 
       describe "#query_fields" do
-        let(:fields) { %w[AccountNumber Name] }
+        let(:fields) { %w[AccountNumber MyCustomField__c Name] }
         subject { object.query_fields }
+        it { is_expected.to eq(fields) }
+      end
+
+      describe "#query_custom_fields" do
+        let(:fields) { %w[MyCustomField__c] }
+        subject { object.query_custom_fields }
+
         it { is_expected.to eq(fields) }
       end
 
