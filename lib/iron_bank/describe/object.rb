@@ -56,6 +56,16 @@ module IronBank
         @query_fields ||= fields.select(&:selectable?).map(&:name)
       end
 
+      def query_custom_fields
+        @query_custom_fields ||= begin
+          custom_fields = fields.select do |field|
+            field.selectable? && field.custom?
+          end
+
+          custom_fields.map(&:name)
+        end
+      end
+
       def related
         @related ||= doc.xpath(".//related-objects/object").map do |node|
           IronBank::Describe::Related.from_xml(node)

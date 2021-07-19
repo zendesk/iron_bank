@@ -26,7 +26,7 @@
          <createable>true</createable>
          <updateable>true</updateable>
          <filterable>true</filterable>
-         <custom>false</custom>
+         <custom>true</custom>
          <maxlength/>
          <required>false</required>
          <type>text</type>
@@ -46,6 +46,22 @@
          <maxlength/>
          <required>false</required>
          <type>boolean</type>
+         <contexts>
+            <context>soap</context>
+            <context>export</context>
+         </contexts>
+      </field>
+      <field>
+         <name>MyCustomField__c</name>
+         <label>MyCustomField__c</label>
+         <selectable>true</selectable>
+         <createable>true</createable>
+         <updateable>true</updateable>
+         <filterable>true</filterable>
+         <custom>true</custom>
+         <maxlength/>
+         <required>true</required>
+         <type>text</type>
          <contexts>
             <context>soap</context>
             <context>export</context>

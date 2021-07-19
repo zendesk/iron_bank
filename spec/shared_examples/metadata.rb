@@ -72,6 +72,33 @@ RSpec.shared_examples "a resource with metadata" do
     end
   end
 
+  describe "#query_custom_fields" do
+    subject { described_class.query_custom_fields }
+
+    context "without a schema" do
+      it { is_expected.to eq([]) }
+    end
+
+    context "with a schema" do
+      let(:query_custom_fields) { %w[MyCustomField__c ExcludedField] }
+
+      before do
+        allow(IronBank::Schema).to receive(:for).and_return(schema)
+        allow(schema).to receive(:query_custom_fields).and_return(query_custom_fields)
+        allow(described_class).to receive(:excluded_fields).and_return(excluded)
+      end
+
+      after do
+        # NOTE: Not resetting the instance variable here seems to leak the
+        #       `instance_double(IronBank::Describe::Object)` to the other
+        #       examples.
+        described_class.remove_instance_variable :@schema
+      end
+
+      it { is_expected.to eq(%w[MyCustomField__c]) }
+    end
+  end
+
   describe "#with_schema" do
     let(:fields)  { %w[AccountNumber MyCustomField__c] }
     let(:methods) { %i[account_number my_custom_field__c] }
