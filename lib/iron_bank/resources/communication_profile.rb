@@ -11,6 +11,7 @@ module IronBank
       with_schema
 
       with_many :accounts
+      with_many :notifications
     end
   end
 end
