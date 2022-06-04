@@ -37,12 +37,16 @@ module IronBank
     # File path for Zuora users export
     attr_accessor :users_file
 
+    # Specify a minor version
+    attr_accessor :api_minor_version
+
     def initialize
-      @schema_directory = "./config/schema"
-      @export_directory = "./config/export"
-      @logger           = IronBank::Logger.new
-      @auth_type        = "token"
-      @middlewares      = []
+      @schema_directory   = "./config/schema"
+      @export_directory   = "./config/export"
+      @logger             = IronBank::Logger.new
+      @auth_type          = "token"
+      @middlewares        = []
+      @api_minor_version  = "0.0"
     end
 
     def schema_directory=(value)
