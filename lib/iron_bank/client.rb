@@ -100,7 +100,7 @@ module IronBank
 
     def headers
       config = IronBank.Configuration
-      header = auth.header.reverse_merge(
+      auth.header.reverse_merge(
         "Content-Type" => "application/json",
         "zuora-version" => config.api_minor_version
       )
