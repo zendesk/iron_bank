@@ -46,7 +46,7 @@ module IronBank
       @logger             = IronBank::Logger.new
       @auth_type          = "token"
       @middlewares        = []
-      @api_minor_version  = "0.0"
+      @api_minor_version  = "211.0"
     end
 
     def schema_directory=(value)
