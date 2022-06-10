@@ -4,6 +4,7 @@ require "timecop"
 require "shared_examples/faraday_connection"
 
 RSpec.describe IronBank::Authentications::Cookie do
+  # rubocop:disable Style/OpenStructUse
   let(:initial_session) do
     OpenStruct.new(
       body:    { success: true },
@@ -17,6 +18,7 @@ RSpec.describe IronBank::Authentications::Cookie do
       headers: { "set-cookie" => "ZSession=456" }
     )
   end
+  # rubocop:enable Style/OpenStructUse
 
   let(:initial_authorization_header) do
     { "Cookie" => initial_session.headers["set-cookie"] }

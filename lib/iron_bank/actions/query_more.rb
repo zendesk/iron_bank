@@ -9,7 +9,7 @@ module IronBank
       private
 
       def params
-        { 'queryLocator': args }
+        { queryLocator: args }
       end
 
       # NOTE: Zuora API endpoint is case-sensitive.

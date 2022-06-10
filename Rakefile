@@ -33,7 +33,7 @@ task :excluded_fields, [:filename] do |_t, args|
   destination = args[:filename] || IronBank.configuration.excluded_fields_file
   fields      = IronBank::Schema.excluded_fields.sort.to_h
 
-  File.open(destination, "w") { |file| file.write(Psych.dump(fields)) }
+  File.write(destination, Psych.dump(fields))
 end
 
 # Helper function to set up an `IronBank::Client` instance
