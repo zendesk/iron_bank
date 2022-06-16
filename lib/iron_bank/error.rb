@@ -6,20 +6,18 @@ module IronBank
     # Returns the appropriate IronBank::Error subclass based on status and
     # response message
     def self.from_response(response)
-      klass = begin
-        case response.status
-        when 200      then from_body(response)
-        when 400      then IronBank::BadRequestError
-        when 401      then IronBank::UnauthorizedError
-        when 404      then IronBank::NotFoundError
-        when 422      then IronBank::UnprocessableEntityError
-        when 429      then IronBank::TooManyRequestsError
-        when 500      then IronBank::InternalServerError
-        when 400..499 then IronBank::ClientError
-        when 500..599 then IronBank::ServerError
-        else               IronBank::Error
-        end
-      end
+      klass = case response.status
+              when 200      then from_body(response)
+              when 400      then IronBank::BadRequestError
+              when 401      then IronBank::UnauthorizedError
+              when 404      then IronBank::NotFoundError
+              when 422      then IronBank::UnprocessableEntityError
+              when 429      then IronBank::TooManyRequestsError
+              when 500      then IronBank::InternalServerError
+              when 400..499 then IronBank::ClientError
+              when 500..599 then IronBank::ServerError
+              else IronBank::Error
+              end
 
       klass&.new(response)
     end

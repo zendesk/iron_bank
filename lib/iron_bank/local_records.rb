@@ -28,9 +28,11 @@ module IronBank
         sleep backoff_time
       end
 
+      # rubocop:disable Style/FileWrite
       File.open(file_path, "w") do |file|
         file.write(export.content.force_encoding("UTF-8"))
       end
+      # rubocop:enable Style/FileWrite
     end
 
     private

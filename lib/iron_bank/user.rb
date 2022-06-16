@@ -16,14 +16,12 @@ module IronBank
       def store
         return {} unless users_file
 
-        @store ||= begin
-          if File.exist?(users_file)
-            load_records
-          else
-            IronBank.logger.warn "File does not exist: #{users_file}"
-            {}
-          end
-        end
+        @store ||= if File.exist?(users_file)
+                     load_records
+                   else
+                     IronBank.logger.warn "File does not exist: #{users_file}"
+                     {}
+                   end
       end
 
       def load_records

@@ -94,10 +94,8 @@ module IronBank
         return {}
       end
 
-      @excluded_fields ||= begin
-        Psych.load_file(excluded_fields_file).tap do |fields|
-          raise "Excluded fields must be a hash" unless fields.is_a?(Hash)
-        end
+      @excluded_fields ||= Psych.load_file(excluded_fields_file).tap do |fields|
+        raise "Excluded fields must be a hash" unless fields.is_a?(Hash)
       end
     end
   end

@@ -7,7 +7,7 @@ RSpec.describe IronBank::Actions::Query do
     it_behaves_like "a Zuora action" do
       let(:args)     { "select FieldName from ObjectName" }
       let(:endpoint) { "v1/action/query" }
-      let(:params)   { { 'queryString': args } }
+      let(:params)   { { queryString: args } }
     end
   end
 
