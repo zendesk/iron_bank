@@ -19,6 +19,7 @@ detectors:
       - IronBank::Configuration#middlewares
       - IronBank::Configuration#schema_directory
       - IronBank::Configuration#users_file
+      - IronBank::Configuration#api_minor_version
 
   BooleanParameter:
     exclude:
