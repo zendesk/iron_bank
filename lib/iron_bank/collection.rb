@@ -12,7 +12,8 @@ module IronBank
                    :empty?,
                    :length,
                    :map,
-                   :size
+                   :size,
+                   :to_ary
 
     def initialize(klass, conditions, records)
       @klass = klass
