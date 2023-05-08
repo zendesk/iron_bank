@@ -32,27 +32,10 @@ RSpec.describe IronBank::LocalRecords do
       IronBank::Export.instance_variable_set :@schema, nil
     end
 
-    context "local export directory does not exist" do
-      before do
-        allow(Dir).to receive(:exist?).and_return(false)
-      end
-
+    context "local export directory" do
       it "creates the local export directory if it does not exist" do
         stub_const("IronBank::LocalRecords::RESOURCE_QUERY_FIELDS", {})
         expect(FileUtils).to receive(:mkdir_p)
-
-        export
-      end
-    end
-
-    context "local export directory already exists" do
-      before do
-        allow(Dir).to receive(:exist?).and_return(true)
-      end
-
-      it "creates the local export directory if it does not exist" do
-        stub_const("IronBank::LocalRecords::RESOURCE_QUERY_FIELDS", {})
-        expect(FileUtils).not_to receive(:mkdir_p)
 
         export
       end

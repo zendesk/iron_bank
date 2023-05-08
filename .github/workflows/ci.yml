@@ -1,6 +1,10 @@
 name: CI
 
-on: push
+on:
+  pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
   specs:
@@ -19,12 +23,6 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
-      - name: Install Dependencies
-        run: |
-          bundle config deployment true
-          bundle config path vendor/bundle
-          bundle install --jobs 4
-
       - name: Run Specs
         run: bundle exec rake spec
         env:
