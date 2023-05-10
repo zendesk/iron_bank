@@ -27,5 +27,5 @@ RSpec.configure do |config|
 end
 
 IronBank.configure do |config|
-  config.logger = IronBank::Logger.new(level: ::Logger::FATAL)
+  config.logger = IronBank::Logger.new(level: Logger::FATAL)
 end

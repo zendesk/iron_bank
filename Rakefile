@@ -42,10 +42,10 @@ def setup_iron_bank
   require "iron_bank"
 
   IronBank.configure do |config|
-    config.client_id            = ENV["ZUORA_CLIENT_ID"]
-    config.client_secret        = ENV["ZUORA_CLIENT_SECRET"]
+    config.client_id            = ENV.fetch("ZUORA_CLIENT_ID", nil)
+    config.client_secret        = ENV.fetch("ZUORA_CLIENT_SECRET", nil)
     config.auth_type            = ENV.fetch("ZUORA_AUTH_TYPE", "token")
-    config.domain               = ENV["ZUORA_DOMAIN"]
-    config.excluded_fields_file = ENV["ZUORA_EXCLUDED_FIELDS_FILE"]
+    config.domain               = ENV.fetch("ZUORA_DOMAIN", nil)
+    config.excluded_fields_file = ENV.fetch("ZUORA_EXCLUDED_FIELDS_FILE", nil)
   end
 end

@@ -64,7 +64,7 @@ module IronBank
 
     def ensure_range_single_condition
       return if conditions.count <= 1
-      return unless conditions.values.any? { |value| value.is_a?(Array) }
+      return unless conditions.values.any?(Array)
 
       raise "Filter ranges must be used in isolation."
     end

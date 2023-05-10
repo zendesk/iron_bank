@@ -10,7 +10,7 @@ RSpec.describe IronBank::Describe::ExcludedFields do
     let(:object_name) { "Product" }
 
     before do
-      allow(object).to receive(:where).with(id: invalid_id) # Successful query
+      allow(object).to receive(:where).with({ id: invalid_id }) # Successful query
     end
 
     it "returns an empty array" do
@@ -34,7 +34,7 @@ RSpec.describe IronBank::Describe::ExcludedFields do
       #   - The first time ("InvalidField2") raises an exception
       #   - The second time ("InvalidField1") raises an exception
       #   - All following calls are successful
-      allow(object).to receive(:where).with(id: invalid_id) do
+      allow(object).to receive(:where).with({ id: invalid_id }) do
         num_query += 1
 
         # NOTE: This ordering is dictated by the order of `query_fields`
@@ -67,7 +67,7 @@ RSpec.describe IronBank::Describe::ExcludedFields do
     before do
       allow(object).
         to receive(:where).
-        with(id: invalid_id).
+        with({ id: invalid_id }).
         and_raise(IronBank::InternalServerError)
     end
 

@@ -12,7 +12,7 @@ module IronBank
     end
 
     def self.export
-      FileUtils.mkdir_p(directory) unless Dir.exist?(directory)
+      FileUtils.mkdir_p(directory)
       new(IronBank.client).export
       reset
       import
