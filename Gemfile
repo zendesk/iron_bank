@@ -8,7 +8,7 @@ gemspec
 gem "bump",                "~> 0.5"
 gem "bundler",             "~> 2.0"
 gem "dotenv",              "~> 2.2"
-gem "factory_bot",         "~> 6.0"
+gem "factory_bot", "~> 6.3", ">= 6.3.0"
 gem "pry-byebug",          "~> 3.4"
 gem "rake",                "~> 13.0"
 gem "reek",                "~> 6"
