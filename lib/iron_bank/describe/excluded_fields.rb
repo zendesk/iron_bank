@@ -6,6 +6,7 @@ module IronBank
     # current Zuora tenant, despites Zuora clearly marking these fields as
     # `<selectable>true</true>` in their Describe API... /rant
     #
+    # rubocop:disable Metrics/ClassLength
     class ExcludedFields
       extend Forwardable
 
@@ -87,9 +88,65 @@ module IronBank
         info "Successful query for #{object_name}"
 
         true
-      rescue IronBank::InternalServerError, IronBank::BadRequestError => e
+      rescue IronBank::BadRequestError => e
         @last_failed_fields = extract_fields_from_exception(e)
 
+        false
+      rescue IronBank::InternalServerError
+        @last_failed_fields = exctract_from_dividing
+
+        false
+      end
+
+      def exctract_from_dividing
+        @working_fields = []
+        @failed_fields = []
+        query_fields = object.query_fields.clone
+
+        divide_and_execute(query_fields)
+        # Set initial state for object.query_fields
+        object.query_fields.concat query_fields
+
+        info "Invalid fields '#{@failed_fields}' for #{object_name} query"
+
+        @failed_fields
+      end
+
+      # rubocop:disable Metrics/MethodLength
+      # rubocop:disable Metrics/AbcSize
+      def divide_and_execute(query_fields)
+        # Clear state before queries
+        object.query_fields.clear
+        # We repeat dividing until only one field has left
+        @failed_fields.push(query_fields.pop) if query_fields.one?
+        return if query_fields.empty?
+
+        mid = query_fields.size / 2
+        left = query_fields[0..mid - 1]
+        right = query_fields[mid..]
+
+        if execute_query(left)
+          @working_fields.concat(left)
+        else
+          divide_and_execute(left)
+        end
+
+        if execute_query(right)
+          @working_fields.concat(right)
+        else
+          divide_and_execute(right)
+        end
+      end
+      # rubocop:enable Metrics/MethodLength
+      # rubocop:enable Metrics/AbcSize
+
+      def execute_query(fields)
+        object.query_fields.concat(@working_fields + fields)
+
+        object.where({ id: INVALID_OBJECT_ID })
+
+        true
+      rescue IronBank::InternalServerError
         false
       end
 
@@ -108,5 +165,6 @@ module IronBank
         failed_fields
       end
     end
+    # rubocop:enable Metrics/ClassLength
   end
 end
