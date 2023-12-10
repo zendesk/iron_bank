@@ -39,6 +39,9 @@ module IronBank
     end
 
     def self.excluded_fields
+      # When Zuora return InternalServerError we can not extract fields from the a message.
+      # For this case we are doing binary search through the query fields and it could be
+      # expensive due to repeatedly querying.
       @excluded_fields ||= IronBank::Resources.constants.each.with_object({}) do |resource, fields|
         fields[resource.to_s] =
           IronBank::Describe::ExcludedFields.call(object_name: resource)
