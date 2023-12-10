@@ -31,6 +31,9 @@ task :excluded_fields, [:filename] do |_t, args|
   setup_iron_bank
 
   destination = args[:filename] || IronBank.configuration.excluded_fields_file
+  # When Zuora return InternalServerError we can not extract fields from the a message.
+  # For this case we are doing binary search through the query fields and it could be
+  # expensive due to repeatedly querying.
   fields      = IronBank::Schema.excluded_fields.sort.to_h
 
   File.write(destination, Psych.dump(fields))
