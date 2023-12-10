@@ -16,62 +16,53 @@ RSpec.describe IronBank::Describe::ExcludedFields do
     it "returns an empty array" do
       expect(call).to eq([])
     end
+  end
 
-    context "with invalid fields" do
-      let!(:fields_count) { query_fields.size }
+  describe "when object has the unqueryable fields" do
+    let(:object_name) { "Account" }
+    let(:query_fields) { %w[InvalidField1 Fields2 Field3] }
+
+    before do
+      allow(object).to receive(:query_fields).and_return(query_fields)
+
+      num_query = 0
+      allow(object).to receive(:where).with({ id: invalid_id }) do
+        num_query += 1
+
+        case num_query
+        when 1 then raise error_class, error_message
+        else anything
+        end
+      end
+    end
+
+    context "query fails with IronBank::BadRequestError" do
+      let(:error_class) { IronBank::BadRequestError }
+      let(:error_message) { "BadRequestError message" }
 
       before do
-        allow(object).to receive(:query_fields).and_return(query_fields)
-
-        num_query = 0
-
-        # Querying `Object#where(id: invalid_id)`:
-        #   - The first 2 queries are initial and failed
-        #   - Plus 2 * invalid fields count and its failed
-        #   - All following calls are successful
-        allow(object).to receive(:where).with({ id: invalid_id }) do
-          num_query += 1
-
-          # NOTE: This ordering is dictated by the order of `query_fields`
-          case num_query
-          when 0..invalid_fields_count * 2 then raise IronBank::InternalServerError
-          else anything
-          end
-        end
+        allow(described_class::ExtractFromMessage).to receive(:call)
       end
 
-      context "when 1 invalid field" do
-        let(:query_fields) { %w[InvalidField1 Fields2 Field3] }
-        let(:invalid_fields_count) { 1 }
+      it "handles an error with ExtractFromMessage" do
+        call
+        expect(described_class::ExtractFromMessage).to have_received(:call).with(error_message)
+      end
+    end
 
-        it "makes initial 2 queries and 2 * working query fields count queries" do
-          call
+    context "query fails with InternalServerError" do
+      let(:error_class) { IronBank::InternalServerError }
+      let(:error_message) { "InternalServerError message" }
 
-          expect(object).to have_received(:where).exactly(2 + (invalid_fields_count * 2)).times
-        end
-
-        it "returns the failed field" do
-          expect(call).to contain_exactly("InvalidField1")
-        end
-
-        it "returns a sorted array of unqueryable fields" do
-          expect(call.sort).to eq(call)
-        end
+      before do
+        allow(described_class::ExtractFromMessage).to receive(:call)
+        allow(described_class::DeduceFromQuery).to receive(:call).and_return([])
       end
 
-      context "when 2 invalid fields" do
-        let(:query_fields) { %w[InvalidField1 InvalidField2 Field3] }
-        let(:invalid_fields_count) { 2 }
-
-        it "makes initial 2 queries and 2 * working query fields count queries" do
-          call
-
-          expect(object).to have_received(:where).exactly(2 + (invalid_fields_count * 2)).times
-        end
-
-        it "returns the failed fields" do
-          expect(call).to contain_exactly("InvalidField1", "InvalidField2")
-        end
+      it "handles an error with DeduceFromQuery" do
+        call
+        expect(described_class::ExtractFromMessage).to have_received(:call).with(error_message)
+        expect(described_class::DeduceFromQuery).to have_received(:call).with(object)
       end
     end
   end
