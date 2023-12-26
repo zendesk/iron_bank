@@ -26,7 +26,6 @@ Metrics/AbcSize:
   Exclude:
     - lib/iron_bank/associations.rb
     - lib/iron_bank/client.rb
-    - lib/iron_bank/describe/excluded_fields/deduce_from_query.rb
 
 Metrics/BlockLength:
   Exclude:
@@ -45,13 +44,9 @@ Metrics/MethodLength:
     - lib/iron_bank/resources/product_rate_plan_charge_tier.rb
     - lib/iron_bank/error.rb
     - lib/iron_bank/client.rb
-    - lib/iron_bank/describe/excluded_fields/deduce_from_query.rb
 
 Style/ClassAndModuleChildren:
   EnforcedStyle: nested
-  Exclude:
-    - lib/iron_bank/describe/excluded_fields/deduce_from_query.rb
-    - lib/iron_bank/describe/excluded_fields/extract_from_message.rb
 
 Style/MixinUsage:
   Exclude:

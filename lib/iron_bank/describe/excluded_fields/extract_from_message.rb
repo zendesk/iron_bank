@@ -2,8 +2,10 @@
 
 module IronBank
   module Describe
-    # Extracts failed fields from an exception message.
-    # Returns from a call if an exception message does not contain failed field
+    # Extracts invalid fields from an exception message.
+    # Returns from a call if an exception message does not contain invalid field
+
+    # rubocop:disable Style/ClassAndModuleChildren
     class ExcludedFields::ExtractFromMessage
       FAULT_FIELD_MESSAGES = Regexp.union(
         # Generic fault field
@@ -48,5 +50,6 @@ module IronBank
         @message = message
       end
     end
+    # rubocop:enable Style/ClassAndModuleChildren
   end
 end

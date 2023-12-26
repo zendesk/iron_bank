@@ -2,7 +2,11 @@
 
 module IronBank
   module Describe
-    # Makes a binary search by query fields to get failed fields
+    # NOTE: Beware there could be a performance hit as the search repeatedly
+    # executes queries to perform the search for invalid fields in the query
+    # included in the query statement.
+
+    # rubocop:disable Style/ClassAndModuleChildren
     class ExcludedFields::DeduceFromQuery
       INVALID_OBJECT_ID = "InvalidObjectId"
 
@@ -13,62 +17,59 @@ module IronBank
       end
 
       def call
-        exctract_from_dividing
-      end
-
-      private
-
-      attr_reader :object
-
-      def initialize(object)
-        @object = object
-      end
-
-      def exctract_from_dividing
-        @working_fields = []
-        @failed_fields = []
         query_fields = object.query_fields.clone
 
         divide_and_execute(query_fields)
         # Set initial state for object.query_fields
         object.query_fields.concat query_fields
 
-        @failed_fields
+        invalid_fields
+      end
+
+      private
+
+      attr_reader :object, :valid_fields, :invalid_fields
+
+      def initialize(object)
+        @object = object
+        @valid_fields = []
+        @invalid_fields = []
       end
 
       def divide_and_execute(query_fields)
         # Clear state before queries
         object.query_fields.clear
         # We repeat dividing until only one field has left
-        @failed_fields.push(query_fields.pop) if query_fields.one?
+        invalid_fields.push(query_fields.pop) if query_fields.one?
         return if query_fields.empty?
 
+        left, right = divide_fields(query_fields)
+
+        execute_or_divide_again(left)
+        execute_or_divide_again(right)
+      end
+
+      def divide_fields(query_fields)
         mid = query_fields.size / 2
-        left = query_fields[0..mid - 1]
-        right = query_fields[mid..]
+        [query_fields[0..mid - 1], query_fields[mid..]]
+      end
 
-        if execute_query(left)
-          @working_fields.concat(left)
+      def execute_or_divide_again(fields)
+        if execute_query(fields)
+          valid_fields.concat(fields)
         else
-          divide_and_execute(left)
-        end
-
-        if execute_query(right)
-          @working_fields.concat(right)
-        else
-          divide_and_execute(right)
+          divide_and_execute(fields)
         end
       end
 
       def execute_query(fields)
-        object.query_fields.concat(@working_fields + fields)
-
+        object.query_fields.concat(valid_fields + fields)
         object.where({ id: INVALID_OBJECT_ID })
-
         true
       rescue IronBank::InternalServerError
         false
       end
     end
+    # rubocop:enable Style/ClassAndModuleChildren
   end
 end
