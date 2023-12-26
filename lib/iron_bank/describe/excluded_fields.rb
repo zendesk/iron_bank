@@ -34,7 +34,7 @@ module IronBank
       end
 
       def object
-        IronBank::Resources.const_get(object_name)
+        @object ||= IronBank::Resources.const_get(object_name)
       end
 
       def excluded_fields
