@@ -5,7 +5,6 @@ module IronBank
     # Returns an array of non-queryable fields for the given object in the
     # current Zuora tenant, despites Zuora clearly marking these fields as
     # `<selectable>true</true>` in their Describe API... /rant
-    #
     class ExcludedFields
       extend Forwardable
 
@@ -18,21 +17,21 @@ module IronBank
       end
 
       def call
-        remove_last_failure_fields until valid_query?
-
+        remove_invalid_fields until valid_query?
         (excluded_fields - single_resource_query_fields).sort
       end
 
       private
 
-      attr_reader :object_name, :last_failed_fields
+      attr_reader :object_name,
+        :invalid_fields
 
       def_delegators "IronBank.logger", :info
       def_delegators :object, :single_resource_query_fields
 
       def initialize(object_name)
-        @object_name        = object_name
-        @last_failed_fields = nil
+        @object_name    = object_name
+        @invalid_fields = []
       end
 
       def object
@@ -43,16 +42,12 @@ module IronBank
         @excluded_fields ||= object.excluded_fields.dup
       end
 
-      def remove_last_failure_fields
-        query_fields = object.query_fields
-
+      def remove_invalid_fields
+        query_fields  = object.query_fields
         failed_fields = query_fields.select do |field|
-          last_failed_fields.any? { |failed| field.casecmp?(failed) }
+          invalid_fields.any? { |failed| field.casecmp?(failed) }
         end
-
         excluded_fields.push(*failed_fields)
-
-        # Remove the field for the next query
         query_fields.delete_if { |field| failed_fields.include?(field) }
       end
 
@@ -60,16 +55,12 @@ module IronBank
         # Querying using the ID (which is an indexed field) should return an
         # empty collection very quickly when successful
         object.where({ id: INVALID_OBJECT_ID })
-
         info "Successful query for #{object_name}"
-
         true
       rescue IronBank::BadRequestError, InternalServerError => e
-        @last_failed_fields = ExtractFromMessage.call(e.message) ||
-                              DeduceFromQuery.call(object)
-
-        info "Invalid fields '#{@last_failed_fields}' for #{object_name} query"
-
+        @invalid_fields = ExtractFromMessage.call(e.message) ||
+          DeduceFromQuery.call(object)
+        info "Invalid fields '#{@invalid_fields}' for #{object_name} query"
         false
       end
     end
