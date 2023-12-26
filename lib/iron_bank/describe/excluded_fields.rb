@@ -23,8 +23,7 @@ module IronBank
 
       private
 
-      attr_reader :object_name,
-        :invalid_fields
+      attr_reader :object_name, :invalid_fields
 
       def_delegators "IronBank.logger", :info
       def_delegators :object, :single_resource_query_fields
@@ -58,8 +57,10 @@ module IronBank
         info "Successful query for #{object_name}"
         true
       rescue IronBank::BadRequestError, InternalServerError => e
-        @invalid_fields = ExtractFromMessage.call(e.message) ||
+        @invalid_fields = Array(
+          ExtractFromMessage.call(e.message) ||
           DeduceFromQuery.call(object)
+        )
         info "Invalid fields '#{@invalid_fields}' for #{object_name} query"
         false
       end
