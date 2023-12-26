@@ -17,7 +17,8 @@ RSpec.describe IronBank::Describe::ExcludedFields::DeduceFromQuery do
     allow(object).
       to receive(:where).
       with({ id: invalid_object_id }) do
-        raise IronBank::InternalServerError unless (query_fields & invalid_fields).none?
+        (query_fields & invalid_fields).none? ||
+          raise(IronBank::InternalServerError)
       end
   end
 
