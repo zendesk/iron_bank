@@ -18,11 +18,8 @@ module IronBank
 
       def call
         query_fields = object.query_fields.clone
-
         divide_and_execute(query_fields)
-        # Set initial state for object.query_fields
-        object.query_fields.concat query_fields
-
+        object.query_fields.concat(query_fields)
         invalid_fields
       end
 
@@ -31,20 +28,20 @@ module IronBank
       attr_reader :object, :valid_fields, :invalid_fields
 
       def initialize(object)
-        @object = object
-        @valid_fields = []
+        @object         = object
+        @valid_fields   = []
         @invalid_fields = []
       end
 
       def divide_and_execute(query_fields)
-        # Clear state before queries
+        # clear state before queries
         object.query_fields.clear
-        # We repeat dividing until only one field has left
+
+        # we repeat dividing until only a single field remains
         invalid_fields.push(query_fields.pop) if query_fields.one?
         return if query_fields.empty?
 
         left, right = divide_fields(query_fields)
-
         execute_or_divide_again(left)
         execute_or_divide_again(right)
       end
