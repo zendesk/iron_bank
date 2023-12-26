@@ -39,7 +39,8 @@ module IronBank
       def call
         return unless FAULT_FIELD_MESSAGES.match(message)
 
-        Regexp.last_match.captures.compact.map { |capture| capture.delete(" ") }
+        Regexp.last_match.captures.compact.
+          map { |capture| capture.delete(" ") }
       end
 
       private
