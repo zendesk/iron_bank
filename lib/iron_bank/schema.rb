@@ -39,6 +39,14 @@ module IronBank
     end
 
     def self.excluded_fields
+      # NOTE: In some instances the error message from Zuora will not include the
+      # unqueryable fields that need to be excluded. When that happens IronBank's
+      # strategy will be to perform a binary search through the fields listed in the
+      # query -- at the cost of performance due to repeated requests sent to Zuora
+      # as it tries to identify the offending field.
+      #
+      # See:
+      # - https://github.com/zendesk/iron_bank/pull/107
       @excluded_fields ||= IronBank::Resources.constants.each.with_object({}) do |resource, fields|
         fields[resource.to_s] =
           IronBank::Describe::ExcludedFields.call(object_name: resource)
