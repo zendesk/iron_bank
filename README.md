@@ -13,7 +13,7 @@ This gem provides opinionated resources to interact with the Zuora API through
 their REST interface. It defines **associations** between them, as well as a
 simple **declaration API** (`with_one`, `with_many`) to extend them.
 
-This gem is tested against Ruby `>= 2.6`.
+This gem is tested against Ruby `>= 3.1`.
 
 Please use [GitHub Issues][issues] to report bugs.
 
