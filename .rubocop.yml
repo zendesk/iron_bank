@@ -5,7 +5,7 @@ AllCops:
   DisplayStyleGuide: true
   NewCops: enable
   SuggestExtensions: false
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.1
 
 Layout/DotPosition:
   EnforcedStyle: trailing
@@ -68,3 +68,15 @@ Style/RegexpLiteral:
 Style/RescueStandardError:
   Exclude:
     - lib/iron_bank/csv.rb
+
+Style/HashSyntax:
+  Exclude:
+    - spec/shared_examples/**
+    - spec/iron_bank/**/*.rb
+    - lib/iron_bank/*.
+    - lib/iron_bank/**/*.rb
+
+Style/RedundantFreeze:
+  Exclude:
+    - lib/iron_bank/*.rb
+
