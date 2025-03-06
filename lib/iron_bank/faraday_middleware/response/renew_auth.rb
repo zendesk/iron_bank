@@ -7,7 +7,7 @@ module IronBank
     # IronBank Faraday response middleware module
     module Response
       # This middleware reauthorize the request on unauthorized request
-      class RenewAuth < Faraday::Response::Middleware
+      class RenewAuth < Faraday::Middleware
         def initialize(app, auth)
           @auth = auth
 

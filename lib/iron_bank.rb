@@ -3,10 +3,10 @@
 # External librairies
 require "csv"
 require "faraday"
-require "faraday_middleware"
 require "fileutils"
 require "json"
 require "nokogiri"
+require "faraday/retry"
 
 # An opinionated Ruby interface to the Zuora REST API
 module IronBank
