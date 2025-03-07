@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    iron_bank (5.4.1)
+    iron_bank (6.0.0)
       faraday (~> 2)
       faraday-retry (~> 2)
       nokogiri (~> 1)
