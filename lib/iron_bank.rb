@@ -75,6 +75,7 @@ require "iron_bank/actions/subscribe"
 require "iron_bank/actions/update"
 require "iron_bank/actions/query"
 require "iron_bank/actions/query_more"
+require "iron_bank/actions/order"
 
 # Client and schema (describe)
 require "iron_bank/authentication"
