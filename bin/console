@@ -5,6 +5,7 @@ require "dotenv/load"
 require "bundler/setup"
 require "iron_bank"
 require "pry-byebug"
+require "active_support/core_ext/hash"
 
 IronBank.configure do |config|
   config.client_id            = ENV.fetch("ZUORA_CLIENT_ID", nil)

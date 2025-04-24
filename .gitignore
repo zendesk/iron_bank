@@ -9,6 +9,7 @@
 /config/
 *.gem
 .env
+.idea/
 
 # rspec failure tracking
 .rspec_status
