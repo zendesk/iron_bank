@@ -104,6 +104,86 @@ RSpec.describe IronBank::Error do
       it { is_expected.to eq(expected_error) }
     end
 
+    shared_examples "returning no error class" do
+      it { is_expected.to eq(nil) }
+    end
+
+    context 'when response is a Hash' do
+      context 'when a custom field contains "INVALID_VALUE"' do
+        let(:body) do
+          {
+            'Id' => '2c92c0f97aa8ed71017aaad5c77e6a1f',
+            'Notes' => 'RENEWAL_ERROR: ${:code=>"INVALID_VALUE", :message=>"error_message."}$\n\n',
+            'RenewalTerm' => 12
+          }
+        end
+
+        it_behaves_like "returning no error class"
+      end
+
+      context 'when faultcode exists' do
+        let(:body) do
+          {
+            "detail" => {
+              "MalformedQueryFault" => {
+                "FaultMessage" => "foo",
+                "FaultCode" => "UNKNOWN_ERROR"
+              }
+            },
+            "faultcode" => "fns:UNKNOWN_ERROR",
+            "faultstring" => "foo"
+          }
+        end
+
+        let(:expected_error) { IronBank::InternalServerError }
+
+        it_behaves_like "returning the correct error class"
+      end
+
+      context 'when "where" response contains custom field with "INVALID_VALUE"' do
+        let(:body) do
+          {
+            "records" => [
+              {
+                "Id" => "2c92c",
+                "SubscriptionStartDate" => "2021-07-09",
+                "Notes" =>
+                  "RENEWAL_ERROR: ${:code=>\"INVALID_VALUE\", :message=>\"error_message.\"}$",
+                "Name" => "A-S001",
+                "ServiceActivationDate" => "2021-07-09"
+              }
+            ],
+            "done" => true,
+            "size" => 1
+          }
+        end
+
+        it_behaves_like "returning no error class"
+      end
+
+      context 'when bulk request response with faultcode' do
+        let(:body) do
+          {
+            "results" => [
+              {
+                "Success" => false,
+                "Errors" => [
+                  {
+                    "Code" => "INVALID_VALUE",
+                    "Message" => "Invalid value"
+                  }
+                ]
+              }
+            ]
+          }
+        end
+
+        let(:expected_error) { IronBank::BadRequestError }
+
+        it_behaves_like "returning the correct error class"
+      end
+    end
+
     context "for a body with a `API_DISABLED` code" do
       let(:code)           { "API_DISABLED" }
       let(:expected_error) { IronBank::ServerError }
