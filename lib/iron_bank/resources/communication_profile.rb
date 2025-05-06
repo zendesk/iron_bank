@@ -11,6 +11,16 @@ module IronBank
       with_schema
 
       with_many :accounts
+      
+      def notifications
+        raise IronBank::NotFoundError unless id
+  
+        response = IronBank.client.connection.get(
+          "/settings/communication-profiles/#{id}/notifications"
+        )
+  
+        response.body
+      end
     end
   end
 end
