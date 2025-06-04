@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "bundler/setup"
+require "bundler/gem_tasks"
+
 require "reek/rake/task"
 require "rspec/core/rake_task"
 require "rubocop/rake_task"
