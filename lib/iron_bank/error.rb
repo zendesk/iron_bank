@@ -22,9 +22,29 @@ module IronBank
       klass&.new(response)
     end
 
+    # find error class from body (and when in 200 response)
     def self.from_body(response)
-      return unless (match = CODE_MATCHER.match(response.body.to_s))
+      body = response.body
 
+      if body.is_a?(Hash)
+        if faultcode = body['faultcode']
+          # NOTE: Some observed faultcodes are now in 400 responses,
+          # and therefore won't reach here,
+          # but we assume some other faultcodes are in 200 responses,
+          # and can still reach here.
+          faultcode = faultcode.sub(/\Afns:/, '')
+          return CODE_CLASSES[faultcode]
+        elsif body.key?('results')
+          # bulk operation response, assume it doesn't contain custom fields.
+          return from_text(body.to_s)
+        end
+      else
+        return from_text(body.to_s)
+      end
+    end
+
+    def self.from_text(text)
+      match = CODE_MATCHER.match(text)
       CODE_CLASSES[match.captures.first]
     end
 
