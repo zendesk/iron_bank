@@ -5,7 +5,7 @@ AllCops:
   DisplayStyleGuide: true
   NewCops: enable
   SuggestExtensions: false
-  TargetRubyVersion: 3.1
+  TargetRubyVersion: 3.2
 
 Layout/DotPosition:
   EnforcedStyle: trailing
