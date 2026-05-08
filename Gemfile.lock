@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    iron_bank (6.1.1)
+    iron_bank (6.2.0)
       csv (~> 3)
       faraday (~> 2)
       faraday-retry (~> 2)
