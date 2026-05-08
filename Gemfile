@@ -5,6 +5,7 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in zuora.gemspec
 gemspec
 
+gem "activesupport",       "~> 7.2"
 gem "bump",                "~> 0.5"
 gem "bundler",             "~> 2.0"
 gem "dotenv",              "~> 2.2"
