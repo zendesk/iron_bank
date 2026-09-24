@@ -38,15 +38,23 @@ module IronBank
       end
     end
 
+    # ZOQL filter literals (Query API) escape \ and ' with a backslash. Export ZOQL
+    # uses doubled quotes; this builder feeds IronBank::Query / queryString only.
+    # https://docs.zuora.com/en/zuora-platform/data/legacy-query-methods/zoql/filter-statements
+    def escape_value(value)
+      value.to_s.
+        gsub("\\") { "\\\\" }.
+        gsub("'") { "\\'" }
+    end
+
     def range_query_builder(field, value)
       value.each.with_object([]) do |option, range_query|
-        range_query << "#{field}='#{option}'"
+        range_query << "#{field}='#{escape_value(option)}'"
       end.join(" OR ")
     end
 
     def hash_query_conditions
       conditions.each.with_object([]) do |(field, value), filters|
-        # TODO: sanitize the value
         field = IronBank::Utils.camelize(field)
         filters << current_filter(field, value)
       end.join(" AND ")
@@ -58,7 +66,7 @@ module IronBank
       elsif [true, false].include? value
         "#{field}=#{value}"
       else
-        "#{field}='#{value}'"
+        "#{field}='#{escape_value(value)}'"
       end
     end
 
