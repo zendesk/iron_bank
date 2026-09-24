@@ -60,8 +60,18 @@ RSpec.describe IronBank::QueryBuilder do
         { name: "O'Brien" }
       end
 
-      it "escapes the quote inside a single ZOQL string literal" do
-        expect(zuora_query_string).to include("Name='O''Brien'")
+      it "escapes the quote with a backslash per Zuora filter statements" do
+        expect(zuora_query_string).to include("Name='O\\'Brien'")
+      end
+    end
+
+    context "when a scalar value contains a backslash" do
+      let(:conditions) do
+        { name: "acme\\corp" }
+      end
+
+      it "escapes backslashes per Zuora filter statements" do
+        expect(zuora_query_string).to include("Name='acme\\\\corp'")
       end
     end
 
@@ -73,14 +83,32 @@ RSpec.describe IronBank::QueryBuilder do
       it "keeps the payload inside one string literal" do
         expect(zuora_query_string).to eq(
           "select  from Product where " \
-          "AccountNumber='A0000001'' OR AccountNumber=''A0000002'"
+          "AccountNumber='A0000001\\' OR AccountNumber=\\'A0000002'"
         )
       end
 
       it "does not emit an additional OR condition outside the literal" do
-        expect(zuora_query_string.scan(/\bOR\b/).size).to eq(1)
         expect(zuora_query_string).not_to match(
           /AccountNumber='A0000001'\s+OR\s+AccountNumber=/
+        )
+      end
+    end
+
+    context "when a scalar value contains a backslash before a quote" do
+      let(:conditions) do
+        { account_number: "x\\' OR AccountNumber='A2" }
+      end
+
+      it "escapes backslashes and quotes so the value stays one literal" do
+        expect(zuora_query_string).to eq(
+          "select  from Product where " \
+          "AccountNumber='x\\\\\\' OR AccountNumber=\\'A2'"
+        )
+      end
+
+      it "does not emit an additional OR condition outside the literal" do
+        expect(zuora_query_string).not_to match(
+          /AccountNumber='x\\'\s+OR\s+AccountNumber=/
         )
       end
     end
@@ -91,7 +119,7 @@ RSpec.describe IronBank::QueryBuilder do
       end
 
       it "escapes each option inside its own string literal" do
-        expect(zuora_query_string).to include("Name='O''Brien' OR Name='Smith'")
+        expect(zuora_query_string).to include("Name='O\\'Brien' OR Name='Smith'")
       end
     end
 
@@ -103,7 +131,7 @@ RSpec.describe IronBank::QueryBuilder do
       it "keeps the payload inside one string literal per option" do
         expect(zuora_query_string).to eq(
           "select  from Product where " \
-          "AccountNumber='A0000001'' OR AccountNumber=''A0000002'"
+          "AccountNumber='A0000001\\' OR AccountNumber=\\'A0000002'"
         )
       end
     end
