@@ -54,5 +54,86 @@ RSpec.describe IronBank::QueryBuilder do
           to raise_error("Filter ranges must be used in isolation.")
       end
     end
+
+    context "when a scalar value contains a single quote" do
+      let(:conditions) do
+        { name: "O'Brien" }
+      end
+
+      it "escapes the quote with a backslash per Zuora filter statements" do
+        expect(zuora_query_string).to include("Name='O\\'Brien'")
+      end
+    end
+
+    context "when a scalar value contains a backslash" do
+      let(:conditions) do
+        { name: "acme\\corp" }
+      end
+
+      it "escapes backslashes per Zuora filter statements" do
+        expect(zuora_query_string).to include("Name='acme\\\\corp'")
+      end
+    end
+
+    context "when a scalar value attempts to inject additional ZOQL" do
+      let(:conditions) do
+        { account_number: "A0000001' OR AccountNumber='A0000002" }
+      end
+
+      it "keeps the payload inside one string literal" do
+        expect(zuora_query_string).to eq(
+          "select  from Product where " \
+          "AccountNumber='A0000001\\' OR AccountNumber=\\'A0000002'"
+        )
+      end
+
+      it "does not emit an additional OR condition outside the literal" do
+        expect(zuora_query_string).not_to match(
+          /AccountNumber='A0000001'\s+OR\s+AccountNumber=/
+        )
+      end
+    end
+
+    context "when a scalar value contains a backslash before a quote" do
+      let(:conditions) do
+        { account_number: "x\\' OR AccountNumber='A2" }
+      end
+
+      it "escapes backslashes and quotes so the value stays one literal" do
+        expect(zuora_query_string).to eq(
+          "select  from Product where " \
+          "AccountNumber='x\\\\\\' OR AccountNumber=\\'A2'"
+        )
+      end
+
+      it "does not emit an additional OR condition outside the literal" do
+        expect(zuora_query_string).not_to match(
+          /AccountNumber='x\\'\s+OR\s+AccountNumber=/
+        )
+      end
+    end
+
+    context "when an array value contains a single quote" do
+      let(:conditions) do
+        { name: ["O'Brien", "Smith"] }
+      end
+
+      it "escapes each option inside its own string literal" do
+        expect(zuora_query_string).to include("Name='O\\'Brien' OR Name='Smith'")
+      end
+    end
+
+    context "when an array value attempts to inject additional ZOQL" do
+      let(:conditions) do
+        { account_number: ["A0000001' OR AccountNumber='A0000002"] }
+      end
+
+      it "keeps the payload inside one string literal per option" do
+        expect(zuora_query_string).to eq(
+          "select  from Product where " \
+          "AccountNumber='A0000001\\' OR AccountNumber=\\'A0000002'"
+        )
+      end
+    end
   end
 end
